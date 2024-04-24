@@ -1,4 +1,6 @@
 import Image from "next/image";
+import store from "../lib/storeProvider"
+
 
 export default function Home() {
   return (

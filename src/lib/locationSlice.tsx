@@ -1,13 +1,7 @@
-import { createSlice, Dispatch } from "@reduxjs/toolkit";
+import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import { fetchUsers } from "@/api/fetchhData";
 
-export const fetchUsers = createAsyncThunk(
-  "users/getAllUsers",
-  async (state: string,  { rejectWithValue }) => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/users");
-    const data = await response.json();
-    return data;
-  }
-);
+
 
 
 interface Card {
@@ -48,9 +42,21 @@ interface Card {
     decrement: (state) => {
       console.log("decrement")
         state.cardDetails.price -= 1;
+    },
+    incrementByAmount: (state, action:PayloadAction<number>) => {
+      state.cardDetails.price += action.payload;
     }
+    },
+    extraReducers: (builder) => {
+      builder.addCase(fetchUsers.fulfilled, (state, action) => {
+        state.cardDetails.price -= 100;
+      });
+  
+      builder.addCase(fetchUsers.pending, (state, action) => {
+        console.log("loading")
+      });
     }
   });
 
-  export const { increment, decrement } = cardSlice.actions;
+  export const { increment, decrement, incrementByAmount } = cardSlice.actions;
 

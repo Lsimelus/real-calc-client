@@ -2,8 +2,8 @@
 import Image from "next/image";
 import store from "../lib/storeProvider"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTax, fetchRental } from '../api';
-import { increment, decrement } from "@/lib/locationSlice";
+import { fetchUsers } from "@/api/fetchhData";
+import { increment, decrement, incrementByAmount } from "@/lib/locationSlice";
 
 
 export default function Home() {
@@ -22,6 +22,12 @@ export default function Home() {
 
       <button onClick={() => dispatch(increment())}>increment</button>
       <button onClick={() => dispatch(decrement())}>decrement</button>
+      <button onClick={() => dispatch(incrementByAmount(33))}>
+        Increment by 33
+      </button>
+      <button onClick={() => dispatch(fetchUsers("MA"))}>
+        Minus 7
+      </button>
     </div>
     
   );

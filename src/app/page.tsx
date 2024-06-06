@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "@/api/fetchhData";
 import { increment, decrement, incrementByAmount } from "@/lib/locationSlice";
 import { Button } from "@/components/ui/button"
+import { Combobox } from "@/components/ui/combobox";
 
 export default function Home() {
   const price = useSelector((state) => state.location.cardDetails.price);
@@ -28,6 +29,8 @@ export default function Home() {
       <Button onClick={() => dispatch(fetchUsers("MA"))}>
         Minus 7
       </Button>
+      <Combobox></Combobox>
+
     </div>
     
   );

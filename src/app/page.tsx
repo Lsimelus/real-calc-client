@@ -6,9 +6,14 @@ import { fetchUsers } from "@/api/fetchhData";
 import { increment, decrement, incrementByAmount } from "@/lib/locationSlice";
 import { Button } from "@/components/ui/button"
 import { Combobox } from "@/components/ui/combobox";
+import { Car } from "lucide-react";
+import { QuestionCard } from "@/components/ui/questioncard";
+import { QuestionCarousel } from "@/components/ui/questioncarousel";
+import { Progress } from "@/components/ui/progress"
+
 
 export default function Home() {
-  const price = useSelector((state) => state.location.cardDetails.price);
+  const price = useSelector((state) => state.location.locationDetails.rental);
 
   console.log(price)
 
@@ -17,9 +22,11 @@ export default function Home() {
 
 
   return (
-    <div>
+    <div className="grid grid-cols-3 gap-4">
+      <div className="col-span-3" >title</div>
+      <Progress value={33} />
+      <QuestionCarousel/>
       <p>{price}</p>
-      <p>gygkhuiohlkjg hjvy</p>
 
       <Button onClick={() => dispatch(increment())}>increment</Button>
       <Button onClick={() => dispatch(decrement())}>decrement</Button>
@@ -30,7 +37,9 @@ export default function Home() {
         Minus 7
       </Button>
       <Combobox></Combobox>
-
+      <QuestionCard/>
+      
+      
     </div>
     
   );

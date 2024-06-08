@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit'
-import {cardSlice} from "../lib/locationSlice"
+import {locationSlice} from "../lib/locationSlice"
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {location: cardSlice.reducer}
+    reducer: {location: locationSlice.reducer}
   })
 }
 

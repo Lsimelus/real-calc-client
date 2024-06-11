@@ -1,5 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
-import { fetchUsers } from "@/api/fetchhData";
+import { fetchTax, fetchRent  } from "@/api/fetchhData";
 
 // Define the interface for the location object
 interface location {
@@ -30,9 +30,20 @@ interface location {
   };
 
   export const locationSlice = createSlice({
-    name: "cards", // Name of the slice
-    initialState, // Initial state
+    name: "location", 
+    initialState,
     reducers: {
+    clearState: (state) => {
+        state = initialState
+    }, 
+    selectState: (state, action:PayloadAction<string>) => {
+        state.locationDetails.state = action.payload;
+        state.locationDetails.complete = state.locationDetails.city !== ""
+    },
+    selectCity: (state,  action:PayloadAction<string>) => {
+        state.locationDetails.city = action.payload;
+        state.locationDetails.complete = state.locationDetails.tax !== 0
+    },
     increment: (state) => {
       console.log("increment")
         state.locationDetails.rental += 1;
@@ -46,15 +57,25 @@ interface location {
     }
     },
     extraReducers: (builder) => {
-      builder.addCase(fetchUsers.fulfilled, (state, action) => {
-        state.locationDetails.rental -= 100;
+      builder.addCase(fetchTax.fulfilled, (state, action) => {
+        state.locationDetails.tax = .35;
       });
   
-      builder.addCase(fetchUsers.pending, (state, action) => {
+      builder.addCase(fetchTax.pending, (state, action) => {
         console.log("loading")
+        state.locationDetails.pending = true
       });
+      builder.addCase(fetchRent.fulfilled, (state, action) => {
+        state.locationDetails.rental = 1500;
+      });
+  
+      builder.addCase(fetchRent.pending, (state, action) => {
+        console.log("loading")
+        state.locationDetails.pending = true
+      });
+
     }
   });
 
-  export const { increment, decrement, incrementByAmount } = locationSlice.actions;
+  export const { selectCity, selectState} = locationSlice.actions;
 

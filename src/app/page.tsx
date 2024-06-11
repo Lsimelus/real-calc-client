@@ -2,8 +2,8 @@
 import Image from "next/image";
 import store from "../lib/storeProvider"
 import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "@/api/fetchhData";
-import { increment, decrement, incrementByAmount } from "@/lib/locationSlice";
+import { fetchTax, fetchRent } from "@/api/fetchhData";
+import { selectCity, selectState } from "@/lib/locationSlice";
 import { Button } from "@/components/ui/button"
 import { Combobox } from "@/components/ui/combobox";
 import { Car } from "lucide-react";
@@ -13,12 +13,24 @@ import { Progress } from "@/components/ui/progress"
 
 
 export default function Home() {
-  const price = useSelector((state) => state.location.locationDetails.rental);
+  const state = useSelector((state) => state.location.locationDetails.state);
+  const city = useSelector((state) => state.location.locationDetails.city);
+  const complete = useSelector((state) => state.location.locationDetails.complete);
 
-  console.log(price)
+  const tax = useSelector((state) => state.location.locationDetails.tax);
+  const rental = useSelector((state) => state.location.locationDetails.rental);
 
-  console.log(typeof price)
   const dispatch = useDispatch();
+
+  function pickState(){
+    dispatch(selectState("MA"))
+    dispatch(fetchTax("MA"))
+  }
+
+  function pickCity(){
+    dispatch(selectCity("Everett"))
+    dispatch(fetchRent("Everett"))
+  }
 
 
   return (
@@ -26,14 +38,20 @@ export default function Home() {
       <div className="col-span-3" >title</div>
       <Progress value={33} />
       <QuestionCarousel/>
-      <p>{price}</p>
+      <p>state</p>
+      <p>{state}</p>
+      <Button onClick={() => pickState()}>state</Button>
 
-      <Button onClick={() => dispatch(increment())}>increment</Button>
-      <Button onClick={() => dispatch(decrement())}>decrement</Button>
-      <Button onClick={() => dispatch(incrementByAmount(33))}>
-        Increment by 33
-      </Button>
-      <Button onClick={() => dispatch(fetchUsers("MA"))}>
+      <p>city</p>
+      <p>{city}</p>
+      <Button onClick={() => pickCity()}>city</Button>
+
+      <p>done boolean</p>
+      <p>{complete ? "complete": "not compplete"}</p>
+      <p>{tax}</p>
+      <p>{rental}</p>
+
+      <Button onClick={() => dispatch(fetchTax("MA"))}>
         Minus 7
       </Button>
       <Combobox></Combobox>

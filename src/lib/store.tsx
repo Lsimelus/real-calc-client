@@ -1,9 +1,21 @@
 import { configureStore } from '@reduxjs/toolkit'
 import {locationSlice} from "../lib/locationSlice"
+import { priceSlice } from './priceSlice'
+import { taxSlice } from './taxSlice'
+import { loanSlice } from './loanSlice'
+import { insuranceSlice } from './insruanceSlice'
+import {feesSlice} from './feesSlice'
 
 export const makeStore = () => {
   return configureStore({
-    reducer: {location: locationSlice.reducer}
+    reducer: {
+      location: locationSlice.reducer,
+    price: priceSlice.reducer,
+    tax: taxSlice.reducer,
+    loan: locationSlice.reducer,
+    insurance: insuranceSlice.reducer,
+    fees: feesSlice.reducer,
+  },
   })
 }
 

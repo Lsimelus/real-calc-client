@@ -44,14 +44,6 @@ interface location {
         state.locationDetails.city = action.payload;
         state.locationDetails.complete = state.locationDetails.tax !== 0
     },
-    increment: (state) => {
-      console.log("increment")
-        state.locationDetails.rental += 1;
-    },
-    decrement: (state) => {
-      console.log("decrement")
-        state.locationDetails.rental  -= 1;
-    },
     incrementByAmount: (state, action:PayloadAction<number>) => {
       state.locationDetails.rental += action.payload;
     }

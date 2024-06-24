@@ -12,7 +12,7 @@ export const makeStore = () => {
       location: locationSlice.reducer,
     price: priceSlice.reducer,
     tax: taxSlice.reducer,
-    loan: locationSlice.reducer,
+    loan: loanSlice.reducer,
     insurance: insuranceSlice.reducer,
     fees: feesSlice.reducer,
   },

@@ -5,10 +5,10 @@ import {
 
 type CardProps = React.ComponentProps<typeof Card>
  
-export function Price({ className, ...props }: CardProps) {
+export function Fees({ className, ...props }: CardProps) {
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
-        <p>Price</p>
+        <p>Fees</p>
     </Card>
   )
 }

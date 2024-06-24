@@ -32,28 +32,15 @@ export default function Home() {
     dispatch(fetchRent("Everett"))
   }
 
+  //Progress values needs call back info from carousel index
+
 
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-3" >title</div>
       <Progress value={33} />
       <QuestionCarousel/>
-      <p>state</p>
-      <p>{state}</p>
-      <Button onClick={() => pickState()}>state</Button>
-
-      <p>city</p>
-      <p>{city}</p>
-      <Button onClick={() => pickCity()}>city</Button>
-
-      <p>done boolean</p>
-      <p>{complete ? "complete": "not compplete"}</p>
-      <p>{tax}</p>
-      <p>{rental}</p>
-
-      <Button onClick={() => dispatch(fetchTax("MA"))}>
-        Minus 7
-      </Button>
+      
       <Combobox></Combobox>
       <QuestionCard/>
       

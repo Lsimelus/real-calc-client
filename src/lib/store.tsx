@@ -10,11 +10,11 @@ export const makeStore = () => {
   return configureStore({
     reducer: {
       location: locationSlice.reducer,
-    price: priceSlice.reducer,
-    tax: taxSlice.reducer,
-    loan: loanSlice.reducer,
-    insurance: insuranceSlice.reducer,
-    fees: feesSlice.reducer,
+      price: priceSlice.reducer,
+      tax: taxSlice.reducer,
+      loan: loanSlice.reducer,
+      insurance: insuranceSlice.reducer,
+      fees: feesSlice.reducer,
   },
   })
 }

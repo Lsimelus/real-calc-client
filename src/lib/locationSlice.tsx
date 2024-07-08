@@ -1,4 +1,4 @@
-import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchTax, fetchRent  } from "@/api/fetchhData";
 
 // Define the interface for the location object

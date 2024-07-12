@@ -18,16 +18,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { type CarouselApi } from "@/components/ui/carousel"
 
 
+interface QuestionCarouselProps {
+  completedQuestions: boolean[]
+}
+
 
 //Pass in setPage and React.useRef<HTMLElement> to each component
-const questions = [<Location />,<Price />,<Tax />, <Loan/>,<Insurance/>, <Fees />]
+const questions = [<Location />,<Price />,<Loan/>,<Tax />,<Insurance/>, <Fees />]
 
-export function QuestionCarousel() {
-  const locationCompleted = useSelector((state) => state.location.locationDetails.complete);
-  const priceCompleted = useSelector((state) => state.price.priceDetails.complete);
-  const completedQuestions = [true,locationCompleted,priceCompleted, false, false , false]//Todo: Add more questions
+//export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect }: ComboboxProps) => {
 
-  const [api, setApi] = React.useState<CarouselApi>()
+export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQuestions }: QuestionCarouselProps) => {
+  
+    const [api, setApi] = React.useState<CarouselApi>()
   const [current, setCurrent] = React.useState(0)
   const [count, setCount] = React.useState(0)
   
@@ -44,18 +47,12 @@ export function QuestionCarousel() {
     })
   }, [api])
 
-  React.useEffect(() => {
-    console.log(current)
-  
-  }, [current])
 
   //Todo: How to implement this function?
   // Index determines next button functionality
   // Also progress bas
   // Array needs to be inside carousel content
-  function completed(){
-    return !completedQuestions[current]
-  }
+
 
   return (
     <Carousel setApi={setApi} className="w-full max-w-3xl ml-20 col-span-3">
@@ -69,7 +66,7 @@ export function QuestionCarousel() {
       ))}
       </CarouselContent>
       <CarouselPrevious />
-      <CarouselNext disabled={!completedQuestions[current]}/>
+      <CarouselNext disabled={!completedQuestions[current-1]}/>
     </Carousel>
   )
 }

@@ -19,32 +19,29 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 
-const frameworks = [
-  {
-    value: "next.js",
-    label: "Next.js",
-  },
-  {
-    value: "sveltekit",
-    label: "SvelteKit",
-  },
-  {
-    value: "nuxt.js",
-    label: "Nuxt.js",
-  },
-  {
-    value: "remix",
-    label: "Remix",
-  },
-  {
-    value: "astro",
-    label: "Astro",
-  },
-]
 
-export function Combobox() {
+interface ComboboxItemProps {
+  value: string,
+  label: string
+}
+
+interface ComboboxProps {
+  frameworks: ComboboxItemProps[],
+  onSelect?: (value: string) => void
+}
+
+export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false)
   const [value, setValue] = React.useState("")
+
+  const handleSelect = (value: string) => {
+    if (onSelect) {
+      onSelect(value);
+    }
+  }
+  React.useEffect(() => {
+    handleSelect(value)
+  }, [value])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

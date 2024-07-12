@@ -9,51 +9,34 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
+import { Combobox } from "@/components/ui/combobox";
+import { states } from "@/data/states";
 
-const notifications = [
-    {
-      title: "Your call has been confirmed.",
-      description: "1 hour ago",
-    },
-    {
-      title: "You have a new message!",
-      description: "1 hour ago",
-    },
-    {
-      title: "Your subscription is expiring soon!",
-      description: "2 hours ago",
-    },
-  ]
- 
+
   
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Location({ className, ...props }: CardProps) {
     const state = useSelector((state) => state.location.locationDetails.state);
     const city = useSelector((state) => state.location.locationDetails.city);
-    const complete = useSelector((state) => state.location.locationDetails.complete);
-
-
     const tax = useSelector((state) => state.location.locationDetails.tax);
     const rental = useSelector((state) => state.location.locationDetails.rental);
   
     const dispatch = useDispatch();
 
 
-    function pickState(){
-        dispatch(selectState("MA"))
-        dispatch(fetchTax("MA"))
-      }
+    function pickState(state: string){
+        dispatch(selectState(state))
+        dispatch(fetchTax(state))
+    }
     
-      function pickCity(){
+    function pickCity(){
         dispatch(selectCity("Everett"))
         dispatch(fetchRent("Everett"))
-      }
+    }
     
 
       
@@ -66,18 +49,14 @@ export function Location({ className, ...props }: CardProps) {
       <CardContent className="grid gap-4">
       <p>state</p>
       <p>{state}</p>
-      <Button onClick={() => pickState()}>state</Button>
+      <Combobox frameworks={states} onSelect={pickState} />
 
       <p>city</p>
       <p>{city}</p>
       <Button onClick={() => pickCity()}>city</Button>
 
-      <p>done boolean</p>
-      <p>{complete ? "complete": "not compplete"}</p>
       <p>{tax}</p>
       <p>{rental}</p>
-
-
   </CardContent>
     </Card>
   )

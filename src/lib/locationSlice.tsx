@@ -43,9 +43,6 @@ interface location {
     selectCity: (state,  action:PayloadAction<string>) => {
         state.locationDetails.city = action.payload;
         state.locationDetails.complete = state.locationDetails.tax !== 0
-    },
-    incrementByAmount: (state, action:PayloadAction<number>) => {
-      state.locationDetails.rental += action.payload;
     }
     },
     extraReducers: (builder) => {

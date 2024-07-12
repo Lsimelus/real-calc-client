@@ -44,7 +44,6 @@ interface price {
       state.priceDetails.downPaymentAmount = action.payload;
     }
     },
-
   });
 
   export const {selectPrice, selectDownPayment, selectDownPaymentAmount} = priceSlice.actions;

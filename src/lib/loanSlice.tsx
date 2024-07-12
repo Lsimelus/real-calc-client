@@ -1,6 +1,9 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
+type loanTypes = "" | 'investment' | 'conventional' | 'fha' | 'va' | 'usda';
+
 interface loan {
+    type: loanTypes;
     pending: boolean;
     error: string[];
     complete: boolean;
@@ -8,11 +11,12 @@ interface loan {
   
   
   interface loanState {
-    taxDetails: loan;
+    loanDetails: loan;
   }
 
   const initialState: loanState = {
-    taxDetails: {
+    loanDetails: {
+      type: "",
       pending: false,
       error: [],
       complete: false
@@ -25,7 +29,11 @@ interface loan {
     reducers: {
     clearState: (state) => {
         state = initialState
-    }
+    },
+    selectType: (state, action:PayloadAction<loanTypes>) => {
+      state.priceDetails.homePrice = action.payload;
+      state.priceDetails.complete = action.payload > 0
+    },
     },
   });
 

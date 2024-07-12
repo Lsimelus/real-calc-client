@@ -66,7 +66,7 @@ export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQue
       ))}
       </CarouselContent>
       <CarouselPrevious />
-      <CarouselNext disabled={!completedQuestions[current-1]}/>
+      <CarouselNext disabled={false}/>
     </Carousel>
   )
 }

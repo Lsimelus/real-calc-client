@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { Combobox } from "@/components/ui/combobox";
-import { states } from "@/data/states";
+import { states } from "../../constants/states";
 
 
   

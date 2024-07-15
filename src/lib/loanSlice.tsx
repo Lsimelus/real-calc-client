@@ -55,6 +55,7 @@ interface loan {
     selectExactOption: (state, action:PayloadAction<boolean>) => {
       state.loanDetails.exactOption = action.payload;
       if (action.payload == false) {
+        console.log("refreshing")
         state.loanDetails.complete =  false;
         state.loanDetails.exact = 0.0;
       }
@@ -63,5 +64,5 @@ interface loan {
     },
   });
 
-  export const {selectType, selectRate, selectExact} = loanSlice.actions;
+  export const {selectType, selectRate, selectExact, selectExactOption} = loanSlice.actions;
 

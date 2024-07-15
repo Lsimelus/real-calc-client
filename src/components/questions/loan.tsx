@@ -5,7 +5,7 @@ import { Separator } from "@/components/ui/separator";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { selectType, selectRate } from "../../lib/loanSlice";
+import { selectType, selectRate, selectExact, selectExactOption } from "../../lib/loanSlice";
 import { loanTypes } from "../../constants/types";
 import { Input } from "@/components/ui/input"
 
@@ -72,15 +72,31 @@ export function Loan({ className, ...props }: CardProps) {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
-    if (value.trim() === "") {
-        setExact(0.0);
-    } else {
-        const parsedValue = parseFloat(value);
-        if (!isNaN(parsedValue)) {
-            setExact(parsedValue);
-        }
-    }
+    setExact(value);
+    console.log("ON change")
+
 }
+const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+  let value = parseFloat(event.target.value);
+  if (isNaN(value)) {
+      value = 0.0;
+  } else if (value < 0.0) {
+      value = 0.0;
+  } else if (value > 30.0) {
+      value = 30.0;
+  }
+  setExact(value.toFixed(1));
+}
+
+React.useEffect(() => {
+  dispatch(selectExact(exact))
+}, [exact])
+
+React.useEffect(() => {
+  dispatch(selectExactOption(exactOption))
+  console.log(initExact)
+  setExact(initExact)
+}, [exactOption])
 
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
@@ -101,9 +117,10 @@ export function Loan({ className, ...props }: CardProps) {
           <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>
           {exactOption && (
             <Input
+            type='number'
             step="0.1"
-            min='0.1'
-            max='30' value={exact} onChange={handleInputChange} ></Input>
+            min='0.0'
+            max='30' value={exact} onChange={handleInputChange} onBlur={handleInputBlur}></Input>
           ) }
 
           

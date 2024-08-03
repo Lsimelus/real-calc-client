@@ -18,8 +18,9 @@ export default function Home() {
   const locationCompleted = useSelector((state) => state.location.locationDetails.complete);
   const priceCompleted = useSelector((state) => state.price.priceDetails.complete);
   const loanCompleted = useSelector((state) => state.loan.loanDetails.complete);
+  const taxCompleted = useSelector((state) => state.tax.taxDetails.complete);
   
-  const completedQuestions = [locationCompleted, loanCompleted, priceCompleted]//Todo: Add more questions
+  const completedQuestions = [locationCompleted, loanCompleted, priceCompleted, taxCompleted]//Todo: Add more questions
   
   const trueCount = completedQuestions.filter(question => question === true).length;
   const percentTrue = (trueCount / completedQuestions.length) * 100;

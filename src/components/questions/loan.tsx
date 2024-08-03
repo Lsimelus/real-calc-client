@@ -73,8 +73,6 @@ export function Loan({ className, ...props }: CardProps) {
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
     setExact(value);
-    console.log("ON change")
-
 }
 const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
   let value = parseFloat(event.target.value);
@@ -94,7 +92,6 @@ React.useEffect(() => {
 
 React.useEffect(() => {
   dispatch(selectExactOption(exactOption))
-  console.log(initExact)
   setExact(initExact)
 }, [exactOption])
 

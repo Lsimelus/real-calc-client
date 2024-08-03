@@ -48,6 +48,8 @@ export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQue
   // Array needs to be inside carousel content
 
 
+  console.log(completedQuestions)
+  console.log(current)
   return (
     <Carousel setApi={setApi} className="w-full max-w-3xl ml-20 col-span-3">
       <CarouselContent>
@@ -60,7 +62,7 @@ export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQue
       ))}
       </CarouselContent>
       <CarouselPrevious />
-      <CarouselNext disabled={false}/>
+      <CarouselNext disabled={!completedQuestions[current-1]}/>
     </Carousel>
   )
 }

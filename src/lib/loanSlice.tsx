@@ -41,7 +41,7 @@ interface loan {
     },
     selectType: (state, action:PayloadAction<loanTypes>) => {
       state.loanDetails.type = action.payload;
-      state.loanDetails.complete = action.payload !== loanTypes.null;
+      state.loanDetails.complete = action.payload !== "";
     },
     selectRate: (state, action:PayloadAction<number>) => {
       state.loanDetails.rate = action.payload;
@@ -49,17 +49,18 @@ interface loan {
 
     },
     selectExact: (state, action:PayloadAction<number>) => {
+      console.log("selectExact", action.payload)
       state.loanDetails.exact = action.payload;
-      state.loanDetails.complete = state.loanDetails.exact !== null;
+      state.loanDetails.complete = state.loanDetails.exact !== 0.0;
     },
     selectExactOption: (state, action:PayloadAction<boolean>) => {
       state.loanDetails.exactOption = action.payload;
       if (action.payload == false) {
-        console.log("refreshing")
-        state.loanDetails.complete =  false;
+        state.loanDetails.complete =  true;
         state.loanDetails.exact = 0.0;
+      }else{
+        state.loanDetails.complete =  false;
       }
-      
     },
     },
   });

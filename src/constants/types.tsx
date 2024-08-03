@@ -1,5 +1,5 @@
 export enum loanTypes {
-    null = "",
+    None = "",
     Investment = "investment",
     Conventional = "conventional",
     FHA = "fha",

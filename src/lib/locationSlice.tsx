@@ -1,12 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchTax, fetchRent  } from "@/api/fetchhData";
+import { fetchRent  } from "@/api/fetchhData";
 
 // Define the interface for the location object
 interface location {
     state: string;
     city: string;
     rental: number;
-    tax: number;
     pending: boolean;
     error: string[];
     complete: boolean;
@@ -22,7 +21,6 @@ interface location {
       state: "",
       city: "",
       rental: 0,
-      tax: 0,
       pending: false,
       error: [],
       complete: false
@@ -38,28 +36,20 @@ interface location {
     }, 
     selectState: (state, action:PayloadAction<string>) => {
         state.locationDetails.state = action.payload;
-        state.locationDetails.complete = state.locationDetails.city !== ""
+        state.locationDetails.city = ""
+        state.locationDetails.complete = false
     },
     selectCity: (state,  action:PayloadAction<string>) => {
         state.locationDetails.city = action.payload;
-        state.locationDetails.complete = state.locationDetails.tax !== 0
+        state.locationDetails.complete = true
     }
     },
     extraReducers: (builder) => {
-      builder.addCase(fetchTax.fulfilled, (state, action) => {
-        state.locationDetails.tax = .35;
-      });
-  
-      builder.addCase(fetchTax.pending, (state, action) => {
-        console.log("loading")
-        state.locationDetails.pending = true
-      });
       builder.addCase(fetchRent.fulfilled, (state, action) => {
         state.locationDetails.rental = 1500;
       });
   
       builder.addCase(fetchRent.pending, (state, action) => {
-        console.log("loading")
         state.locationDetails.pending = true
       });
 

@@ -38,7 +38,6 @@ interface price {
     },
     selectDownPayment: (state,  action:PayloadAction<number>) => {
         state.priceDetails.downPaymentPercent = action.payload;
-        state.priceDetails.complete = true
     },
     selectDownPaymentAmount: (state,  action:PayloadAction<number>) => {
       state.priceDetails.downPaymentAmount = action.payload;

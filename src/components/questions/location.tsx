@@ -22,7 +22,7 @@ type CardProps = React.ComponentProps<typeof Card>
 export function Location({ className, ...props }: CardProps) {
     const state = useSelector((state) => state.location.locationDetails.state);
     const city = useSelector((state) => state.location.locationDetails.city);
-    const tax = useSelector((state) => state.location.locationDetails.tax);
+    const tax = useSelector((state) => state.tax.taxDetails.national);
     const rental = useSelector((state) => state.location.locationDetails.rental);
   
     const dispatch = useDispatch();

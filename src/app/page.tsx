@@ -9,7 +9,7 @@ import { Insurance } from "../components/questions/insurance"
 import { Loan } from "../components/questions/loan"
 import { Fees } from "../components/questions/fees"
 import { useDispatch, useSelector } from "react-redux";
-
+import Summary from "../components/ui/summary";
 
 const questions = [<Location />,<Loan/>, <Price />,<Tax />]
 
@@ -30,9 +30,14 @@ export default function Home() {
   return (
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-3" >title</div>
-      <Progress value={percentTrue} />
-      <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
-      
+      <>
+    {percentTrue  == 100 ? <>
+        
+        <Progress value={percentTrue} />
+        <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
+        </> : <Summary></Summary>
+        }
+    </>      
       <QuestionCard/>
     </div>
     

@@ -11,7 +11,7 @@ import { Fees } from "../components/questions/fees"
 import { useDispatch, useSelector } from "react-redux";
 
 
-const questions = [<Location />,<Loan/>, <Price />,<Tax />,<Insurance/>, <Fees />]
+const questions = [<Location />,<Loan/>, <Price />,<Tax />]
 
 
 export default function Home() {

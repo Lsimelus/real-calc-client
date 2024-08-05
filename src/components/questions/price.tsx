@@ -5,6 +5,7 @@ import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "react-redux";
 import { selectPrice, selectDownPayment, selectDownPaymentAmount } from "@/lib/priceSlice"
+import { addcomma, formatNumber } from "../../constants/utils";
 
 type CardProps = React.ComponentProps<typeof Card>
 
@@ -41,29 +42,7 @@ export function Price({ className, ...props }: CardProps) {
         dispatch(selectDownPaymentAmount(downPaymentValue))
     }, [downPayment])
 
-    const formatNumber = (num: number) => {
-        if (num >= 1000000) {
-            const mValue = num / 1000000;
-            if (Number.isInteger(mValue)) {
-                return '$' + mValue + 'M';
-            } else {
-                return '$' + mValue.toFixed(1) + 'M';
-            }
-        } else if (num >= 1000) {
-            const kValue = num / 1000;
-            if (Number.isInteger(kValue)) {
-                return '$' + kValue + 'K';
-            } else {
-                return '$' + kValue.toFixed(1) + 'K';
-            }
-        } else {
-            return '$' + num.toString();
-        }
-    }
-
-    const addcomma = (num: number) => {
-        return '$' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-    }
+   
 
     const downPaymentValue = (price * (downPayment[0])) / 100;
     const formattedDownPayment = addcomma(downPaymentValue);

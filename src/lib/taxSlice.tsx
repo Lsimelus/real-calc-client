@@ -8,6 +8,7 @@ interface tax {
     pending: boolean;
     error: string[];
     complete: boolean;
+    exactOption: boolean;
   }
   
   
@@ -17,9 +18,10 @@ interface tax {
 
   const initialState: taxState = {
     taxDetails: {
-      national: .30,
+      national: .03,
       local: null,
       exact: null,
+      exactOption: false,
       pending: false,
       error: [],
       complete: false
@@ -37,14 +39,23 @@ interface tax {
       state.taxDetails.local = action.payload;
     },
     selectExact: (state, action:PayloadAction<number>) => {
-      console.log("Selecting Exact", action.payload)
+
       state.taxDetails.exact = action.payload;
       state.taxDetails.complete = action.payload !== 0;
+    },
+    selectExactOption: (state, action:PayloadAction<boolean>) => {
+      state.taxDetails.exactOption = action.payload;
+      if (action.payload == false) {
+        state.taxDetails.complete =  true;
+        state.taxDetails.exact = 0.0;
+      }else{
+        state.taxDetails.complete =  false;
+      }
     },
     },
     extraReducers: (builder) => {
       builder.addCase(fetchTax.fulfilled, (state, action) => {
-        state.taxDetails.local = .35;
+        state.taxDetails.local = .035;
         state.taxDetails.pending = false
       });
   
@@ -54,5 +65,5 @@ interface tax {
     }
   });
 
-  export const {} = taxSlice.actions;
+  export const {selectExact, selectExactOption} = taxSlice.actions;
 

@@ -1,4 +1,5 @@
 "use client";
+import React from 'react';
 import { QuestionCard } from "@/components/ui/questioncard";
 import { QuestionCarousel } from "@/components/ui/questioncarousel";
 import { Progress } from "@/components/ui/progress"
@@ -15,44 +16,60 @@ import {
     TableFooter
   } from "@/components/ui/table"
 
+  import {
+    Tooltip,
+    TooltipContent,
+    TooltipProvider,
+    TooltipTrigger,
+  } from "@/components/ui/tooltip"
 
+
+  
   const invoices = [
     { cost: "Principal & Interest",
-        monthly: "",
-        yearly: "",
-        test: ""
+        monthly: "jhvj",
+        yearly: "hjvj",
+        desc: "The principal is the amount of money you borrowed to buy the home. The interest is the cost of borrowing that money."
     },
     { cost: "Property Taxes",
         monthly: "",
         yearly: "",
-        test: ""
+        desc: "Property taxes are assessed by the local government and are based on the value of your home."
     },
     { cost: "Homeowners Insurance",
         monthly: "",
         yearly: "",
-        test: ""
+        desc: "Homeowners insurance protects your home and belongings from damage or theft."
     },
     { cost: "Mortgage Insurance",
         monthly: "",
         yearly: "",
-        test: ""
+        desc: "Mortgage insurance protects the lender if you stop making payments on your loan."
     },
     { cost: "Premium Mortgage Insurance",
         monthly: "",
         yearly: "",
-        test: ""
+        desc: "Premium mortgage insurance is a type of mortgage insurance that is only required for certain loans."
     },
     { cost: "HOA Dues + fees",
         monthly: "",
         yearly: "",
-        test: ""
+        desc: "HOA dues are fees that are paid to a homeowners association for the upkeep of common areas."
     }
   ]
   
 export default function Summary() {
+
+    React.useEffect(() => {
+        invoices[0].monthly = "hjsddsfsvj";
+
+      }, [])
+    
+
+    
   return (
     <>
-<Table>
+    <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
@@ -64,7 +81,15 @@ export default function Summary() {
       <TableBody>
         {invoices.map((invoice) => (
           <TableRow key={invoice.cost}>
-            <TableCell className="font-medium">{invoice.cost}</TableCell>
+            <TableCell className="font-medium"><TooltipProvider>
+            <Tooltip>
+                <TooltipTrigger>{invoice.cost}</TooltipTrigger>
+                <TooltipContent>
+                <p>{invoice.desc}</p>
+                </TooltipContent>
+            </Tooltip>
+            </TooltipProvider></TableCell>
+
             <TableCell>{invoice.monthly}</TableCell>
             <TableCell>{invoice.yearly}</TableCell>
           </TableRow>

@@ -1,7 +1,7 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { fetchTax, fetchRent  } from "@/api/fetchhData";
 
-interface tax {
+export interface tax {
     national: number;
     local: number | null;
     exact: number| null;

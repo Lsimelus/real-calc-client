@@ -4,6 +4,8 @@ import { QuestionCard } from "@/components/ui/questioncard";
 import { QuestionCarousel } from "@/components/ui/questioncarousel";
 import { Progress } from "@/components/ui/progress"
 
+import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount} from "../../utils/utils"
+
 import { useDispatch, useSelector } from "react-redux";
 import {
     Table,
@@ -59,9 +61,30 @@ import {
   ]
   
 export default function Summary() {
+  const price = useSelector((state) => state.price.priceDetails);
+  const loan = useSelector((state) => state.loan.loanDetails);
+  const tax = useSelector((state) => state.tax.taxDetails);
+  const insurance = useSelector((state) => state.insurance.insuranceDetails);
+  const fees = useSelector((state) => state.fees.feesDetails);
 
     React.useEffect(() => {
-        invoices[0].monthly = "hjsddsfsvj";
+        invoices[0].monthly = addcomma(principalAndInterest(price, loan)/12);
+        invoices[0].yearly = addcomma(principalAndInterest(price, loan));
+
+        invoices[1].monthly = addcomma(propertyTax(price, tax)/12);
+        invoices[1].yearly = addcomma(propertyTax(price, tax));
+
+        invoices[2].monthly = addcomma(homeInsurance(price, insurance)/12);
+        invoices[2].yearly = addcomma(homeInsurance(price, insurance));
+
+        invoices[3].monthly = addcomma(mortgageInsurance(price)/12);
+        invoices[3].yearly = addcomma(mortgageInsurance(price));
+
+        invoices[4].monthly = addcomma(pmInsurance(price, loan)/12);
+        invoices[4].yearly = addcomma(pmInsurance(price, loan));
+
+        invoices[5].monthly = addcomma(feesAmount(fees)/12);
+        invoices[5].yearly = addcomma(feesAmount(fees));
 
       }, [])
     

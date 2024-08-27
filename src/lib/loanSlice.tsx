@@ -5,7 +5,7 @@ import { loanTypes } from "../constants/types";
 
 
 
-interface loan {
+export interface loan {
     type: loanTypes;
     rate: number | null;
     exact: number | null;

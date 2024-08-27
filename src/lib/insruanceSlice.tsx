@@ -1,6 +1,6 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
-interface insurance {
+export interface insurance {
     pending: boolean;
     error: string[];
     complete: boolean;

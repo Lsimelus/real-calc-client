@@ -1,3 +1,9 @@
+import {price} from "../lib/priceSlice"
+import {loan} from "../lib/loanSlice"
+import {tax} from "../lib/taxSlice"
+import { insurance } from "@/lib/insruanceSlice"
+import { fees } from "../lib/feesSlice"
+
 export const formatNumber = (num: number) => {
     if (num >= 1000000) {
         console.log("first")
@@ -24,4 +30,28 @@ export const formatNumber = (num: number) => {
 
 export const addcomma = (num: number) => {
     return '$' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
+}
+
+export const principalAndInterest = (currPrice: price, currLoan:loan) =>{
+    return 100
+}
+
+export const propertyTax = (currPrice: price, currTax:tax) =>{
+    return 1000
+}
+
+export const homeInsurance = (currPrice: price, currInsurance:insurance) =>{
+    return 1000
+}
+
+export const mortgageInsurance = (currPrice: price) =>{
+    return 1000
+}
+
+export const pmInsurance = (currPrice: price, currLoan:loan) =>{
+    return 1000
+}
+
+export const feesAmount = (feesPrice: fees) =>{
+    return 1000
 }

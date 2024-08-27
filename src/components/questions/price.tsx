@@ -5,7 +5,7 @@ import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "react-redux";
 import { selectPrice, selectDownPayment, selectDownPaymentAmount } from "@/lib/priceSlice"
-import { addcomma, formatNumber } from "../../constants/utils";
+import { addcomma, formatNumber } from "../../utils/utils";
 
 type CardProps = React.ComponentProps<typeof Card>
 

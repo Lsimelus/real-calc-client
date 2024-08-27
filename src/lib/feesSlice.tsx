@@ -1,6 +1,6 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
-interface fees {
+export interface fees {
     pending: boolean;
     error: string[];
     complete: boolean;

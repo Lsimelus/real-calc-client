@@ -31,10 +31,11 @@ export default function Home() {
     <div className="grid grid-cols-3 gap-4">
       <div className="col-span-3" >title</div>
       <>
-    {percentTrue  == 100 ? <>
+    {percentTrue  !== 100 ? <>
         
         <Progress value={percentTrue} />
         <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
+        <Summary></Summary>
         </> : <Summary></Summary>
         }
     </>      

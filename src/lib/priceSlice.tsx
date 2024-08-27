@@ -1,6 +1,6 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 
-interface price {
+export interface price {
     homePrice: number;
     downPaymentPercent: number;
     downPaymentAmount: number;

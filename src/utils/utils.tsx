@@ -3,10 +3,10 @@ import {loan} from "../lib/loanSlice"
 import {tax} from "../lib/taxSlice"
 import { insurance } from "@/lib/insruanceSlice"
 import { fees } from "../lib/feesSlice"
+import { calculateMortgage, calculateHomeInsurance, calculateMortgageInsurance, calculatePropertyTax, calculatePMI } from "./math"
 
 export const formatNumber = (num: number) => {
     if (num >= 1000000) {
-        console.log("first")
         const mValue = num / 1000000;
         if (Number.isInteger(mValue)) {
             return '$' + mValue + 'M';
@@ -14,7 +14,6 @@ export const formatNumber = (num: number) => {
             return '$' + mValue.toFixed(1) + 'M';
         }
     } else if (num >= 1000) {
-        console.log("second")
         const kValue = num / 1000;
         if (Number.isInteger(kValue)) {
             return '$' + kValue + 'K';
@@ -22,8 +21,6 @@ export const formatNumber = (num: number) => {
             return '$' + kValue.toFixed(1) + 'K';
         }
     } else {
-        console.log("End")
-        console.log('$' + num.toString())
         return '$' + num.toString();
     }
 }
@@ -33,25 +30,64 @@ export const addcomma = (num: number) => {
 }
 
 export const principalAndInterest = (currPrice: price, currLoan:loan) =>{
-    return 100
-}
+
+    if (!currPrice.complete || !currLoan.complete) {
+        return 0;
+    }
+
+    
+    let principal = currPrice.homePrice- currPrice.downPaymentAmount; // $200,000 loan
+    let annualInterestRate = currLoan.exactOption ? currLoan.exact : currLoan.rate; // 5% annual interest rate
+    let years = 30; // 30-year mortgage
+
+    let monthlyPayment = calculateMortgage(principal, annualInterestRate, years);
+    return monthlyPayment
+    }
+
 
 export const propertyTax = (currPrice: price, currTax:tax) =>{
-    return 1000
+    if (!currPrice.complete || !currTax.complete) {
+        return 0;
+    }
+    let propertyValue = 300000; // $300,000 property value
+let taxRate = 1.25; // 1.25% tax rate
+
+return calculatePropertyTax(propertyValue, taxRate);
 }
 
 export const homeInsurance = (currPrice: price, currInsurance:insurance) =>{
-    return 1000
+    if (!currPrice.complete || !currInsurance.complete) {
+        return 0;
+    }
+    let homeValue = 250000; // $250,000 home value
+let insuranceRate = 0.5; // 0.5% insurance rate
+
+return calculateHomeInsurance(homeValue, insuranceRate);
+
 }
 
 export const mortgageInsurance = (currPrice: price) =>{
-    return 1000
+    if (!currPrice.complete) {
+        return 0;
+    }
+    let loanAmount = 180000; // $180,000 loan amount
+let insuranceRate = 0.85; // 0.85% mortgage insurance rate
+
+return calculateMortgageInsurance(loanAmount, insuranceRate);
+
 }
 
 export const pmInsurance = (currPrice: price, currLoan:loan) =>{
-    return 1000
+    if (!currPrice.complete || !currLoan.complete) {
+        return 0;
+    }
+    let loanAmount = 250000; // $250,000 loan amount
+let pmiRate = 0.75; // 0.75% PMI rate
+
+return calculatePMI(loanAmount, pmiRate);
+
 }
 
 export const feesAmount = (feesPrice: fees) =>{
-    return 1000
+    return 0
 }

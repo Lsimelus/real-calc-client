@@ -49,7 +49,6 @@ export interface loan {
 
     },
     selectExact: (state, action:PayloadAction<number>) => {
-      console.log("selectExact", action.payload)
       state.loanDetails.exact = action.payload;
       state.loanDetails.complete = state.loanDetails.exact !== 0.0;
     },

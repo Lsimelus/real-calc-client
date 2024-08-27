@@ -34,7 +34,8 @@ export function Price({ className, ...props }: CardProps) {
         }
     }
     React.useEffect(() => {
-      dispatch(selectPrice(price))   
+      dispatch(selectPrice(price))
+      dispatch(selectDownPaymentAmount(downPaymentValue))   
     }, [price])
 
     React.useEffect(() => {

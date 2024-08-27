@@ -8,11 +8,11 @@ export interface insurance {
   
   
   interface insuranceState {
-    taxDetails: insurance;
+    insruanceDetails: insurance;
   }
 
   const initialState: insuranceState = {
-    taxDetails: {
+    insuranceDetails: {
       pending: false,
       error: [],
       complete: false

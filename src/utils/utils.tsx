@@ -49,8 +49,8 @@ export const propertyTax = (currPrice: price, currTax:tax) =>{
     if (!currPrice.complete || !currTax.complete) {
         return 0;
     }
-    let propertyValue = 300000; // $300,000 property value
-let taxRate = 1.25; // 1.25% tax rate
+    let propertyValue = currPrice.homePrice
+    let taxRate = currTax.exactOption ? currTax.exact : currTax.local ? currTax.local: currTax.national;
 
 return calculatePropertyTax(propertyValue, taxRate);
 }
@@ -59,7 +59,8 @@ export const homeInsurance = (currPrice: price, currInsurance:insurance) =>{
     if (!currPrice.complete || !currInsurance.complete) {
         return 0;
     }
-    let homeValue = 250000; // $250,000 home value
+
+    let homeValue = currPrice.homePrice; // $250,000 home value
 let insuranceRate = 0.5; // 0.5% insurance rate
 
 return calculateHomeInsurance(homeValue, insuranceRate);
@@ -70,7 +71,7 @@ export const mortgageInsurance = (currPrice: price) =>{
     if (!currPrice.complete) {
         return 0;
     }
-    let loanAmount = 180000; // $180,000 loan amount
+    let loanAmount = currPrice.homePrice- currPrice.downPaymentAmount; // $180,000 loan amount
 let insuranceRate = 0.85; // 0.85% mortgage insurance rate
 
 return calculateMortgageInsurance(loanAmount, insuranceRate);
@@ -81,7 +82,7 @@ export const pmInsurance = (currPrice: price, currLoan:loan) =>{
     if (!currPrice.complete || !currLoan.complete) {
         return 0;
     }
-    let loanAmount = 250000; // $250,000 loan amount
+    let loanAmount = currPrice.homePrice- currPrice.downPaymentAmount;; // $250,000 loan amount
 let pmiRate = 0.75; // 0.75% PMI rate
 
 return calculatePMI(loanAmount, pmiRate);

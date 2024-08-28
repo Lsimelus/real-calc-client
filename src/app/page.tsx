@@ -1,5 +1,4 @@
 "use client";
-import { QuestionCard } from "@/components/ui/questioncard";
 import { QuestionCarousel } from "@/components/ui/questioncarousel";
 import { Progress } from "@/components/ui/progress"
 import { Price } from "../components/questions/price"
@@ -29,17 +28,13 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-3 gap-4">
-      <div className="col-span-3" >title</div>
+      <div className="col-span-3" >Find a home that makes sense</div>
       <>
-    {percentTrue  !== 1001 ? <>
-        
-        <Progress value={percentTrue} />
+    <Progress value={percentTrue} />
         <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
         <Summary></Summary>
-        </> : <Summary></Summary>
-        }
+        
     </>      
-      <QuestionCard/>
     </div>
     
   );

@@ -128,7 +128,7 @@ export default function Summary() {
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[300px]">Category</TableHead>
+          <TableHead className="w-[300px]"></TableHead>
           <TableHead className="w-[230px]">Monthly</TableHead>
           <TableHead  >Yearly</TableHead>
         </TableRow>

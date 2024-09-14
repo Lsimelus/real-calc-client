@@ -4,9 +4,9 @@ import { QuestionCard } from "@/components/ui/questioncard";
 import { QuestionCarousel } from "@/components/ui/questioncarousel";
 import { Progress } from "@/components/ui/progress"
 
-import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount} from "../../utils/utils"
+import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit} from "../../utils/utils"
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
     Table,
     TableBody,
@@ -25,9 +25,15 @@ import {
     TooltipTrigger,
   } from "@/components/ui/tooltip"
 
-
   
-  const invoices = [
+export default function Summary() {
+  const price = useSelector((state) => state.price.priceDetails);
+  const loan = useSelector((state) => state.loan.loanDetails);
+  const tax = useSelector((state) => state.tax.taxDetails);
+  const insurance = useSelector((state) => state.insurance.insuranceDetails);
+  const fees = useSelector((state) => state.fees.feesDetails);
+
+  const [invoices, setInvoices] = React.useState([
     { cost: "Principal & Interest",
         monthly: "jhvj",
         yearly: "hjvj",
@@ -58,69 +64,72 @@ import {
         yearly: "",
         desc: "HOA dues are fees that are paid to a homeowners association for the upkeep of common areas."
     }
-  ]
-  
-export default function Summary() {
-  const price = useSelector((state) => state.price.priceDetails);
-  const loan = useSelector((state) => state.loan.loanDetails);
-  const tax = useSelector((state) => state.tax.taxDetails);
-  const insurance = useSelector((state) => state.insurance.insuranceDetails);
-  const fees = useSelector((state) => state.fees.feesDetails);
+  ]);
 
-  function row0(){
-    invoices[0].monthly = addcomma(principalAndInterest(price, loan));
-    invoices[0].yearly = addcomma(principalAndInterest(price, loan)*12);
-  }
+  const updateInvoiceRow = (index: number, value: number) => {
+    setInvoices(prevInvoices => {
+      const newInvoices = [...prevInvoices];
+      newInvoices[index].monthly = addcomma(value / 12);
+      newInvoices[index].yearly = addcomma(value);
+      return newInvoices;
+    });
+  };
 
-  function row1(){
-    invoices[1].monthly = addcomma(propertyTax(price, tax)/12);
-        invoices[1].yearly = addcomma(propertyTax(price, tax));
-  }
-  function row2(){
-    invoices[2].monthly = addcomma(homeInsurance(price, insurance)/12);
-        invoices[2].yearly = addcomma(homeInsurance(price, insurance));
-  }
-  function row3(){
-    invoices[3].monthly = addcomma(mortgageInsurance(price)/12);
-        invoices[3].yearly = addcomma(mortgageInsurance(price));
-  }
-  function row4(){
-    invoices[4].monthly = addcomma(pmInsurance(price, loan)/12);
-        invoices[4].yearly = addcomma(pmInsurance(price, loan));
-  }
-  function row5(){
-    invoices[5].monthly = addcomma(feesAmount(fees)/12);
-    invoices[5].yearly = addcomma(feesAmount(fees));
-  }
-  function row6(){
-  }
+  function getSumOfRows() {
+    let sum = 0;
+    for (let i = 0; i < 6; i++) {
+        sum +=  moneyToString(invoices[i].monthly)
+    }
+    return sum;
+}
+
+function row0(){
+  var value =  principalAndInterest(price, loan)*12
+  updateInvoiceRow(0, value);
+}
+
+function row1(){
+    var value = propertyTax(price, tax);
+    updateInvoiceRow(1, value);
+}
+
+function row2(){
+    var value = homeInsurance(price, insurance);
+    updateInvoiceRow(2, value);
+}
+
+function row3(){
+    var value = mortgageInsurance(price);
+    updateInvoiceRow(3, value);
+}
+
+function row4(){
+    var value = pmInsurance(price, loan);
+    updateInvoiceRow(4, value);
+}
+
+function row5(){
+    var value = feesAmount(fees);
+    updateInvoiceRow(5, value);
+}
+
+function downDeposit(){
+  return calcDownDeposit(price)
+}
 
     React.useEffect(() => {
-      row0()
-      row1()
-      row2()
-      row3()
-      row4()
-      }, [price])
-      React.useEffect(() => {
-        row0()
-        row4()
+      row0();
+      row1();
+      row2();
+      row3();
+      row4();
+      row5();
+    }, [price, loan, insurance, tax, fees]);
 
-      }, [loan])
-      React.useEffect(() => {
-        row2()
-
-      }, [insurance])
-      React.useEffect(() => {
-        row1()
-
-      }, [tax])
-      React.useEffect(() => {
-        row5()
-
-      }, [fees])
+    React.useEffect(() => {
+      
+    }, [invoices]);
     
-
     
   return (
     <>
@@ -153,13 +162,13 @@ export default function Summary() {
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Mortgage</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
+          <TableCell className="text-right">{addcomma(getSumOfRows())}</TableCell>
         </TableRow>
       </TableFooter>
       <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Down Payment + Closing Cost</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
+          <TableCell className="text-right">{addcomma(getSumOfRows() + downDeposit())}</TableCell>
         </TableRow>
       </TableFooter>
       

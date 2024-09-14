@@ -29,6 +29,11 @@ export const addcomma = (num: number) => {
     return '$' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
 }
 
+export const moneyToString= (num: string) => {
+    console.log("num: ", num)
+    return parseFloat(num.replace(/[$,]/g, ''));
+}
+
 export const principalAndInterest = (currPrice: price, currLoan:loan) =>{
 
     if (!currPrice.complete || !currLoan.complete) {
@@ -82,12 +87,20 @@ export const pmInsurance = (currPrice: price, currLoan:loan) =>{
     if (!currPrice.complete || !currLoan.complete) {
         return 0;
     }
-    let loanAmount = currPrice.homePrice- currPrice.downPaymentAmount;; // $250,000 loan amount
+    let loanAmount = calcLoanAmount(currPrice) // $250,000 loan amount
 let pmiRate = 0.75; // 0.75% PMI rate
 
 return calculatePMI(loanAmount, pmiRate);
 
 }
+
+export const calcDownDeposit = (currPrice: price) =>{
+    return calcLoanAmount(currPrice) * 0.02;
+}
+
+const calcLoanAmount = (currPrice: price) =>{
+    return currPrice.homePrice- currPrice.downPaymentAmount;
+}  
 
 export const feesAmount = (feesPrice: fees) =>{
     return 0

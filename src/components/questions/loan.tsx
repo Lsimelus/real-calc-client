@@ -1,6 +1,12 @@
 import React from 'react';
 import { cn } from "@/lib/utils";
-import { Card } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
@@ -96,7 +102,14 @@ React.useEffect(() => {
 }, [exactOption])
 
   return (
-    <Card className={cn("w-[380px]", className)} {...props}>
+    <Card className={cn("", className)} {...props}>
+            <CardHeader>
+        <CardTitle>Loan Type</CardTitle>
+        <CardDescription>Loan type, interest rate, and length</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+
+      
       <div className="flex h-5 items-center space-x-4 text-sm">
         {cards.map((card, index) => (
           <React.Fragment key={index}>
@@ -104,6 +117,7 @@ React.useEffect(() => {
             {index < cards.length - 1 && <Separator orientation="vertical" />}
           </React.Fragment>
         ))}
+        
       </div>
       {type !== loanTypes.None && (
         <div>
@@ -123,6 +137,7 @@ React.useEffect(() => {
           
         </div>
       )}
+      </CardContent>
     </Card>
   );
 }

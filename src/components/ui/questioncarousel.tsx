@@ -49,7 +49,7 @@ export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQue
 
 
   return (
-    <Carousel setApi={setApi} className="w-full max-w-3xl ml-20 col-span-3">
+    <Carousel setApi={setApi} className="ml-20 mr-20 lg:col-span-3 col-span-5">
       <CarouselContent>
       {questionPages.map((question, index) => (
         <CarouselItem key={index}>

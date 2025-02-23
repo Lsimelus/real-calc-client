@@ -30,7 +30,6 @@ export const addcomma = (num: number) => {
 }
 
 export const moneyToString= (num: string) => {
-    console.log("num: ", num)
     return parseFloat(num.replace(/[$,]/g, ''));
 }
 

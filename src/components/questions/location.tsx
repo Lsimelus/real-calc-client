@@ -39,24 +39,16 @@ export function Location({ className, ...props }: CardProps) {
     }
     
 
-      
   return (
-    <Card className={cn("w-[380px]", className)} {...props}>
+    <Card className={cn("h-[520px]", className)} {...props}>
       <CardHeader>
-        <CardTitle>Notifications</CardTitle>
-        <CardDescription>You have 3 unread messages.</CardDescription>
+        <CardTitle>Location</CardTitle>
+        <CardDescription>Creative nonsense</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-      <p>state</p>
-      <p>{state}</p>
       <Combobox frameworks={states} onSelect={pickState} />
-
-      <p>city</p>
       <p>{city}</p>
-      <Button onClick={() => pickCity()}>city</Button>
-
-      <p>{tax}</p>
-      <p>{rental}</p>
+      <Button onClick={() => pickCity()}>Pick City</Button>
   </CardContent>
     </Card>
   )

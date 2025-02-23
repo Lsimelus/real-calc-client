@@ -1,9 +1,5 @@
 "use client";
 import React from 'react';
-import { QuestionCard } from "@/components/ui/questioncard";
-import { QuestionCarousel } from "@/components/ui/questioncarousel";
-import { Progress } from "@/components/ui/progress"
-
 import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit} from "../../utils/utils"
 
 import { useSelector } from "react-redux";
@@ -130,9 +126,9 @@ function downDeposit(){
       
     }, [invoices]);
     
-    
+
   return (
-    <>
+    <div className='col-span-5 lg:col-span-2'>
     <Table>
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
@@ -173,7 +169,7 @@ function downDeposit(){
       </TableFooter>
       
     </Table>
-    </>
+    </div>
     
   )
 }

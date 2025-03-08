@@ -5,6 +5,7 @@ import { taxSlice } from './taxSlice'
 import { loanSlice } from './loanSlice'
 import { insuranceSlice } from './insruanceSlice'
 import {feesSlice} from './feesSlice'
+import { confirmSlice } from './confirmSlice'
 
 export const makeStore = () => {
   return configureStore({
@@ -15,6 +16,7 @@ export const makeStore = () => {
       tax: taxSlice.reducer,
       insurance: insuranceSlice.reducer,
       fees: feesSlice.reducer,
+      confirm: confirmSlice.reducer
   },
   })
 }

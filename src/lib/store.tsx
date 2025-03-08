@@ -3,7 +3,7 @@ import {locationSlice} from "../lib/locationSlice"
 import { priceSlice } from './priceSlice'
 import { taxSlice } from './taxSlice'
 import { loanSlice } from './loanSlice'
-import { insuranceSlice } from './insruanceSlice'
+import { insuranceSlice } from './insuranceSlice'
 import {feesSlice} from './feesSlice'
 import { confirmSlice } from './confirmSlice'
 

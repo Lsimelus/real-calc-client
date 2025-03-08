@@ -7,15 +7,17 @@ import { addcomma, formatNumber } from "../../utils/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import React from 'react';
-import { selectExact, selectExactOption } from "../../lib/taxSlice";
+import { selectExact, selectExactOption } from "../../lib/insuranceSlice";
 
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Insurance({ className, ...props }: CardProps) {
-  const premium = useSelector((state) => state.insurance.insuranceDetails.premium);
+  const premium = useSelector((state) => state.price.priceDetails.homePrice);
+  const defaultRate = useSelector((state) => state.insurance.insuranceDetails.default);
   const initExactOption = useSelector((state) => state.insurance.insuranceDetails.exactOption);
+  const exactAmount = useSelector((state) => state.insurance.insuranceDetails.exact);
 
-  const [exact, setExact] = React.useState(premium);
+  const [exact, setExact] = React.useState(exactAmount);
   const [exactOption, setExactOption] = React.useState(initExactOption);
   const dispatch = useDispatch();
 
@@ -39,12 +41,23 @@ export function Insurance({ className, ...props }: CardProps) {
   React.useEffect(() => {
     dispatch(selectExactOption(exactOption))
   }, [exactOption])
-  
+
+  console.log(premium)
+  console.log(defaultRate)
+
+  const InsuranceInfo = () => (
+    <>
+      <p>Estimated Insurance Premium: ${premium * defaultRate}</p>
+    </>
+  );
 
 
 
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
+      <p>Insurance</p>
+      <InsuranceInfo/>
+
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
           <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>
           {exactOption && (

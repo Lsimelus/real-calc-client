@@ -26,11 +26,7 @@ export function calculatePropertyTax(propertyValue:number, taxRate: number) {
 }
 
 export function calculateHomeInsurance(homeValue:number, insuranceRate:number) {
-    // Convert insurance rate percentage to a decimal
-    let insuranceRateDecimal = insuranceRate / 100;
-
-    // Calculate the annual home insurance cost
-    let annualInsuranceCost = homeValue * insuranceRateDecimal;
+    let annualInsuranceCost = homeValue * insuranceRate;
 
     return annualInsuranceCost;
 }

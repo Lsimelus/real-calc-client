@@ -1,7 +1,7 @@
 import {price} from "../lib/priceSlice"
 import {loan} from "../lib/loanSlice"
 import {tax} from "../lib/taxSlice"
-import { insurance } from "@/lib/insruanceSlice"
+import { insurance } from "@/lib/insuranceSlice"
 import { fees } from "../lib/feesSlice"
 import { calculateMortgage, calculateHomeInsurance, calculateMortgageInsurance, calculatePropertyTax, calculatePMI } from "./math"
 
@@ -63,11 +63,13 @@ export const homeInsurance = (currPrice: price, currInsurance:insurance) =>{
     if (!currPrice.complete || !currInsurance.complete) {
         return 0;
     }
+    if (currInsurance.exactOption){
+        return currInsurance.exact
+    }else{
+        let homeValue = currPrice.homePrice;
 
-    let homeValue = currPrice.homePrice; // $250,000 home value
-let insuranceRate = 0.5; // 0.5% insurance rate
-
-return calculateHomeInsurance(homeValue, insuranceRate);
+        return calculateHomeInsurance(currPrice.homePrice, currInsurance.default)
+    }
 
 }
 
@@ -101,6 +103,6 @@ const calcLoanAmount = (currPrice: price) =>{
     return currPrice.homePrice- currPrice.downPaymentAmount;
 }  
 
-export const feesAmount = (feesPrice: fees) =>{
-    return 0
+export const feesAmount = (fees: fees) =>{
+    return fees.fee * 12;
 }

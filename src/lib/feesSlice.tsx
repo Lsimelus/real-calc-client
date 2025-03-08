@@ -4,18 +4,20 @@ export interface fees {
     pending: boolean;
     error: string[];
     complete: boolean;
+    fee: number;
   }
   
   
   interface feesState {
-    taxDetails: fees;
+    feesDetails: fees;
   }
 
   const initialState: feesState = {
-    taxDetails: {
+    feesDetails: {
       pending: false,
       error: [],
-      complete: false
+      complete: false,
+      fee: 0
     },
   };
 
@@ -25,9 +27,13 @@ export interface fees {
     reducers: {
     clearState: (state) => {
         state = initialState
-    }
+    },
+    setFee: (state,  action:PayloadAction<number>) => {
+      state.feesDetails.fee = action.payload;
+      state.feesDetails.complete = true
+  }
     },
   });
 
-  export const {} = feesSlice.actions;
+  export const {setFee} = feesSlice.actions;
 

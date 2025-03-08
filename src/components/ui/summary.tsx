@@ -20,9 +20,17 @@ import {
     TooltipProvider,
     TooltipTrigger,
   } from "@/components/ui/tooltip"
+  import { Button } from "@/components/ui/button"
+
 
   
-export default function Summary() {
+
+  interface SummaryProps {
+    questionCompleted: boolean;
+  }
+  
+  
+  export const Summary: React.FC<SummaryProps> = ({questionCompleted}: SummaryProps)=>{
   const price = useSelector((state) => state.price.priceDetails);
   const loan = useSelector((state) => state.loan.loanDetails);
   const tax = useSelector((state) => state.tax.taxDetails);
@@ -133,7 +141,12 @@ function downDeposit(){
       <TableCaption>A list of your recent invoices.</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[300px]"></TableHead>
+          <TableHead className="w-[300px]">
+            {questionCompleted && 
+            <Button>Edit</Button>
+            }
+            
+            </TableHead>
           <TableHead className="w-[230px]">Monthly</TableHead>
           <TableHead  >Yearly</TableHead>
         </TableRow>

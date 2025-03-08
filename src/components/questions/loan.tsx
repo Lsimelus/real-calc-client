@@ -102,7 +102,7 @@ React.useEffect(() => {
 }, [exactOption])
 
   return (
-    <Card className={cn("", className)} {...props}>
+    <Card className={cn("h-[580px]", className)} {...props}>
             <CardHeader>
         <CardTitle>Loan Type</CardTitle>
         <CardDescription>Loan type, interest rate, and length</CardDescription>

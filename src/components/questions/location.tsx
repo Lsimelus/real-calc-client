@@ -40,7 +40,7 @@ export function Location({ className, ...props }: CardProps) {
     
 
   return (
-    <Card className={cn("h-[520px]", className)} {...props}>
+    <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
         <CardTitle>Location</CardTitle>
         <CardDescription>Creative nonsense</CardDescription>

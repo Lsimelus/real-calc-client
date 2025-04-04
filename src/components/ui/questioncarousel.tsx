@@ -17,11 +17,6 @@ interface QuestionCarouselProps {
   questionPages: React.ReactNode[]
 }
 
-
-//Pass in setPage and React.useRef<HTMLElement> to each component
-
-//export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect }: ComboboxProps) => {
-
 export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQuestions, questionPages }: QuestionCarouselProps) => {
   
     const [api, setApi] = React.useState<CarouselApi>()
@@ -40,12 +35,6 @@ export const QuestionCarousel: React.FC<QuestionCarouselProps> = ({ completedQue
       setCurrent(api.selectedScrollSnap() + 1)
     })
   }, [api])
-
-
-  //Todo: How to implement this function?
-  // Index determines next button functionality
-  // Also progress bas
-  // Array needs to be inside carousel content
 
 
   return (

@@ -27,8 +27,6 @@ interface confirm {
         state = initialState
     }, 
     selectCompleteness: (state, action:PayloadAction<boolean>) => {
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~")
-      console.log(action.payload)
       state.confirmDetails.complete = action.payload;
     }
     },

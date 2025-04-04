@@ -16,20 +16,21 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 const chartData = [
-  { month: "January", desktop: 186, mobile: 80 },
-  { month: "February", desktop: 305, mobile: 200 },
-  { month: "March", desktop: 237, mobile: 120 },
-  { month: "April", desktop: 73, mobile: 190 },
-  { month: "May", desktop: 209, mobile: 130 },
-  { month: "June", desktop: 214, mobile: 140 },
+  { month: "January", interest: 186, principal: 80 },
+  { month: "January", interest: 286, principal: 180 },
+  { month: "February", interest: 305, principal: 200 },
+  { month: "March", interest: 237, principal: 120 },
+  { month: "", interest: 73, principal: 190 },
+  { month: "May", interest: 209, principal: 130 },
+  { month: "June", interest: 214, principal: 140 },
 ]
 const chartConfig = {
-  desktop: {
-    label: "Desktop",
+  interest: {
+    label: "Interest",
     color: "hsl(var(--chart-1))",
   },
-  mobile: {
-    label: "Mobile",
+  principal: {
+    label: "Principal",
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
@@ -38,8 +39,8 @@ export function Graph() {
 
     <Card className='col-span-5 lg:col-span-3'>
       <CardHeader>
-        <CardTitle>Line Chart - Multiple</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardTitle>Amortization Schedule Graph</CardTitle>
+        <CardDescription>Monthly payment</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -61,16 +62,16 @@ export function Graph() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
-              dataKey="desktop"
+              dataKey="interest"
               type="monotone"
-              stroke="var(--color-desktop)"
+              stroke="var(--color-interest)"
               strokeWidth={2}
               dot={false}
             />
             <Line
-              dataKey="mobile"
+              dataKey="principal"
               type="monotone"
-              stroke="var(--color-mobile)"
+              stroke="var(--color-principal)"
               strokeWidth={2}
               dot={false}
             />

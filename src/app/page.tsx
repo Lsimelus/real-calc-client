@@ -6,11 +6,14 @@ import { Location } from "../components/questions/location"
 import { Tax } from "../components/questions/tax";
 import { Loan } from "../components/questions/loan"
 import { Confirm } from "../components/questions/confirm"
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Graph } from "@/components/ui/graph";
 import { Fees } from "@/components/questions/fees";
 import { Insurance } from "@/components/questions/insurance";
 import {Summary }from "../components/ui/summary";
+import * as React from "react"
+import { selectCompleteness } from "@/lib/confirmSlice";
+
 
 const questions = [<Location />,<Loan/>, <Price />,<Tax />, <Fees/>, <Insurance/>, <Confirm />]
 
@@ -27,7 +30,19 @@ export default function Home() {
   const completedQuestions = [locationCompleted, loanCompleted, priceCompleted, taxCompleted, feesCompleted, insuranceCompleted , confirmCompleted];
   
   const trueCount = completedQuestions.filter(question => question === true).length;
-  const percentTrue = (trueCount / completedQuestions.length) * 100;
+  const [percentTrue, setPercentTrue] = React.useState(0);
+
+  const dispatch = useDispatch();
+
+
+  React.useEffect(() => {
+    setPercentTrue((trueCount / completedQuestions.length) * 100);
+  }, [completedQuestions])
+
+
+  function editAfterCompletion(){
+    dispatch(selectCompleteness(false))
+  }
 
 
   return (
@@ -44,7 +59,7 @@ export default function Home() {
         <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
         </>
           }
-        <Summary questionCompleted={percentTrue == 100} ></Summary>
+        <Summary questionCompleted={percentTrue == 100} editInfo={() => editAfterCompletion()}></Summary>
         { percentTrue == 100 &&
         <Graph/>
           

@@ -13,6 +13,7 @@ export interface loan {
     pending: boolean;
     error: string[];
     complete: boolean;
+    length: number;
   }
   
   
@@ -26,6 +27,7 @@ export interface loan {
       rate: null,
       exact: 0.0,
       exactOption: false,
+      length: 30,
       pending: false,
       error: [],
       complete: false

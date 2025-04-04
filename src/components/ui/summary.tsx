@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit} from "../../utils/utils"
+import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit, amortizationSchedule} from "../../utils/utils"
 
 import { useSelector } from "react-redux";
 import {
@@ -27,10 +27,11 @@ import {
 
   interface SummaryProps {
     questionCompleted: boolean;
+    editInfo: () => void;
   }
   
   
-  export const Summary: React.FC<SummaryProps> = ({questionCompleted}: SummaryProps)=>{
+  export const Summary: React.FC<SummaryProps> = ({questionCompleted, editInfo}: SummaryProps)=>{
   const price = useSelector((state) => state.price.priceDetails);
   const loan = useSelector((state) => state.loan.loanDetails);
   const tax = useSelector((state) => state.tax.taxDetails);
@@ -88,7 +89,10 @@ import {
 }
 
 function row0(){
-  var value =  principalAndInterest(price, loan)*12
+  var mortgage = principalAndInterest(price, loan)
+  var value =  mortgage*12
+  console.log(amortizationSchedule(price, loan, mortgage))
+  console.log("End~~~~~")
   updateInvoiceRow(0, value);
 }
 
@@ -143,7 +147,7 @@ function downDeposit(){
         <TableRow>
           <TableHead className="w-[300px]">
             {questionCompleted && 
-            <Button>Edit</Button>
+            <Button onClick={editInfo}>Edit info</Button>
             }
             
             </TableHead>

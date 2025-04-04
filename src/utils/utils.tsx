@@ -42,11 +42,37 @@ export const principalAndInterest = (currPrice: price, currLoan:loan) =>{
     
     let principal = currPrice.homePrice- currPrice.downPaymentAmount; // $200,000 loan
     let annualInterestRate = currLoan.exactOption ? currLoan.exact : currLoan.rate; // 5% annual interest rate
-    let years = 30; // 30-year mortgage
+    let years = currLoan.length; // 30-year mortgage
 
     let monthlyPayment = calculateMortgage(principal, annualInterestRate, years);
     return monthlyPayment
-    }
+}
+
+export const amortizationSchedule = (currPrice: price, currLoan:loan, principalAndInterest:number) =>{
+    var loanAmount = currPrice.homePrice- currPrice.downPaymentAmount;
+    let annualInterestRate = currLoan.exactOption ? currLoan.exact : currLoan.rate;
+    let monthlyInterest = annualInterestRate / 1200
+
+    
+    
+    var interestPayment = loanAmount * monthlyInterest
+    var principalPaid = principalAndInterest - interestPayment
+
+
+    let scheduleInfo = []
+    var i = 1
+    while (i <= currLoan.length*12) {
+        var interestPayment = loanAmount * monthlyInterest
+        var principalPaid = principalAndInterest - interestPayment
+        let payments = [principalPaid, interestPayment]
+        scheduleInfo.push(payments)
+        loanAmount -= principalPaid
+        i++;
+      }
+
+    return scheduleInfo
+
+}
 
 
 export const propertyTax = (currPrice: price, currTax:tax) =>{

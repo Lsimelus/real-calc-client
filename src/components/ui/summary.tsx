@@ -2,7 +2,8 @@
 import React from 'react';
 import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit, amortizationSchedule} from "../../utils/utils"
 
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectPI, selectAmortization } from '@/lib/loanSlice';
 import {
     Table,
     TableBody,
@@ -37,6 +38,8 @@ import {
   const tax = useSelector((state) => state.tax.taxDetails);
   const insurance = useSelector((state) => state.insurance.insuranceDetails);
   const fees = useSelector((state) => state.fees.feesDetails);
+
+  const dispatch = useDispatch();
 
   const [invoices, setInvoices] = React.useState([
     { cost: "Principal & Interest",
@@ -89,10 +92,11 @@ import {
 }
 
 function row0(){
-  var mortgage = principalAndInterest(price, loan)
-  var value =  mortgage*12
-  console.log(amortizationSchedule(price, loan, mortgage))
-  console.log("End~~~~~")
+  let mortgage = principalAndInterest(price, loan)
+  //dispatch(selectPI(mortgage))
+  let value =  mortgage*12
+
+  //let amortization = amortizationSchedule(price, loan, mortgage)
   updateInvoiceRow(0, value);
 }
 

@@ -132,3 +132,14 @@ const calcLoanAmount = (currPrice: price) =>{
 export const feesAmount = (fees: fees) =>{
     return fees.fee * 12;
 }
+
+export const schedule = (unformatted_schdule: number[][]) =>{
+    var chartData = []
+
+    for (let i = 0; i < unformatted_schdule.length; i++) {
+        var row = { month: (i+1).toString(), interest: unformatted_schdule[i][1], principal: unformatted_schdule[i][0] }
+        chartData.push(row)
+    }
+    return chartData
+}
+

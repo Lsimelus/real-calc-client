@@ -1,5 +1,5 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
-import { fetchTax, fetchRent  } from "@/api/fetchhData";
+//import { fetchTax, fetchRent  } from "@/api/fetchhData";
 
 export interface tax {
     national: number;
@@ -53,16 +53,16 @@ export interface tax {
       }
     },
     },
-    extraReducers: (builder) => {
-      builder.addCase(fetchTax.fulfilled, (state, action) => {
-        state.taxDetails.local = .035;
-        state.taxDetails.pending = false
-      });
+    // extraReducers: (builder) => {
+    //   builder.addCase(fetchTax.fulfilled, (state, action) => {
+    //     state.taxDetails.local = .035;
+    //     state.taxDetails.pending = false
+    //   });
   
-      builder.addCase(fetchTax.pending, (state, action) => {
-        state.taxDetails.pending = true
-      });
-    }
+    //   builder.addCase(fetchTax.pending, (state, action) => {
+    //     state.taxDetails.pending = true
+    //   });
+    // }
   });
 
   export const {selectExact, selectExactOption} = taxSlice.actions;

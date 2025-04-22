@@ -1,7 +1,7 @@
 import { BellRing, Check } from "lucide-react"
  
 import { useDispatch, useSelector } from "react-redux";
-import { fetchTax, fetchRent } from "@/api/fetchhData";
+import { fetchCityInfo ,fetchStateInfo } from "@/api/fetchhData";
 import { selectCity, selectState } from "@/lib/locationSlice";
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -24,18 +24,20 @@ export function Location({ className, ...props }: CardProps) {
     const city = useSelector((state) => state.location.locationDetails.city);
     const tax = useSelector((state) => state.tax.taxDetails.national);
     const rental = useSelector((state) => state.location.locationDetails.rental);
+    const cityOptions = useSelector((state) => state.location.locationDetails.cityOptions);
   
     const dispatch = useDispatch();
 
 
     function pickState(state: string){
         dispatch(selectState(state))
-        dispatch(fetchTax(state))
+        dispatch(fetchStateInfo(state))
+        console.log(cityOptions)
     }
     
     function pickCity(){
         dispatch(selectCity("Everett"))
-        dispatch(fetchRent("Everett"))
+        dispatch(fetchCityInfo("Everett"))
     }
     
 
@@ -43,7 +45,7 @@ export function Location({ className, ...props }: CardProps) {
     <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
         <CardTitle>Location</CardTitle>
-        <CardDescription>Creative nonsense</CardDescription>
+        <CardDescription>Where is your next property?</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
       <Combobox frameworks={states} onSelect={pickState} />

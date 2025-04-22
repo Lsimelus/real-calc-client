@@ -1,6 +1,8 @@
 "use client"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
+import {schedule,addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit, amortizationSchedule, prin} from "../../utils/utils"
+
 import {
   Card,
   CardContent,
@@ -15,7 +17,12 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-const chartData = [
+import { selectPI, selectAmortization } from '@/lib/loanSlice';
+import { useDispatch, useSelector } from "react-redux"; 
+import React from 'react';
+
+// from function
+const chartData3 = [
   { month: "January", interest: 186, principal: 80 },
   { month: "January", interest: 286, principal: 180 },
   { month: "February", interest: 305, principal: 200 },
@@ -35,6 +42,33 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 export function Graph() {
+  const price = useSelector((state) => state.price.priceDetails);
+  const loan = useSelector((state) => state.loan.loanDetails);
+
+
+
+  React.useEffect(() => {
+    console.log("!!!!!!")
+    let mortgage = principalAndInterest(price, loan)
+  //dispatch(selectPI(mortgage))
+    let value =  mortgage*12
+
+    let amortization = amortizationSchedule(price, loan, mortgage)
+    console.log(amortization)
+    //dispatch(selectAmortization(amortization))
+    
+
+  }, []);
+  
+  let mortgage = principalAndInterest(price, loan)
+  //dispatch(selectPI(mortgage))
+    let value =  mortgage*12
+
+    let amortization = amortizationSchedule(price, loan, mortgage)
+
+    let chartData = schedule(amortization)
+    //console.log(chartData2)
+
   return (
 
     <Card className='col-span-5 lg:col-span-3'>

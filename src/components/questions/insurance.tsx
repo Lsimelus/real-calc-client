@@ -42,8 +42,7 @@ export function Insurance({ className, ...props }: CardProps) {
     dispatch(selectExactOption(exactOption))
   }, [exactOption])
 
-  console.log(premium)
-  console.log(defaultRate)
+
 
   const InsuranceInfo = () => (
     <>

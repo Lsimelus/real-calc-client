@@ -47,7 +47,7 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-5 gap-8 m-6 p-6">
-      <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white" >Find a home that makes sense</div>
+      <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white" >Making real estate make sense</div>
       <>
       
     
@@ -60,7 +60,7 @@ export default function Home() {
         </>
           }
         <Summary questionCompleted={percentTrue == 100} editInfo={() => editAfterCompletion()}></Summary>
-        { percentTrue == 100 &&
+        { percentTrue !== 100 &&
         <Graph/>
           
             }

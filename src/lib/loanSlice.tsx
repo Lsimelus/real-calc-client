@@ -14,6 +14,8 @@ export interface loan {
     error: string[];
     complete: boolean;
     length: number;
+    pi: number
+    amortization: number[][];
   }
   
   
@@ -28,6 +30,8 @@ export interface loan {
       exact: 0.0,
       exactOption: false,
       length: 30,
+      pi: 0,
+      amortization: [],
       pending: false,
       error: [],
       complete: false
@@ -54,6 +58,13 @@ export interface loan {
       state.loanDetails.exact = action.payload;
       state.loanDetails.complete = state.loanDetails.exact !== 0.0;
     },
+    selectPI: (state, action:PayloadAction<number>) => {
+      state.loanDetails.pi = action.payload;
+    },
+    selectAmortization: (state, action:PayloadAction<any>) => {
+      state.loanDetails.amortization = action.payload;
+    },
+
     selectExactOption: (state, action:PayloadAction<boolean>) => {
       state.loanDetails.exactOption = action.payload;
       if (action.payload == false) {
@@ -66,5 +77,5 @@ export interface loan {
     },
   });
 
-  export const {selectType, selectRate, selectExact, selectExactOption} = loanSlice.actions;
+  export const {selectType, selectRate, selectExact, selectExactOption, selectAmortization, selectPI} = loanSlice.actions;
 

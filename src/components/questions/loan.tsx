@@ -135,7 +135,7 @@ React.useEffect(() => {
           <Label>Typical rate for loan type: {cardTypes[type].rates}{"%"}</Label>
           </div>
           <div className="grid  max-w-sm items-center gap-1.5">
-          <p>Do you want to use a specifc interest rate instead instead?</p>
+          <Label>Do you want to use a specifc interest rate instead instead?</Label>
           </div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
           <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>

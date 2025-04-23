@@ -1,5 +1,4 @@
 import { cn } from "@/lib/utils"
-import { Card } from "@/components/ui/card"
 import { Slider } from "@/components/ui/slider"
 import * as React from "react"
 import { Input } from "@/components/ui/input"
@@ -7,11 +6,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectPrice, selectDownPayment, selectDownPaymentAmount } from "@/lib/priceSlice"
 import { addcomma, formatNumber } from "../../utils/utils";
 
+import {
+    Card,
+    CardContent,
+    CardDescription,
+    CardHeader,
+    CardTitle,
+  } from "@/components/ui/card"
+import { Label } from "../ui/label";
 type CardProps = React.ComponentProps<typeof Card>
 
 export function Price({ className, ...props }: CardProps) {
-    const min = 3.5
-    const max = 75
+    const min = 2.5
+    const max = 40
     const initPrice = useSelector((state) => state.price.priceDetails.homePrice);
     const initDownPayment = useSelector((state) => state.price.priceDetails.downPaymentPercent);
     
@@ -49,19 +56,29 @@ export function Price({ className, ...props }: CardProps) {
     const formattedDownPayment = addcomma(downPaymentValue);
 
     return (
-        <Card className={cn("w-[380px]", className)} {...props}>
-            <p>Price</p>
-            <Input value={price} onChange={handleInputChange} ></Input>
-            <p>price</p>
-            <p>{formatNumber(price)}</p>
-            {price > 0 && (
-                <>
+        <Card className={cn("h-[580px]", className)} {...props}>
+                        <CardHeader>
+        <CardTitle>Budget</CardTitle>
+        <CardDescription>Property price & downpayment</CardDescription>
+      </CardHeader>
+      <CardContent className="grid gap-4">
+      
+      
+      <div className="grid  max-w-sm items-center gap-1.5">
+      <Label>Property price: {formatNumber(price)}</Label>
+      <Input value={price} onChange={handleInputChange} ></Input>
+        </div>
+
+        {price > 0 && (
+                <div className="grid  max-w-sm items-center gap-1.5 mt-6">
+                    <Label>Down payment</Label>
                     <Slider defaultValue={downPayment} min={min} max={max} step={.5} value={downPayment} onValueChange={(downPayment) => setDownPayment(downPayment)} />
-                    <p>Down Payment</p>
                     <p>{downPayment + "%"}</p>
                     <p>{formattedDownPayment}</p>
-                </>
+                </div>
             )}
+
+        </CardContent>
         </Card>
     )
 }

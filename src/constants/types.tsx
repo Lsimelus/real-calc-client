@@ -3,6 +3,4 @@ export enum loanTypes {
     Investment = "investment",
     Conventional = "conventional",
     FHA = "fha",
-    VA = "va",
-    USDA = "usda",
   }

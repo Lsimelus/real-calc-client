@@ -20,7 +20,7 @@ import {
 } from "@/components/ui/popover"
 
 
-interface ComboboxItemProps {
+export interface ComboboxItemProps {
   value: string,
   label: string
 }
@@ -54,13 +54,13 @@ export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect }: Comb
         >
           {value
             ? frameworks.find((framework) => framework.value === value)?.label
-            : "Select framework..."}
+            : "Select ..."}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-[200px] p-0">
         <Command>
-          <CommandInput placeholder="Search framework..." />
+          <CommandInput placeholder="Search ..." />
           <CommandList>
             <CommandEmpty>No framework found.</CommandEmpty>
             <CommandGroup>

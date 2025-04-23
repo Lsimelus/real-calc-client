@@ -14,6 +14,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectType, selectRate, selectExact, selectExactOption } from "../../lib/loanSlice";
 import { loanTypes } from "../../constants/types";
 import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Slider } from '../ui/slider';
+
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -44,6 +47,10 @@ export function Loan({ className, ...props }: CardProps) {
   const initType = useSelector((state) => state.loan.loanDetails.type);
   const initExact = useSelector((state) => state.loan.loanDetails.exact);
   const initExactOption = useSelector((state) => state.loan.loanDetails.exactOption);
+
+  const initLoanLength = useSelector((state) => state.loan.loanDetails.length);
+    
+    const [loanLength, setLoanLength] = React.useState([initLoanLength])
   
   const [type, setType] = React.useState<loanTypes>(initType);
   const [exact, setExact] = React.useState(initExact);
@@ -51,11 +58,9 @@ export function Loan({ className, ...props }: CardProps) {
 
   const cardTypes: { [key in loanTypes]: { buttonText: string, contentText: string, rates: number } } = {
     [loanTypes.None]: { buttonText: 'None', contentText: 'No loan type selected', rates: 0 },
-    [loanTypes.FHA]: { buttonText: 'FHA', contentText: 'fha specific adadsa', rates: 2.5 },
-    [loanTypes.Conventional]: { buttonText: 'Convtest', contentText: 'conventional specific adasd', rates: 2.5 },
-    [loanTypes.Investment]: { buttonText: 'Invest option', contentText: 'investment specific adasd', rates: 2.5 },
-    [loanTypes.VA]: { buttonText: 'VA', contentText: 'va specific adadsa', rates: 2.5 },
-    [loanTypes.USDA]: { buttonText: 'USDA', contentText: 'usda specific adadsa', rates: 2.5 },
+    [loanTypes.FHA]: { buttonText: 'F.H.A.', contentText: 'First time home buyer. Great for those with low credit and low down payment. Typically refinanced wthin the first trimester of loan life time', rates: 6 },
+    [loanTypes.Conventional]: { buttonText: 'Conventional', contentText: 'Typical loan. No hidden fees. Higher rate than FHA', rates: 7 },
+    [loanTypes.Investment]: { buttonText: 'Investment loan', contentText: 'Investment loan. Works for 4+ unit property. Does not need to be owner occupied. Higher rate than conventional', rates: 8.5 },
   };
 
   const cards = Object.entries(cardTypes)
@@ -110,7 +115,7 @@ React.useEffect(() => {
       <CardContent className="grid gap-4">
 
       
-      <div className="flex h-5 items-center space-x-4 text-sm">
+      <div className="flex h-5 items-center space-x-4 text-sm ml-8">
         {cards.map((card, index) => (
           <React.Fragment key={index}>
             <CustomHoverCard {...card} />
@@ -121,9 +126,17 @@ React.useEffect(() => {
       </div>
       {type !== loanTypes.None && (
         <div>
-          <p>jgcjcjncj</p>
-          <p>{cardTypes[type].rates}</p>
-          <p>Do you have a prices quote?</p>
+          <div className="grid w-full max-w-sm items-center gap-1.5 mb-10 mt-10">
+          <Label>The lengh of the loan: {loanLength} years</Label>
+          <Slider defaultValue={[30]} max={30} step={5} min={10} value={loanLength} onValueChange={(loanLength) => setLoanLength(loanLength)} />
+          </div>
+
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+          <Label>Typical rate for loan type: {cardTypes[type].rates}{"%"}</Label>
+          </div>
+          <div className="grid  max-w-sm items-center gap-1.5">
+          <p>Do you want to use a specifc interest rate instead instead?</p>
+          </div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
           <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>
           {exactOption && (
@@ -133,6 +146,11 @@ React.useEffect(() => {
             min='0.0'
             max='30' value={exact} onChange={handleInputChange} onBlur={handleInputBlur}></Input>
           ) }
+         
+
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+  
+          </div>
 
           
         </div>

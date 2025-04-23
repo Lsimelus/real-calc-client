@@ -4,6 +4,7 @@ import {tax} from "../lib/taxSlice"
 import { insurance } from "@/lib/insuranceSlice"
 import { fees } from "../lib/feesSlice"
 import { calculateMortgage, calculateHomeInsurance, calculateMortgageInsurance, calculatePropertyTax, calculatePMI } from "./math"
+import { ComboboxItemProps } from "@/components/ui/combobox"
 
 export const formatNumber = (num: number) => {
     if (num >= 1000000) {
@@ -141,5 +142,21 @@ export const schedule = (unformatted_schdule: number[][]) =>{
         chartData.push(row)
     }
     return chartData
+}
+
+const formatForCombo = (rawString:string) => {
+    return rawString
+} 
+
+export const cityOptionsList = (cityOptions: string[]) => {
+    var list: ComboboxItemProps[] = []
+    for (let i = 0; i < cityOptions.length; i++) {
+        list.push({
+            value: cityOptions[i],
+            label: cityOptions[i],
+          })
+
+    }
+    return list
 }
 

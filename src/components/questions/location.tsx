@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/card"
 import { Combobox } from "@/components/ui/combobox";
 import { states } from "../../constants/states";
-
+import {cityOptionsList } from "../../utils/utils"
+import { Label } from "@/components/ui/label"
 
   
 type CardProps = React.ComponentProps<typeof Card>
@@ -30,9 +31,9 @@ export function Location({ className, ...props }: CardProps) {
 
 
     function pickState(state: string){
-        dispatch(selectState(state))
-        dispatch(fetchStateInfo(state))
-        console.log(cityOptions)
+      dispatch(fetchStateInfo(state))
+      dispatch(selectState(state))
+        
     }
     
     function pickCity(){
@@ -48,9 +49,14 @@ export function Location({ className, ...props }: CardProps) {
         <CardDescription>Where is your next property?</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Label>State</Label>
       <Combobox frameworks={states} onSelect={pickState} />
-      <p>{city}</p>
-      <Button onClick={() => pickCity()}>Pick City</Button>
+      </div>
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Label>City</Label>
+      <Combobox frameworks={cityOptionsList(cityOptions)} onSelect={pickCity} />
+      </div>
   </CardContent>
     </Card>
   )

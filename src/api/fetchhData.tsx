@@ -6,7 +6,6 @@ export const fetchStateInfo = createAsyncThunk(
   async (state: string,  { rejectWithValue }) => {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
     const data = await response.json();
-    var temp = { state: "MA", tax: 186, cities: ["Boston", "Everett", "Medford"] }
     return  { state: "MA", tax: 186, cities: ["Boston", "Everett", "Medford"] }
   }
 );
@@ -16,7 +15,6 @@ export const fetchCityInfo = createAsyncThunk(
   async (state: string,  { rejectWithValue }) => {
     const response = await fetch("https://jsonplaceholder.typicode.com/users");
     const data = await response.json();
-    var temp = { state: "MA", tax: 186, cities: ["Boston", "Everett", "Medford"] }
     return  { state: "MA", tax: 186, cities: ["Boston", "Everett", "Medford"] };
   }
 );

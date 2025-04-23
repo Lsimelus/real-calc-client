@@ -48,12 +48,10 @@ interface location {
     },
     extraReducers: (builder) => {
       builder.addCase(fetchStateInfo.fulfilled, (state, action) => {
-        console.log("~~~~~~~~~")
-        console.log(action.payload)
-        console.log(action.payload.cities)
         state.locationDetails.cityOptions = action.payload.cities
         state.locationDetails.pending = false
         state.locationDetails.rental = 1500;
+        state.locationDetails.city = "";
       });
   
       builder.addCase(fetchStateInfo.pending, (state, action) => {

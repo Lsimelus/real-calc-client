@@ -81,4 +81,4 @@ export function Price({ className, ...props }: CardProps) {
         </CardContent>
         </Card>
     )
-}
+}34

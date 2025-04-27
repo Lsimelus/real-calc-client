@@ -21,10 +21,6 @@ import { Label } from "@/components/ui/label"
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Location({ className, ...props }: CardProps) {
-    const state = useSelector((state) => state.location.locationDetails.state);
-    const city = useSelector((state) => state.location.locationDetails.city);
-    const tax = useSelector((state) => state.tax.taxDetails.national);
-    const rental = useSelector((state) => state.location.locationDetails.rental);
     const cityOptions = useSelector((state) => state.location.locationDetails.cityOptions);
   
     const dispatch = useDispatch();
@@ -46,7 +42,7 @@ export function Location({ className, ...props }: CardProps) {
     <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
         <CardTitle>Location</CardTitle>
-        <CardDescription>Where is your next property?</CardDescription>
+        <CardDescription>Just incase</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
       <div className="grid w-full max-w-sm items-center gap-1.5">

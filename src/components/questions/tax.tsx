@@ -74,7 +74,7 @@ export function Tax({ className, ...props }: CardProps) {
       <CardContent className="grid gap-4">
         <TaxInfo />
         <div>
-          <div className="grid  max-w-sm items-center gap-1.5 mt-10">
+          <div className="grid  max-w-sm items-center gap-1.5 mt-5">
           <Label className="mb-1">Do you have/want to use a exact yearly tax amount? {exact > 0 && formatNumber(exact)}</Label>
           <div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>

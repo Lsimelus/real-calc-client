@@ -21,7 +21,7 @@ export function Tax({ className, ...props }: CardProps) {
   const nation = useSelector((state) => state.tax.taxDetails.national);
   const tax = useSelector((state) => state.tax.taxDetails.local);
   
-  const price = useSelector((state) => state.price.priceDetails.homePrice);
+  const price = useSelector((state) => state.finance.financeDetails.homePrice);
   const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
 
 

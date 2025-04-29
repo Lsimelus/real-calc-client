@@ -33,7 +33,6 @@ import {
   
   
   export const Summary: React.FC<SummaryProps> = ({questionCompleted, editInfo}: SummaryProps)=>{
-  const price = useSelector((state) => state.price.priceDetails);
   const finance = useSelector((state) => state.finance.financeDetails);
   const tax = useSelector((state) => state.tax.taxDetails);
   const insurance = useSelector((state) => state.insurance.insuranceDetails);
@@ -92,7 +91,7 @@ import {
 }
 
 function row0(){
-  let mortgage = principalAndInterest(price, finance)
+  let mortgage = principalAndInterest(finance, finance)
   //dispatch(selectPI(mortgage))
   let value =  mortgage*12
 
@@ -102,22 +101,22 @@ function row0(){
 }
 
 function row1(){
-    var value = propertyTax(price, tax);
+    var value = propertyTax(finance, tax);
     updateInvoiceRow(1, value);
 }
 
 function row2(){
-    var value = homeInsurance(price, insurance);
+    var value = homeInsurance(finance, insurance);
     updateInvoiceRow(2, value);
 }
 
 function row3(){
-    var value = mortgageInsurance(price);
+    var value = mortgageInsurance(finance);
     updateInvoiceRow(3, value);
 }
 
 function row4(){
-    var value = pmInsurance(price, finance);
+    var value = pmInsurance(finance, finance);
     updateInvoiceRow(4, value);
 }
 
@@ -127,7 +126,7 @@ function row5(){
 }
 
 function downDeposit(){
-  return calcDownDeposit(price)
+  return calcDownDeposit(finance)
 }
 
     React.useEffect(() => {
@@ -137,7 +136,7 @@ function downDeposit(){
       row3();
       row4();
       row5();
-    }, [price, finance, insurance, tax, fees]);
+    }, [finance, finance, insurance, tax, fees]);
 
     React.useEffect(() => {
       

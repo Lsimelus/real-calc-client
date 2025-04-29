@@ -17,7 +17,7 @@ import { formatNumber } from "@/utils/utils";
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Insurance({ className, ...props }: CardProps) {
-  const premium = useSelector((state) => state.price.priceDetails.homePrice);
+  const premium = useSelector((state) => state.finance.financeDetails.homePrice);
   const defaultRate = useSelector((state) => state.insurance.insuranceDetails.default);
   const initExactOption = useSelector((state) => state.insurance.insuranceDetails.exactOption);
   const exactAmount = useSelector((state) => state.insurance.insuranceDetails.exact);

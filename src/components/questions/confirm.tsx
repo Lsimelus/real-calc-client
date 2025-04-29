@@ -21,7 +21,6 @@ type CardProps = React.ComponentProps<typeof Card>
  
 export function Confirm({ className, ...props }: CardProps) {
   const location = useSelector((state) => state.location.locationDetails);
-  const price = useSelector((state) => state.price.priceDetails);
   const finance  = useSelector((state) => state.finance.financeDetails );
   const tax = useSelector((state) => state.tax.taxDetails);
   const insurance = useSelector((state) => state.insurance.insuranceDetails);
@@ -45,7 +44,7 @@ export function Confirm({ className, ...props }: CardProps) {
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
-      <Label>The property value is {formatNumber(price.homePrice)} and a {price.downPaymentPercent}%-{formatNumber(price.downPaymentAmount)} will be put down</Label>
+      <Label>The property value is {formatNumber(finance.homePrice)} and a {finance.downPaymentPercent}%-{formatNumber(finance.downPaymentAmount)} will be put down</Label>
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">

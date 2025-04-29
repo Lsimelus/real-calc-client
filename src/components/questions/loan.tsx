@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";
 import { useDispatch, useSelector } from "react-redux";
-import { selectType, selectRate, selectExact, selectExactOption } from "../../lib/loanSlice";
+import { selectType,  selectExactRate, selectLength } from "../../lib/financeSlice";
 import { loanTypes } from "../../constants/types";
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -42,26 +42,27 @@ const CustomHoverCard: React.FC<CustomHoverCardProps> = ({ onClick, buttonText, 
   );
 }
 
+export const cardTypes: { [key in loanTypes]: { buttonText: string, contentText: string, rates: number, minDownpayment: number } } = {
+  [loanTypes.None]: { buttonText: 'None', contentText: 'No loan type selected', rates: 0, minDownpayment: 0},
+  [loanTypes.FHA]: { buttonText: 'F.H.A.', contentText: 'First time home buyer. Great for those with low credit and low down payment. Typically refinanced wthin the first trimester of loan life time', rates: 6, minDownpayment: 2.5 },
+  [loanTypes.Conventional]: { buttonText: 'Conventional', contentText: 'Typical loan. No hidden fees. Higher rate than FHA', rates: 7 , minDownpayment: 5},
+  [loanTypes.Investment]: { buttonText: 'Investment loan', contentText: 'Investment loan. Works for 4+ unit property. Does not need to be owner occupied. Higher rate than conventional', rates: 8.5, minDownpayment: 15 },
+};
+
 export function Loan({ className, ...props }: CardProps) {
 
-  const initType = useSelector((state) => state.loan.loanDetails.type);
-  const initExact = useSelector((state) => state.loan.loanDetails.exact);
-  const initExactOption = useSelector((state) => state.loan.loanDetails.exactOption);
+  const initType = useSelector((state) => state.finance.financeDetails.type);
+  const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
 
-  const initLoanLength = useSelector((state) => state.loan.loanDetails.length);
+  const initLoanLength = useSelector((state) => state.finance.financeDetails.length);
     
     const [loanLength, setLoanLength] = React.useState([initLoanLength])
   
   const [type, setType] = React.useState<loanTypes>(initType);
-  const [exact, setExact] = React.useState(initExact);
-  const [exactOption, setExactOption] = React.useState(initExactOption);
+  const [exact, setExact] = React.useState<number>(initExact);
+  const [exactOption, setExactOption] = React.useState(initExact !== 0);
 
-  const cardTypes: { [key in loanTypes]: { buttonText: string, contentText: string, rates: number } } = {
-    [loanTypes.None]: { buttonText: 'None', contentText: 'No loan type selected', rates: 0 },
-    [loanTypes.FHA]: { buttonText: 'F.H.A.', contentText: 'First time home buyer. Great for those with low credit and low down payment. Typically refinanced wthin the first trimester of loan life time', rates: 6 },
-    [loanTypes.Conventional]: { buttonText: 'Conventional', contentText: 'Typical loan. No hidden fees. Higher rate than FHA', rates: 7 },
-    [loanTypes.Investment]: { buttonText: 'Investment loan', contentText: 'Investment loan. Works for 4+ unit property. Does not need to be owner occupied. Higher rate than conventional', rates: 8.5 },
-  };
+
 
   const cards = Object.entries(cardTypes)
     .slice(1)
@@ -76,9 +77,6 @@ export function Loan({ className, ...props }: CardProps) {
 
   React.useEffect(() => {
     dispatch(selectType(type))
-    if (type !== loanTypes.None) {
-      dispatch(selectRate(cardTypes[type].rates))
-    }
   }, [type])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -98,13 +96,14 @@ const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
 }
 
 React.useEffect(() => {
-  dispatch(selectExact(exact))
+  dispatch(selectExactRate(parseFloat(exact)))
 }, [exact])
 
 React.useEffect(() => {
-  dispatch(selectExactOption(exactOption))
-  setExact(initExact)
-}, [exactOption])
+  dispatch(selectLength(loanLength[0]))
+
+}, [loanLength])
+
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -114,7 +113,6 @@ React.useEffect(() => {
       </CardHeader>
       <CardContent className="grid gap-4">
 
-      
       <div className="flex h-5 items-center space-x-4 text-sm ml-8">
         {cards.map((card, index) => (
           <React.Fragment key={index}>
@@ -135,7 +133,7 @@ React.useEffect(() => {
           <Label>Typical rate for loan type: {cardTypes[type].rates}{"%"}</Label>
           </div>
           <div className="grid  max-w-sm items-center gap-1.5">
-          <Label>Do you want to use a specifc interest rate instead instead?</Label>
+          <Label>Do you want to use a specifc interest rate instead instead? {exact > 0 && exact}%</Label>
           </div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
           <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>

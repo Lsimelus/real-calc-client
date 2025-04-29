@@ -3,7 +3,7 @@ import { Slider } from "@/components/ui/slider"
 import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "react-redux";
-import { selectPrice, selectDownPayment, selectDownPaymentAmount } from "@/lib/priceSlice"
+import { selectPrice, selectDownPayment, selectDownPaymentAmount } from "@/lib/financeSlice"
 import { addcomma, formatNumber } from "../../utils/utils";
 
 import {
@@ -17,10 +17,10 @@ import { Label } from "../ui/label";
 type CardProps = React.ComponentProps<typeof Card>
 
 export function Price({ className, ...props }: CardProps) {
-    const min = 2.5
+    const min = useSelector((state) => state.finance.financeDetails.minDownpayment);
     const max = 40
-    const initPrice = useSelector((state) => state.price.priceDetails.homePrice);
-    const initDownPayment = useSelector((state) => state.price.priceDetails.downPaymentPercent);
+    const initPrice = useSelector((state) => state.finance.financeDetails.homePrice);
+    const initDownPayment = useSelector((state) => state.finance.financeDetails.downPaymentPercent);
     
     const [downPayment, setDownPayment] = React.useState([initDownPayment])
     const [price, setPrice] = React.useState(initPrice)
@@ -54,6 +54,9 @@ export function Price({ className, ...props }: CardProps) {
 
     const downPaymentValue = (price * (downPayment[0])) / 100;
     const formattedDownPayment = addcomma(downPaymentValue);
+
+    console.log("~~~~~~~~~~~~~~~~~")
+    console.log(useSelector((state) => state.finance.financeDetails));
 
     return (
         <Card className={cn("h-[580px]", className)} {...props}>

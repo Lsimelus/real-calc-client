@@ -43,28 +43,28 @@ const chartConfig = {
 } satisfies ChartConfig
 export function Graph() {
   const price = useSelector((state) => state.price.priceDetails);
-  const loan = useSelector((state) => state.loan.loanDetails);
+  const finance = useSelector((state) => state.finance.financeDetails);
 
 
 
   React.useEffect(() => {
     console.log("!!!!!!")
-    let mortgage = principalAndInterest(price, loan)
+    let mortgage = principalAndInterest(price, finance)
   //dispatch(selectPI(mortgage))
     let value =  mortgage*12
 
-    let amortization = amortizationSchedule(price, loan, mortgage)
+    let amortization = amortizationSchedule(price, finance, mortgage)
     console.log(amortization)
     //dispatch(selectAmortization(amortization))
     
 
   }, []);
   
-  let mortgage = principalAndInterest(price, loan)
+  let mortgage = principalAndInterest(price, finance)
   //dispatch(selectPI(mortgage))
     let value =  mortgage*12
 
-    let amortization = amortizationSchedule(price, loan, mortgage)
+    let amortization = amortizationSchedule(price, finance, mortgage)
 
     let chartData = schedule(amortization)
     //console.log(chartData2)

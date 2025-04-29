@@ -20,8 +20,8 @@ const questions = [<Location />,<Loan/>, <Price />,<Tax />, <Fees/>, <Insurance/
 
 export default function Home() {
   const locationCompleted = useSelector((state) => state.location.locationDetails.complete);
-  const priceCompleted = useSelector((state) => state.price.priceDetails.complete);
-  const loanCompleted = useSelector((state) => state.loan.loanDetails.complete);
+  const priceCompleted = useSelector((state) => state.finance.financeDetails.priceComplete);
+  const loanCompleted = useSelector((state) => state.finance.financeDetails.loanComplete);
   const taxCompleted = useSelector((state) => state.tax.taxDetails.complete);
   const confirmCompleted = useSelector((state) => state.confirm.confirmDetails.complete);
   const feesCompleted = useSelector((state) => state.fees.feesDetails.complete);

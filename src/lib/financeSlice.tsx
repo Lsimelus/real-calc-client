@@ -1,0 +1,82 @@
+import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
+import { loanTypes } from "../constants/types";
+import { cardTypes } from "../components/questions/loan"
+export interface finance {
+    type: loanTypes;
+    rate: number | null;
+    exactRate: number | null;
+    length: number;
+    priceComplete: boolean;
+    loanComplete: boolean;
+    homePrice: number;
+    downPaymentPercent: number;
+    downPaymentAmount: number;
+    minDownpayment: number;
+    pending: boolean;
+    error: string[];
+    complete: boolean;
+  }
+  
+  
+  interface financeState {
+    financeDetails: finance;
+  }
+
+  const initialState: financeState = {
+    financeDetails: {
+      type: loanTypes.None,
+      rate: null,
+      exactRate: 0.0,
+      length: 30,
+      priceComplete: false,
+      loanComplete: false,
+      homePrice: 0,
+      downPaymentPercent: 3,
+      downPaymentAmount: 0,
+      minDownpayment: 0.0,
+      pending: false,
+      error: [],
+      complete: false
+    },
+  };
+
+  export const financeSlice = createSlice({
+    name: "loan", 
+    initialState,
+    reducers: {
+    clearState: (state) => {
+        state = initialState
+    },
+    selectType: (state, action:PayloadAction<loanTypes>) => {
+      state.financeDetails.type = action.payload;
+      state.financeDetails.rate = cardTypes[action.payload].rates
+      state.financeDetails.minDownpayment = cardTypes[action.payload].minDownpayment
+      if (state.financeDetails.minDownpayment > state.financeDetails.downPaymentPercent){
+        state.financeDetails.downPaymentPercent = state.financeDetails.minDownpayment
+      }
+
+      state.financeDetails.loanComplete = action.payload !== "";
+    },
+    selectExactRate: (state, action:PayloadAction<number>) => {
+      state.financeDetails.exactRate = action.payload;
+      state.financeDetails.priceComplete = state.financeDetails.exact !== 0.0;
+    },
+    selectLength: (state, action:PayloadAction<loanTypes>) => {
+      state.financeDetails.length = action.payload;
+    },
+
+    selectPrice: (state, action:PayloadAction<number>) => {
+        state.financeDetails.homePrice = action.payload;
+        state.financeDetails.loanComplete = action.payload > 0
+      },
+      selectDownPayment: (state,  action:PayloadAction<number>) => {
+          state.financeDetails.downPaymentPercent = action.payload;
+      },
+      selectDownPaymentAmount: (state,  action:PayloadAction<number>) => {
+        state.financeDetails.downPaymentAmount = action.payload;
+      }
+    },
+  });
+
+  export const {selectType, selectExactRate, selectPrice, selectDownPayment, selectDownPaymentAmount, selectLength} = financeSlice.actions;
+

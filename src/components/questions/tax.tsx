@@ -22,16 +22,14 @@ export function Tax({ className, ...props }: CardProps) {
   const tax = useSelector((state) => state.tax.taxDetails.local);
   
   const price = useSelector((state) => state.price.priceDetails.homePrice);
-  const initExact = useSelector((state) => state.loan.loanDetails.exact);
+  const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
 
-
-  const initExactOption = useSelector((state) => state.loan.loanDetails.exactOption);
 
   const localTax = tax > 0;
   const currentTax = localTax ? tax : nation;
 
   const [exact, setExact] = React.useState(currentTax * price);
-  const [exactOption, setExactOption] = React.useState(initExactOption);
+  const [exactOption, setExactOption] = React.useState(false);
   const dispatch = useDispatch();
 
 

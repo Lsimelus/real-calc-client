@@ -22,7 +22,6 @@ type CardProps = React.ComponentProps<typeof Card>
  
 export function Location({ className, ...props }: CardProps) {
     const cityOptions = useSelector((state) => state.location.locationDetails.cityOptions);
-  
     const dispatch = useDispatch();
 
 

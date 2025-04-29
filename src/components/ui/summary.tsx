@@ -91,7 +91,7 @@ import {
 }
 
 function row0(){
-  let mortgage = principalAndInterest(finance, finance)
+  let mortgage = principalAndInterest(finance)
   //dispatch(selectPI(mortgage))
   let value =  mortgage*12
 
@@ -116,7 +116,7 @@ function row3(){
 }
 
 function row4(){
-    var value = pmInsurance(finance, finance);
+    var value = pmInsurance(finance);
     updateInvoiceRow(4, value);
 }
 
@@ -136,7 +136,7 @@ function downDeposit(){
       row3();
       row4();
       row5();
-    }, [finance, finance, insurance, tax, fees]);
+    }, [finance, insurance, tax, fees]);
 
     React.useEffect(() => {
       

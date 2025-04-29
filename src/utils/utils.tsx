@@ -1,5 +1,4 @@
-import {price} from "../lib/priceSlice"
-import {loan} from "../lib/loanSlice"
+import {finance} from "../lib/financeSlice"
 import {tax} from "../lib/taxSlice"
 import { insurance } from "@/lib/insuranceSlice"
 import { fees } from "../lib/feesSlice"
@@ -34,24 +33,23 @@ export const moneyToString= (num: string) => {
     return parseFloat(num.replace(/[$,]/g, ''));
 }
 
-export const principalAndInterest = (currPrice: price, currLoan:loan) =>{
+export const principalAndInterest = (financeSlice: finance) =>{
 
-    if (!currPrice.complete || !currLoan.complete) {
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete)) {
         return 0;
     }
 
     
-    let principal = currPrice.homePrice- currPrice.downPaymentAmount; // $200,000 loan
-    let annualInterestRate = currLoan.exactOption ? currLoan.exact : currLoan.rate; // 5% annual interest rate
-    let years = currLoan.length; // 30-year mortgage
-
+    let principal = financeSlice.homePrice- financeSlice.downPaymentAmount;
+    let annualInterestRate = financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;
+    let years = financeSlice.length;
     let monthlyPayment = calculateMortgage(principal, annualInterestRate, years);
     return monthlyPayment
 }
 
-export const amortizationSchedule = (currPrice: price, currLoan:loan, principalAndInterest:number) =>{
-    var loanAmount = currPrice.homePrice- currPrice.downPaymentAmount;
-    let annualInterestRate = currLoan.exactOption ? currLoan.exact : currLoan.rate;
+export const amortizationSchedule = (financeSlice: finance, principalAndInterest:number) =>{
+    var loanAmount = financeSlice.homePrice- financeSlice.downPaymentAmount;
+    let annualInterestRate = financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;
     let monthlyInterest = annualInterestRate / 1200
 
     
@@ -62,7 +60,7 @@ export const amortizationSchedule = (currPrice: price, currLoan:loan, principalA
 
     let scheduleInfo = []
     var i = 1
-    while (i <= currLoan.length*12) {
+    while (i <= financeSlice.length*12) {
         var interestPayment = loanAmount * monthlyInterest
         var principalPaid = principalAndInterest - interestPayment
         let payments = [principalPaid, interestPayment]
@@ -76,58 +74,58 @@ export const amortizationSchedule = (currPrice: price, currLoan:loan, principalA
 }
 
 
-export const propertyTax = (currPrice: price, currTax:tax) =>{
-    if (!currPrice.complete || !currTax.complete) {
+export const propertyTax = (financeSlice: finance, currTax:tax) =>{
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete) || !currTax.complete) {
         return 0;
     }
-    let propertyValue = currPrice.homePrice
-    let taxRate = currTax.exactOption ? currTax.exact : currTax.local ? currTax.local: currTax.national;
+    let propertyValue = financeSlice.homePrice
+    let taxRate = financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;
 
 return calculatePropertyTax(propertyValue, taxRate);
 }
 
-export const homeInsurance = (currPrice: price, currInsurance:insurance) =>{
-    if (!currPrice.complete || !currInsurance.complete) {
+export const homeInsurance = (financeSlice:finance, currInsurance:insurance) =>{
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete) || !currInsurance.complete) {
         return 0;
     }
     if (currInsurance.exactOption){
         return currInsurance.exact
     }else{
-        let homeValue = currPrice.homePrice;
+        let homeValue = financeSlice.homePrice;
 
-        return calculateHomeInsurance(currPrice.homePrice, currInsurance.default)
+        return calculateHomeInsurance(financeSlice.homePrice, currInsurance.default)
     }
 
 }
 
-export const mortgageInsurance = (currPrice: price) =>{
-    if (!currPrice.complete) {
+export const mortgageInsurance = (financeSlice: finance) =>{
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete) ) {
         return 0;
     }
-    let loanAmount = currPrice.homePrice- currPrice.downPaymentAmount; // $180,000 loan amount
+    let loanAmount = financeSlice.homePrice- financeSlice.downPaymentAmount; // $180,000 loan amount
 let insuranceRate = 0.85; // 0.85% mortgage insurance rate
 
 return calculateMortgageInsurance(loanAmount, insuranceRate);
 
 }
 
-export const pmInsurance = (currPrice: price, currLoan:loan) =>{
-    if (!currPrice.complete || !currLoan.complete) {
+export const pmInsurance = (financeSlice: finance) =>{
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete)) {
         return 0;
     }
-    let loanAmount = calcLoanAmount(currPrice) // $250,000 loan amount
+    let loanAmount = calcLoanAmount(financeSlice) // $250,000 loan amount
 let pmiRate = 0.75; // 0.75% PMI rate
 
 return calculatePMI(loanAmount, pmiRate);
 
 }
 
-export const calcDownDeposit = (currPrice: price) =>{
-    return calcLoanAmount(currPrice) * 0.02;
+export const calcDownDeposit = (financeSlice: finance) =>{
+    return calcLoanAmount(financeSlice) * 0.02;
 }
 
-const calcLoanAmount = (currPrice: price) =>{
-    return currPrice.homePrice- currPrice.downPaymentAmount;
+const calcLoanAmount = (financeSlice: finance) =>{
+    return financeSlice.homePrice- financeSlice.downPaymentAmount;
 }  
 
 export const feesAmount = (fees: fees) =>{

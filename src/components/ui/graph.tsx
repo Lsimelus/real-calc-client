@@ -49,22 +49,22 @@ export function Graph() {
 
   React.useEffect(() => {
     console.log("!!!!!!")
-    let mortgage = principalAndInterest(finance, finance)
+    let mortgage = principalAndInterest(finance)
   //dispatch(selectPI(mortgage))
     let value =  mortgage*12
 
-    let amortization = amortizationSchedule(finance, finance, mortgage)
+    let amortization = amortizationSchedule(finance,  mortgage)
     console.log(amortization)
     //dispatch(selectAmortization(amortization))
     
 
   }, []);
   
-  let mortgage = principalAndInterest(finance, finance)
+  let mortgage = principalAndInterest(finance)
   //dispatch(selectPI(mortgage))
     let value =  mortgage*12
 
-    let amortization = amortizationSchedule(finance, finance, mortgage)
+    let amortization = amortizationSchedule(finance, mortgage)
 
     let chartData = schedule(amortization)
     //console.log(chartData2)

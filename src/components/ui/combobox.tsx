@@ -27,12 +27,14 @@ export interface ComboboxItemProps {
 
 interface ComboboxProps {
   frameworks: ComboboxItemProps[],
-  onSelect?: (value: string) => void
+  onSelect?: (value: string) => void,
+  defaultValue: string
+
 }
 
-export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect }: ComboboxProps) => {
+export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect, defaultValue }: ComboboxProps) => {
   const [open, setOpen] = React.useState(false)
-  const [value, setValue] = React.useState("")
+  const [value, setValue] = React.useState(defaultValue)
 
   const handleSelect = (value: string) => {
     if (onSelect) {
@@ -42,6 +44,10 @@ export const Combobox: React.FC<ComboboxProps> = ({ frameworks, onSelect }: Comb
   React.useEffect(() => {
     handleSelect(value)
   }, [value])
+
+  React.useEffect(() => {
+    setValue(defaultValue)
+  }, [defaultValue])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>

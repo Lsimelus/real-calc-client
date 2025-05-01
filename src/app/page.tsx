@@ -1,6 +1,5 @@
 "use client";
 import { QuestionCarousel } from "@/components/ui/questioncarousel";
-import { Progress } from "@/components/ui/progress"
 import { Price } from "../components/questions/price"
 import { Location } from "../components/questions/location"
 import { Tax } from "../components/questions/tax";
@@ -53,9 +52,7 @@ export default function Home() {
     
           { percentTrue < 100 &&
           <>
-          <Progress  value={percentTrue} />
-          
-          
+
         <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
         </>
           }

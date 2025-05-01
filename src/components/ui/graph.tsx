@@ -1,7 +1,7 @@
 "use client"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import {schedule,addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit, amortizationSchedule, prin} from "../../utils/utils"
+import {schedule,addcomma,  feesAmount, moneyToString} from "../../utils/utils"
 
 import {
   Card,
@@ -20,17 +20,8 @@ import {
 import { selectPI, selectAmortization } from '@/lib/loanSlice';
 import { useDispatch, useSelector } from "react-redux"; 
 import React from 'react';
+import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil"
 
-// from function
-const chartData3 = [
-  { month: "January", interest: 186, principal: 80 },
-  { month: "January", interest: 286, principal: 180 },
-  { month: "February", interest: 305, principal: 200 },
-  { month: "March", interest: 237, principal: 120 },
-  { month: "", interest: 73, principal: 190 },
-  { month: "May", interest: 209, principal: 130 },
-  { month: "June", interest: 214, principal: 140 },
-]
 const chartConfig = {
   interest: {
     label: "Interest",

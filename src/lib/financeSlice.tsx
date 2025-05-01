@@ -1,6 +1,7 @@
 import { createSlice, Dispatch, PayloadAction } from "@reduxjs/toolkit";
 import { loanTypes } from "../constants/types";
 import { cardTypes } from "../components/questions/loan"
+
 export interface finance {
     type: loanTypes;
     rate: number | null;
@@ -59,7 +60,7 @@ export interface finance {
     },
     selectExactRate: (state, action:PayloadAction<number>) => {
       state.financeDetails.exactRate = action.payload;
-      state.financeDetails.priceComplete = state.financeDetails.exact !== 0.0;
+      //state.financeDetails.priceComplete = state.financeDetails.exact !== 0.0;
     },
     selectLength: (state, action:PayloadAction<loanTypes>) => {
       state.financeDetails.length = action.payload;
@@ -67,7 +68,7 @@ export interface finance {
 
     selectPrice: (state, action:PayloadAction<number>) => {
         state.financeDetails.homePrice = action.payload;
-        state.financeDetails.loanComplete = action.payload > 0
+        state.financeDetails.priceComplete = action.payload > 0;
       },
       selectDownPayment: (state,  action:PayloadAction<number>) => {
           state.financeDetails.downPaymentPercent = action.payload;

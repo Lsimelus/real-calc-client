@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import {addcomma, principalAndInterest, propertyTax, homeInsurance, mortgageInsurance, pmInsurance, feesAmount, moneyToString, calcDownDeposit, amortizationSchedule} from "../../utils/utils"
+import {addcomma, feesAmount, moneyToString} from "../../utils/utils"
 
 import { useDispatch, useSelector } from "react-redux";
 import { selectPI, selectAmortization } from '@/lib/loanSlice';
@@ -22,6 +22,7 @@ import {
     TooltipTrigger,
   } from "@/components/ui/tooltip"
   import { Button } from "@/components/ui/button"
+import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, principalAndInterest, propertyTax } from '@/utils/sliceUtil';
 
 
   

@@ -16,7 +16,7 @@ export interface fees {
     feesDetails: {
       pending: false,
       error: [],
-      complete: false,
+      complete: true,
       fee: 0
     },
   };
@@ -30,7 +30,6 @@ export interface fees {
     },
     setFee: (state,  action:PayloadAction<number>) => {
       state.feesDetails.fee = action.payload;
-      state.feesDetails.complete = true
   }
     },
   });

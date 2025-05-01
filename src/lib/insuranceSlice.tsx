@@ -5,7 +5,6 @@ export interface insurance {
     error: string[];
     complete: boolean;
     exact: number;
-    exactOption: boolean;
     default: number;
   }
   
@@ -14,13 +13,14 @@ export interface insurance {
     insuranceDetails: insurance;
   }
 
+  // Todo: pull rate from env variable
+  // MOck API response
   const initialState: insuranceState = {
     insuranceDetails: {
       pending: false,
       error: [],
       complete: true,
       exact: 0,
-      exactOption: false,
       default: 0.01
     },
   };
@@ -37,17 +37,8 @@ export interface insurance {
       state.insuranceDetails.exact = action.payload;
       state.insuranceDetails.complete = action.payload !== 0;
     },
-    selectExactOption: (state, action:PayloadAction<boolean>) => {
-      state.insuranceDetails.exactOption = action.payload;
-      if (action.payload == false) {
-        state.insuranceDetails.complete =  true;
-        state.insuranceDetails.exact = 0.0;
-      }else{
-        state.insuranceDetails.complete =  false;
-      }
-    },
     },
   });
 
-  export const {selectExact, selectExactOption} = insuranceSlice.actions;
+  export const {selectExact} = insuranceSlice.actions;
 

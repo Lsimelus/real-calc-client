@@ -1,10 +1,7 @@
-import { BellRing, Check } from "lucide-react"
- 
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCityInfo ,fetchStateInfo } from "@/api/fetchhData";
 import { selectCity, selectState } from "@/lib/locationSlice";
 import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -21,7 +18,10 @@ import { Label } from "@/components/ui/label"
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Location({ className, ...props }: CardProps) {
-    const cityOptions = useSelector((state) => state.location.locationDetails.cityOptions);
+    const locationSlice =  useSelector((state) => state.location.locationDetails);
+    const cityOptions = locationSlice.cityOptions
+    const city = locationSlice.city;
+    const state = locationSlice.state;
     const dispatch = useDispatch();
 
 
@@ -31,11 +31,11 @@ export function Location({ className, ...props }: CardProps) {
         
     }
     
-    function pickCity(){
-        dispatch(selectCity("Everett"))
-        dispatch(fetchCityInfo("Everett"))
+    function pickCity(city:string){
+        dispatch(selectCity(city))
+        dispatch(fetchCityInfo(city))
     }
-    
+  
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -46,11 +46,11 @@ export function Location({ className, ...props }: CardProps) {
       <CardContent className="grid gap-4">
       <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label>State</Label>
-      <Combobox frameworks={states} onSelect={pickState} />
+      <Combobox frameworks={states} onSelect={pickState} defaultValue={state} />
       </div>
       <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label>City</Label>
-      <Combobox frameworks={cityOptionsList(cityOptions)} onSelect={pickCity} />
+      <Combobox frameworks={cityOptionsList(cityOptions)} onSelect={pickCity}  defaultValue={city}/>
       </div>
   </CardContent>
     </Card>

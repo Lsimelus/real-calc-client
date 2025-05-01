@@ -16,6 +16,7 @@ export interface tax {
     taxDetails: tax ;
   }
 
+  // Todo: Pull from env variable
   const initialState: taxState = {
     taxDetails: {
       national: .03,

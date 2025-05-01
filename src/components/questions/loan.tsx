@@ -50,14 +50,12 @@ export const cardTypes: { [key in loanTypes]: { buttonText: string, contentText:
 };
 
 export function Loan({ className, ...props }: CardProps) {
+  const financeSlice = useSelector((state) => state.finance.financeDetails);
+  const initType = financeSlice.type;
+  const initExact = financeSlice.exactRate;
+  const initLoanLength = financeSlice.length;
 
-  const initType = useSelector((state) => state.finance.financeDetails.type);
-  const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
-
-  const initLoanLength = useSelector((state) => state.finance.financeDetails.length);
-    
-    const [loanLength, setLoanLength] = React.useState([initLoanLength])
-  
+  const [loanLength, setLoanLength] = React.useState([initLoanLength])
   const [type, setType] = React.useState<loanTypes>(initType);
   const [exact, setExact] = React.useState<number>(initExact);
   const [exactOption, setExactOption] = React.useState(initExact !== 0);
@@ -78,31 +76,30 @@ export function Loan({ className, ...props }: CardProps) {
   React.useEffect(() => {
     dispatch(selectType(type))
   }, [type])
+  React.useEffect(() => {
+    dispatch(selectExactRate(parseFloat(exact)))
+  }, [exact])
+  
+  React.useEffect(() => {
+    dispatch(selectLength(loanLength[0]))
+  
+  }, [loanLength])
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
     setExact(value);
-}
-const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
-  let value = parseFloat(event.target.value);
-  if (isNaN(value)) {
-      value = 0.0;
-  } else if (value < 0.0) {
-      value = 0.0;
-  } else if (value > 30.0) {
-      value = 30.0;
   }
-  setExact(value.toFixed(1));
-}
-
-React.useEffect(() => {
-  dispatch(selectExactRate(parseFloat(exact)))
-}, [exact])
-
-React.useEffect(() => {
-  dispatch(selectLength(loanLength[0]))
-
-}, [loanLength])
+  const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    let value = parseFloat(event.target.value);
+    if (isNaN(value)) {
+        value = 0.0;
+    } else if (value < 0.0) {
+        value = 0.0;
+    } else if (value > 30.0) {
+        value = 30.0;
+    }
+    setExact(value.toFixed(1));
+  }
 
 
   return (
@@ -133,10 +130,10 @@ React.useEffect(() => {
           <Label>Typical rate for loan type: {cardTypes[type].rates}{"%"}</Label>
           </div>
           <div className="grid  max-w-sm items-center gap-1.5">
-          <Label>Do you want to use a specifc interest rate instead instead? {exact > 0 && exact}%</Label>
+          <Label>Do you want to use a specifc interest rate instead instead? {exact > 0 && `${exact}%`}</Label>
           </div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
-          <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>
+          <Button onClick={() => {setExactOption(false); setExact(0.0) } }   variant={!exactOption ? "default" : "ghost"}>No</Button>
           {exactOption && (
             <Input
             type='number'
@@ -144,8 +141,6 @@ React.useEffect(() => {
             min='0.0'
             max='30' value={exact} onChange={handleInputChange} onBlur={handleInputBlur}></Input>
           ) }
-         
-
           <div className="grid w-full max-w-sm items-center gap-1.5">
           </div>
 

@@ -43,7 +43,7 @@ interface location {
     },
     selectCity: (state,  action:PayloadAction<string>) => {
         state.locationDetails.city = action.payload;
-        state.locationDetails.complete = true
+        state.locationDetails.complete = !(action.payload == "");
     }
     },
     extraReducers: (builder) => {

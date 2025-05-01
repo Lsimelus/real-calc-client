@@ -18,7 +18,7 @@ type CardProps = React.ComponentProps<typeof Card>
 
 export function Price({ className, ...props }: CardProps) {
     const min = useSelector((state) => state.finance.financeDetails.minDownpayment);
-    const max = 40
+    const max = 40 //Todo: Add max interest var
     const initPrice = useSelector((state) => state.finance.financeDetails.homePrice);
     const initDownPayment = useSelector((state) => state.finance.financeDetails.downPaymentPercent);
     
@@ -50,13 +50,9 @@ export function Price({ className, ...props }: CardProps) {
         dispatch(selectDownPaymentAmount(downPaymentValue))
     }, [downPayment])
 
-   
 
     const downPaymentValue = (price * (downPayment[0])) / 100;
     const formattedDownPayment = addcomma(downPaymentValue);
-
-    console.log("~~~~~~~~~~~~~~~~~")
-    console.log(useSelector((state) => state.finance.financeDetails));
 
     return (
         <Card className={cn("h-[580px]", className)} {...props}>

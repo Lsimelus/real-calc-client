@@ -57,7 +57,7 @@ export default function Home() {
         </>
           }
         <Summary questionCompleted={percentTrue == 100} editInfo={() => editAfterCompletion()}></Summary>
-        { percentTrue !== 100 &&
+        { percentTrue == 100 &&
         <Graph/>
           
             }

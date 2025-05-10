@@ -7,7 +7,7 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { useDispatch, useSelector } from "react-redux";
-import {  formatNumber } from "../../utils/utils";
+import {  addcomma, formatNumber } from "../../utils/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import React from 'react';
@@ -16,23 +16,34 @@ import { Label } from "../ui/label";
 import { estimatePropertyTax, locationPropertyTax, propertyTax } from "@/utils/sliceUtil";
 import { financeSlice } from "@/lib/financeSlice";
 import { locationSlice } from "@/lib/locationSlice";
+import { init } from "next/dist/compiled/webpack/webpack";
 
 
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Tax({ className, ...props }: CardProps) {
-  const nation = useSelector((state) => state.tax.taxDetails.national);
-  const tax = propertyTax(financeSlice, taxSlice, locationSlice)
+  const financeSlice = useSelector((state) => state.finance.financeDetails);
+  const taxSlice = useSelector((state) => state.tax.taxDetails);
+  const locationSlice = useSelector((state) => state.location.locationDetails);
+
   const estimatedTax = estimatePropertyTax(financeSlice, locationSlice)
+
   const price = useSelector((state) => state.finance.financeDetails.homePrice);
+
   const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
-
-
-  const localTax = tax > 0;
-  const currentTax = localTax ? tax : nation;
-
-  const [exact, setExact] = React.useState(currentTax * price);
+  const [exact, setExact] = React.useState(initExact);
   const [exactOption, setExactOption] = React.useState(false);
+
+
+  const [taxType, setTaxType] = React.useState("");
+  const [taxAmount, setTaxAmount] = React.useState(0);
+
+  React.useEffect(() => {
+    let currTax = propertyTax(financeSlice, taxSlice, locationSlice)
+    setTaxAmount(currTax[1])
+    setTaxType(currTax[0])
+  }, [financeSlice, taxSlice, locationSlice])
+
   const dispatch = useDispatch();
 
 
@@ -65,7 +76,7 @@ export function Tax({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
       <div className="grid  max-w-sm items-center gap-1.5">
-       <Label>Estimated yearly tax: {estimatedTax[1]}</Label>
+       <Label>Estimated yearly tax: {addcomma(estimatePropertyTax(financeSlice, locationSlice)[1])}</Label>
 
       </div>
         <div>

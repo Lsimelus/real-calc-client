@@ -78,6 +78,9 @@ import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, princip
   const updateInvoiceRow = (index: number, value: number | any[]) => {
     setInvoices(prevInvoices => {
       const newInvoices = [...prevInvoices];
+      if (Array.isArray(value)){
+        value  = value[1]
+      }
 
 
       newInvoices[index].monthly = addcomma(value / 12);
@@ -106,9 +109,6 @@ function row0(){
 
 function row1(){
     var value = propertyTax(finance, tax, location);
-    if (Array.isArray(value)){
-      value  = value[1]
-    }
     updateInvoiceRow(1, value);
 }
 
@@ -149,7 +149,7 @@ function downDeposit(){
   return (
     <div className='col-span-5 lg:col-span-2'>
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>You are payments broken down</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[300px]">

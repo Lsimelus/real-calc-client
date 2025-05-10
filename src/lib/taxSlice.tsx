@@ -19,7 +19,7 @@ export interface tax {
       exact: 0,
       pending: false,
       error: [],
-      complete: false
+      complete: true
     },
   };
 
@@ -36,7 +36,6 @@ export interface tax {
     selectExact: (state, action:PayloadAction<number>) => {
 
       state.taxDetails.exact = action.payload;
-      state.taxDetails.complete = action.payload !== 0;
     },
     },
   });

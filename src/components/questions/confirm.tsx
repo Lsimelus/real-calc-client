@@ -12,11 +12,11 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import {homeInsurance} from "../../utils/sliceUtil"
+import {homeInsurance, propertyTax} from "../../utils/sliceUtil"
 import { Label } from "../ui/label";
-import { formatNumber } from "@/utils/utils";
+import { addcomma, formatNumber } from "@/utils/utils";
 import { financeSlice } from "@/lib/financeSlice";
-
+import * as React from "react"
 
   
 type CardProps = React.ComponentProps<typeof Card>
@@ -27,7 +27,6 @@ export function Confirm({ className, ...props }: CardProps) {
   const tax = useSelector((state) => state.tax.taxDetails);
   const insurance = useSelector((state) => state.insurance.insuranceDetails);
   const fees = useSelector((state) => state.fees.feesDetails);
-
   const dispatch = useDispatch();
 
 
@@ -51,20 +50,16 @@ export function Confirm({ className, ...props }: CardProps) {
 
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label>{fees.fee > 0 ? `The total monthly fees are ${fees.fee}`: `There are no monthly fees`}</Label>
+        <Label>{fees.fee > 0 ? `The total monthly fees are ${addcomma(fees.fee)}`: `There are no monthly fees`}</Label>
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
-        {
-          insurance.exact > 0 ?
-          <Label>The user given insurance is {insurance.exact}.</Label>
-          :
-          <Label>The estimated yearly insurance premium is {homeInsurance(finance)}</Label>
-        }
-        <p>{insurance.exact}</p>
-        <p>{homeInsurance(financeSlice)}</p>
+        <Label>The total yearly premium for home insurance is  {addcomma(homeInsurance(finance, insurance)[1])}</Label>
       </div>
 
+      <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label>The total yearly taxes is {addcomma(propertyTax(finance, tax, location)[1])}</Label>
+      </div> 
 
       <Button onClick={() => dispatch(selectCompleteness(true))}>Confirm info</Button>
     </CardContent>

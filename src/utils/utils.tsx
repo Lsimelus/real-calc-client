@@ -40,12 +40,20 @@ export const feesAmount = (fees: fees) =>{
 
 export const schedule = (unformatted_schdule: number[][]) =>{
     var chartData = []
+    var turned = false
+    var turningPoint = 0
 
     for (let i = 0; i < unformatted_schdule.length; i++) {
-        var row = { month: (i+1).toString(), interest: unformatted_schdule[i][1], principal: unformatted_schdule[i][0] }
+        let interest = unformatted_schdule[i][1]
+        let principal =  unformatted_schdule[i][0]
+        if (!turned && principal > interest){
+            turningPoint = i
+            turned = true
+        }
+        var row = { month: (i+1).toString(), interest: interest, principal: principal }
         chartData.push(row)
     }
-    return chartData
+    return [chartData, turningPoint]
 }
 
 const formatForCombo = (rawString:string) => {

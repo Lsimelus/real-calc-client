@@ -27,8 +27,6 @@ export function Location({ className, ...props }: CardProps) {
 
     function pickState(state: string){
       dispatch(fetchStateInfo(state))
-      //dispatch(selectState(state))
-        
     }
     
     function pickCity(city:string){

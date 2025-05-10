@@ -42,15 +42,15 @@ export interface location {
     clearState: (state) => {
         state = initialState
     }, 
-    selectState: (state, action:PayloadAction<string>) => {
-        state.locationDetails.state = action.payload;
-        state.locationDetails.city = ""
-        state.locationDetails.complete = false
-    },
-    selectCity: (state,  action:PayloadAction<string>) => {
-        state.locationDetails.city = action.payload;
-        state.locationDetails.complete = !(action.payload == "");
-    }
+    // selectState: (state, action:PayloadAction<string>) => {
+    //     state.locationDetails.state = action.payload;
+    //     state.locationDetails.city = ""
+    //     state.locationDetails.complete = false
+    // },
+    // selectCity: (state,  action:PayloadAction<string>) => {
+    //     state.locationDetails.city = action.payload;
+    //     state.locationDetails.complete = !(action.payload == "");
+    // }
     },
     extraReducers: (builder) => {
       builder.addCase(fetchStateInfo.fulfilled, (state, action) => {
@@ -66,8 +66,9 @@ export interface location {
 
       builder.addCase(fetchCityInfo.fulfilled, (state, action) => {
         state.locationDetails.county = action.payload.county;
-        //state.locationDetails.median_tax = action.payload.median_tax || "";
-        //state.locationDetails.median_value = action.payload.median_value;
+        state.locationDetails.medianTax = action.payload.median_ax || "";
+        state.locationDetails.medianValue = action.payload.median_value;
+        state.locationDetails.city = action.payload.city;
         state.locationDetails.complete = true
       });
       builder.addCase(fetchCityInfo.pending, (state, action) => {

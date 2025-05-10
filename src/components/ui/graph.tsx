@@ -33,29 +33,11 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 export function Graph() {
-
   const finance = useSelector((state) => state.finance.financeDetails);
 
-
-
-  React.useEffect(() => {
-    let mortgage = principalAndInterest(finance)
-  //dispatch(selectPI(mortgage))
-    let value =  mortgage*12
-
-    let amortization = amortizationSchedule(finance,  mortgage)
-    //dispatch(selectAmortization(amortization))
-    
-
-  }, []);
-  
   let mortgage = principalAndInterest(finance)
-  //dispatch(selectPI(mortgage))
-    let value =  mortgage*12
-
-    let amortization = amortizationSchedule(finance, mortgage)
-
-    let chartData = schedule(amortization)
+  let amortization = amortizationSchedule(finance, mortgage)
+  let chartData = schedule(amortization)
 
 
   return (
@@ -69,7 +51,7 @@ export function Graph() {
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData}
+            data={chartData[0]}
             margin={{
               left: 12,
               right: 12,
@@ -105,10 +87,10 @@ export function Graph() {
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none">
-              Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
+             
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              Showing total visitors for the last 6 months
+              The principal will be more than the interest rate on month {chartData[1]}
             </div>
           </div>
         </div>

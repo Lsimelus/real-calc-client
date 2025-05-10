@@ -12,18 +12,18 @@ import { Input } from "@/components/ui/input"
 import React from 'react';
 import { selectExact } from "../../lib/insuranceSlice";
 import { Label } from "../ui/label";
-import { formatNumber } from "@/utils/utils";
+import { addcomma, formatNumber } from "@/utils/utils";
+import { estimatedHomeInsurance, homeInsurance } from "@/utils/sliceUtil";
 
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Insurance({ className, ...props }: CardProps) {
-  const premium = useSelector((state) => state.finance.financeDetails.homePrice);
-  const defaultRate = .005
-  const initExactOption = useSelector((state) => state.insurance.insuranceDetails.exactOption);
-  const exactAmount = useSelector((state) => state.insurance.insuranceDetails.exact);
+  const financeSlice = useSelector((state) => state.finance.financeDetails);
+  const insuranceSlice =  useSelector((state) => state.insurance.insuranceDetails);
+  const exactAmount = insuranceSlice.exact;
 
   const [exact, setExact] = React.useState(exactAmount);
-  const [exactOption, setExactOption] = React.useState(initExactOption);
+  const [exactOption, setExactOption] = React.useState(exactAmount >0 );
   const dispatch = useDispatch();
 
 
@@ -43,6 +43,16 @@ export function Insurance({ className, ...props }: CardProps) {
     dispatch(selectExact(exact))
   }, [exact])
 
+  React.useEffect(() => {
+    if (!exactOption){
+      setExact(0)
+    }
+
+  }, [exactOption])
+
+
+
+
 
 
 
@@ -54,7 +64,7 @@ export function Insurance({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
           <div className="grid  max-w-sm items-center gap-1.5">
-          <Label className="mb-1">Estimated Insurance Premium: ${premium * defaultRate}</Label>
+          <Label className="mb-1">Estimated Insurance Premium: {addcomma(estimatedHomeInsurance(financeSlice, insuranceSlice)[1])}</Label>
           <Label>Is there an exact insurance premium you would want use? {exact > 0 && formatNumber(exact)}</Label>
           </div>
           <div>

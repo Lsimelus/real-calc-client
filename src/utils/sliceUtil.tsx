@@ -3,15 +3,14 @@ import { insurance } from "@/lib/insuranceSlice";
 import { tax } from "@/lib/taxSlice";
 import {location } from "@/lib/locationSlice"
 import {  calculateMortgage, calculateMortgageInsurance, calculatePMI } from "./math";
+import { NATIONAL_AVERAGE_PROPERTY_TAX_RATE, NATIONAL_INSURANCE_PREMIUM_RATE_PER_HOUSE_DOLLAR } from "@/constants/rates";
 
 export const propertyTax = (financeSlice: finance, taxSlice:tax, locationSlice:location) =>{
     if (taxSlice.exact > 0){
         return ["exact", taxSlice.exact]
-    }else if(locationSlice.median_tax != "" ||financeSlice.priceComplete ){
-        console.log("22222")
+    }else if(locationSlice.medianTax != "" ||financeSlice.priceComplete ){
         return estimatePropertyTax(financeSlice, locationSlice)
     }else{
-        console.log("33333")
         return ["", 0]
     }
 }
@@ -27,14 +26,13 @@ export const  estimatePropertyTax = (financeSlice: finance, locationSlice:locati
 }
 
 export const locationPropertyTax = (financeSlice: finance, locationSlice:location ) =>{
-    if (locationSlice.median_tax == "" || !(financeSlice.priceComplete)) {
+    if (locationSlice.medianTax == "" || !(financeSlice.priceComplete)) {
         return ["", 0]
     }
     let propertyValue = financeSlice.homePrice
 
-    
-    console.log(parseFloat(locationSlice.median_tax))
-    let medianTax =  parseFloat(locationSlice.median_tax)
+
+    let medianTax =  parseFloat(locationSlice.medianTax)
 return propertyValue * medianTax;
 }
 
@@ -43,15 +41,25 @@ export const defaultPropertyTax = (financeSlice: finance) =>{
         return 0;
     }
     let propertyValue = financeSlice.homePrice
-return  propertyValue * .01; //Todo: Relocate
+    return  propertyValue * NATIONAL_AVERAGE_PROPERTY_TAX_RATE;
 }
 
 
 
-export const homeInsurance = (financeSlice:finance) =>{
-    return financeSlice.homePrice * .01
+export const homeInsurance = (financeSlice:finance, insuranceSlice: insurance) =>{
+    if (insuranceSlice.exact > 0){
+        return ["exact", insuranceSlice.exact]
+    }
+
+    return estimatedHomeInsurance(financeSlice)
 
 }
+export const estimatedHomeInsurance = (financeSlice:finance) =>{
+    let value = financeSlice.homePrice * NATIONAL_INSURANCE_PREMIUM_RATE_PER_HOUSE_DOLLAR
+    return ["estimate", financeSlice.homePrice * NATIONAL_INSURANCE_PREMIUM_RATE_PER_HOUSE_DOLLAR]
+}
+
+
 
 
 

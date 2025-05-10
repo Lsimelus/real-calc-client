@@ -14,23 +14,6 @@ export function calculateMortgage(principal:number , annualInterestRate:any, yea
 
     return monthlyPayment;
 }
-
-export function calculatePropertyTax(propertyValue:number, taxRate: number) {
-    // Convert tax rate percentage to a decimal
-    let taxRateDecimal = taxRate / 100;
-
-    // Calculate the annual property tax
-    let propertyTax = propertyValue * taxRateDecimal;
-
-    return propertyTax;
-}
-
-export function calculateHomeInsurance(homeValue:number, insuranceRate:number) {
-    let annualInsuranceCost = homeValue * insuranceRate;
-
-    return annualInsuranceCost;
-}
-
 export function calculateMortgageInsurance(loanAmount:number, insuranceRate:number) {
     // Convert insurance rate percentage to a decimal
     let insuranceRateDecimal = insuranceRate / 100;

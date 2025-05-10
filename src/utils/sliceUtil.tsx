@@ -1,41 +1,65 @@
 import { finance } from "@/lib/financeSlice";
 import { insurance } from "@/lib/insuranceSlice";
 import { tax } from "@/lib/taxSlice";
-import { calculateHomeInsurance, calculateMortgage, calculateMortgageInsurance, calculatePMI, calculatePropertyTax } from "./math";
+import {location } from "@/lib/locationSlice"
+import {  calculateMortgage, calculateMortgageInsurance, calculatePMI } from "./math";
 
-export const propertyTax = (financeSlice: finance, currTax:tax) =>{
-    if (!(financeSlice.loanComplete && financeSlice.priceComplete) || !currTax.complete) {
+export const propertyTax = (financeSlice: finance, taxSlice:tax, locationSlice:location) =>{
+    if (taxSlice.exact > 0){
+        return ["exact", taxSlice.exact]
+    }else if(locationSlice.median_tax != "" ||financeSlice.priceComplete ){
+        console.log("22222")
+        return estimatePropertyTax(financeSlice, locationSlice)
+    }else{
+        console.log("33333")
+        return ["", 0]
+    }
+}
+
+export const  estimatePropertyTax = (financeSlice: finance, locationSlice:location) =>{
+    if(typeof locationSlice.medianTax !== 'undefined' && locationSlice.medianTax !== ''){
+        return ["location", locationPropertyTax(financeSlice, locationSlice)]
+    }else if (financeSlice.priceComplete ){
+        return ["default", defaultPropertyTax(financeSlice)]
+    }else{
+        return ["", 0]
+    }
+}
+
+export const locationPropertyTax = (financeSlice: finance, locationSlice:location ) =>{
+    if (locationSlice.median_tax == "" || !(financeSlice.priceComplete)) {
+        return ["", 0]
+    }
+    let propertyValue = financeSlice.homePrice
+
+    
+    console.log(parseFloat(locationSlice.median_tax))
+    let medianTax =  parseFloat(locationSlice.median_tax)
+return propertyValue * medianTax;
+}
+
+export const defaultPropertyTax = (financeSlice: finance) =>{
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete)) {
         return 0;
     }
     let propertyValue = financeSlice.homePrice
-    let taxRate = financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;
-
-return calculatePropertyTax(propertyValue, taxRate);
+return  propertyValue * .01; //Todo: Relocate
 }
 
-export const homeInsurance = (financeSlice:finance, currInsurance:insurance) =>{
-    if (!(financeSlice.loanComplete && financeSlice.priceComplete) || !currInsurance.complete) {
-        return 0;
-    }
-    if (currInsurance.exactOption){
-        return currInsurance.exact
-    }else{
-        let homeValue = financeSlice.homePrice;
 
-        return calculateHomeInsurance(financeSlice.homePrice, currInsurance.default)
-    }
+
+export const homeInsurance = (financeSlice:finance) =>{
+    return financeSlice.homePrice * .01
 
 }
 
 
 
 export const principalAndInterest = (financeSlice: finance) =>{
-
     if (!(financeSlice.loanComplete && financeSlice.priceComplete)) {
         return 0;
     }
 
-    
     let principal = financeSlice.homePrice- financeSlice.downPaymentAmount;
     let annualInterestRate = financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;
     let years = financeSlice.length;

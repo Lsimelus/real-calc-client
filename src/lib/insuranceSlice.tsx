@@ -5,7 +5,6 @@ export interface insurance {
     error: string[];
     complete: boolean;
     exact: number;
-    default: number;
   }
   
   
@@ -20,8 +19,7 @@ export interface insurance {
       pending: false,
       error: [],
       complete: true,
-      exact: 0,
-      default: 0.01
+      exact: 0
     },
   };
 
@@ -33,9 +31,7 @@ export interface insurance {
         state = initialState
     },
     selectExact: (state, action:PayloadAction<number>) => {
-
       state.insuranceDetails.exact = action.payload;
-      state.insuranceDetails.complete = action.payload !== 0;
     },
     },
   });

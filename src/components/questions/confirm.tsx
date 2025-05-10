@@ -12,8 +12,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+import {homeInsurance} from "../../utils/sliceUtil"
 import { Label } from "../ui/label";
 import { formatNumber } from "@/utils/utils";
+import { financeSlice } from "@/lib/financeSlice";
 
 
   
@@ -21,7 +23,7 @@ type CardProps = React.ComponentProps<typeof Card>
  
 export function Confirm({ className, ...props }: CardProps) {
   const location = useSelector((state) => state.location.locationDetails);
-  const finance  = useSelector((state) => state.finance.financeDetails );
+  const finance = useSelector((state) => state.finance.financeDetails);
   const tax = useSelector((state) => state.tax.taxDetails);
   const insurance = useSelector((state) => state.insurance.insuranceDetails);
   const fees = useSelector((state) => state.fees.feesDetails);
@@ -47,14 +49,6 @@ export function Confirm({ className, ...props }: CardProps) {
       <Label>The property value is {formatNumber(finance.homePrice)} and a {finance.downPaymentPercent}%-{formatNumber(finance.downPaymentAmount)} will be put down</Label>
       </div>
 
-      <div className="grid w-full max-w-sm items-center gap-1.5">
-      {
-          tax.exactOption ?
-          <Label>The user given insurance is {tax.exact}.</Label>
-          :
-          <Label>The estimated yearly insurance premium is  {tax.national}</Label>
-        }
-      </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label>{fees.fee > 0 ? `The total monthly fees are ${fees.fee}`: `There are no monthly fees`}</Label>
@@ -62,12 +56,13 @@ export function Confirm({ className, ...props }: CardProps) {
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
         {
-          insurance.exactOption ?
+          insurance.exact > 0 ?
           <Label>The user given insurance is {insurance.exact}.</Label>
           :
-          <Label>The estimated yearly insurance premium is  {insurance.default}</Label>
+          <Label>The estimated yearly insurance premium is {homeInsurance(finance)}</Label>
         }
-
+        <p>{insurance.exact}</p>
+        <p>{homeInsurance(financeSlice)}</p>
       </div>
 
 

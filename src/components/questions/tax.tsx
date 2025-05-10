@@ -7,20 +7,23 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 import { useDispatch, useSelector } from "react-redux";
-import { addcomma, formatNumber } from "../../utils/utils";
+import {  formatNumber } from "../../utils/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import React from 'react';
-import { selectExact, selectExactOption } from "../../lib/taxSlice";
+import { selectExact, taxSlice } from "../../lib/taxSlice";
 import { Label } from "../ui/label";
+import { estimatePropertyTax, locationPropertyTax, propertyTax } from "@/utils/sliceUtil";
+import { financeSlice } from "@/lib/financeSlice";
+import { locationSlice } from "@/lib/locationSlice";
 
 
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Tax({ className, ...props }: CardProps) {
   const nation = useSelector((state) => state.tax.taxDetails.national);
-  const tax = useSelector((state) => state.tax.taxDetails.local);
-  
+  const tax = propertyTax(financeSlice, taxSlice, locationSlice)
+  const estimatedTax = estimatePropertyTax(financeSlice, locationSlice)
   const price = useSelector((state) => state.finance.financeDetails.homePrice);
   const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
 
@@ -50,18 +53,9 @@ export function Tax({ className, ...props }: CardProps) {
   }, [exact])
 
   React.useEffect(() => {
-    dispatch(selectExactOption(exactOption))
     setExact(initExact)
   }, [exactOption])
   
-
-  const TaxInfo = () => (
-    <div className="grid  max-w-sm items-center gap-1.5">
-       <Label>Estimated yearly tax: {addcomma(currentTax * price)}</Label>
-
-      </div>
-  );
-
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -70,7 +64,10 @@ export function Tax({ className, ...props }: CardProps) {
         <CardDescription>Everyones favorite part</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <TaxInfo />
+      <div className="grid  max-w-sm items-center gap-1.5">
+       <Label>Estimated yearly tax: {estimatedTax[1]}</Label>
+
+      </div>
         <div>
           <div className="grid  max-w-sm items-center gap-1.5 mt-5">
           <Label className="mb-1">Do you have/want to use a exact yearly tax amount? {exact > 0 && formatNumber(exact)}</Label>

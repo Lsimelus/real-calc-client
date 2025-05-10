@@ -38,6 +38,7 @@ import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, princip
   const tax = useSelector((state) => state.tax.taxDetails);
   const insurance = useSelector((state) => state.insurance.insuranceDetails);
   const fees = useSelector((state) => state.fees.feesDetails);
+  const location = useSelector((state) => state.location.locationDetails);
 
   const dispatch = useDispatch();
 
@@ -74,9 +75,11 @@ import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, princip
     }
   ]);
 
-  const updateInvoiceRow = (index: number, value: number) => {
+  const updateInvoiceRow = (index: number, value: number | any[]) => {
     setInvoices(prevInvoices => {
       const newInvoices = [...prevInvoices];
+
+
       newInvoices[index].monthly = addcomma(value / 12);
       newInvoices[index].yearly = addcomma(value);
       return newInvoices;
@@ -102,7 +105,10 @@ function row0(){
 }
 
 function row1(){
-    var value = propertyTax(finance, tax);
+    var value = propertyTax(finance, tax, location);
+    if (Array.isArray(value)){
+      value  = value[1]
+    }
     updateInvoiceRow(1, value);
 }
 
@@ -139,10 +145,6 @@ function downDeposit(){
       row5();
     }, [finance, insurance, tax, fees]);
 
-    React.useEffect(() => {
-      
-    }, [invoices]);
-    
 
   return (
     <div className='col-span-5 lg:col-span-2'>

@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input"
 import React from 'react';
-import { selectExact, selectExactOption } from "../../lib/insuranceSlice";
+import { selectExact } from "../../lib/insuranceSlice";
 import { Label } from "../ui/label";
 import { formatNumber } from "@/utils/utils";
 
@@ -18,7 +18,7 @@ type CardProps = React.ComponentProps<typeof Card>
  
 export function Insurance({ className, ...props }: CardProps) {
   const premium = useSelector((state) => state.finance.financeDetails.homePrice);
-  const defaultRate = useSelector((state) => state.insurance.insuranceDetails.default);
+  const defaultRate = .005
   const initExactOption = useSelector((state) => state.insurance.insuranceDetails.exactOption);
   const exactAmount = useSelector((state) => state.insurance.insuranceDetails.exact);
 
@@ -43,17 +43,6 @@ export function Insurance({ className, ...props }: CardProps) {
     dispatch(selectExact(exact))
   }, [exact])
 
-  React.useEffect(() => {
-    dispatch(selectExactOption(exactOption))
-  }, [exactOption])
-
-
-
-  const InsuranceInfo = () => (
-    <>
-      <p>Estimated Insurance Premium: ${premium * defaultRate}</p>
-    </>
-  );
 
 
 

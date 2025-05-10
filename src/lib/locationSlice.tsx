@@ -2,11 +2,14 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { fetchStateInfo, fetchCityInfo  } from "@/api/fetchhData";
 
 // Define the interface for the location object
-interface location {
+export interface location {
     state: string;
     city: string;
     rental: number;
     cityOptions: string[]
+    county: string | null;
+    medianValue: number;
+    medianTax: string;
     pending: boolean;
     error: string[];
     complete: boolean;
@@ -22,6 +25,9 @@ interface location {
       state: "",
       city: "",
       rental: 0,
+      medianTax: "",
+      medianValue: 0,
+      county: "",
       cityOptions: [],
       pending: false,
       error: [],
@@ -49,17 +55,24 @@ interface location {
     extraReducers: (builder) => {
       builder.addCase(fetchStateInfo.fulfilled, (state, action) => {
         state.locationDetails.cityOptions = action.payload.cities
+        state.locationDetails.state = action.payload.state;
         state.locationDetails.pending = false
         state.locationDetails.rental = 1500;
         state.locationDetails.city = "";
       });
-  
       builder.addCase(fetchStateInfo.pending, (state, action) => {
         state.locationDetails.pending = true
       });
 
-
-
+      builder.addCase(fetchCityInfo.fulfilled, (state, action) => {
+        state.locationDetails.county = action.payload.county;
+        //state.locationDetails.median_tax = action.payload.median_tax || "";
+        //state.locationDetails.median_value = action.payload.median_value;
+        state.locationDetails.complete = true
+      });
+      builder.addCase(fetchCityInfo.pending, (state, action) => {
+        state.locationDetails.pending = true
+      });
     }
   });
 

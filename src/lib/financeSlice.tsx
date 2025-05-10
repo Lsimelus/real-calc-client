@@ -60,7 +60,6 @@ export interface finance {
     },
     selectExactRate: (state, action:PayloadAction<number>) => {
       state.financeDetails.exactRate = action.payload;
-      //state.financeDetails.priceComplete = state.financeDetails.exact !== 0.0;
     },
     selectLength: (state, action:PayloadAction<loanTypes>) => {
       state.financeDetails.length = action.payload;
@@ -68,6 +67,8 @@ export interface finance {
 
     selectPrice: (state, action:PayloadAction<number>) => {
         state.financeDetails.homePrice = action.payload;
+        console.log("Finance setting !!!")
+        console.log(action.payload)
         state.financeDetails.priceComplete = action.payload > 0;
       },
       selectDownPayment: (state,  action:PayloadAction<number>) => {

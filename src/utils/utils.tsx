@@ -2,7 +2,7 @@ import {finance} from "../lib/financeSlice"
 import {tax} from "../lib/taxSlice"
 import { insurance } from "@/lib/insuranceSlice"
 import { fees } from "../lib/feesSlice"
-import { calculateMortgage, calculateHomeInsurance, calculateMortgageInsurance, calculatePropertyTax, calculatePMI } from "./math"
+import { calculateMortgage,  calculateMortgageInsurance, calculatePropertyTax, calculatePMI } from "./math"
 import { ComboboxItemProps } from "@/components/ui/combobox"
 
 export const formatNumber = (num: number) => {

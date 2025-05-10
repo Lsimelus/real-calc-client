@@ -1,7 +1,7 @@
 "use client"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import {schedule,addcomma,  feesAmount, moneyToString} from "../../utils/utils"
+import {schedule,  feesAmount, moneyToString} from "../../utils/utils"
 
 import {
   Card,
@@ -39,13 +39,11 @@ export function Graph() {
 
 
   React.useEffect(() => {
-    console.log("!!!!!!")
     let mortgage = principalAndInterest(finance)
   //dispatch(selectPI(mortgage))
     let value =  mortgage*12
 
     let amortization = amortizationSchedule(finance,  mortgage)
-    console.log(amortization)
     //dispatch(selectAmortization(amortization))
     
 
@@ -58,7 +56,7 @@ export function Graph() {
     let amortization = amortizationSchedule(finance, mortgage)
 
     let chartData = schedule(amortization)
-    //console.log(chartData2)
+
 
   return (
 

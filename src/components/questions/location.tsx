@@ -27,13 +27,12 @@ export function Location({ className, ...props }: CardProps) {
 
     function pickState(state: string){
       dispatch(fetchStateInfo(state))
-      dispatch(selectState(state))
+      //dispatch(selectState(state))
         
     }
     
     function pickCity(city:string){
-        dispatch(selectCity(city))
-        dispatch(fetchCityInfo(city))
+        dispatch(fetchCityInfo(state+ "/"+city))
     }
   
 

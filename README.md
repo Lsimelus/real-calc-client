@@ -6,14 +6,15 @@ Currently, the application calculates the user's down payment, closing costs, an
 
 ### Next steps
 
-1. Add Eslint/prettier
-2. Add Typescript testing sweet
-3. Deploy using Vercel
-4. Update CSV to add rental income
-5. Make UI decorative
-6. Add Equity building feature
-7. Add a comparitive feature
-8. Reconstruct back end as DB for better searching or at least consider it? Or stick to CSV approach pros vs con
+1. Get feedback - On points 4,5,9 (relating to how the slices are split out), also file structure for possible change
+3. Add Eslint/prettier
+4. Add Typescript testing sweet
+5. Deploy using Vercel
+6. Update CSV to add rental income
+7. Make UI decorative
+8. Add Equity building feature
+9. Add a comparitive feature
+10. Reconstruct back end as DB for better searching or at least consider it? Or stick to CSV approach pros vs con
 
 
 

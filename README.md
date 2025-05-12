@@ -1,3 +1,27 @@
+# Preview 
+
+This application is designed to provide users with insight into how U.S. real estate markets compare in terms of affordability and profitability. It also allows for easy comparison between locations and shows how a loan can be paid off over time, as well as how that affects the equity you build in your home.
+
+Currently, the application calculates the user's down payment, closing costs, and the estimated mortgage for a property in the area of their choosing. The rest of the capabilities have not yet been added.
+
+### Next steps
+
+1. Add Eslint/prettier
+2. Add Typescript testing sweet
+3. Deploy using Vercel
+4. Update CSV to add rental income
+5. Make UI decorative
+6. Add Equity building feature
+7. Add a comparitive feature
+8. Reconstruct back end as DB for better searching or at least consider it? Or stick to CSV approach pros vs con
+
+
+
+
+
+
+The [backend](https://github.com/Lsimelus/real-calc-script) for this application is a python flask app that will eventually get updated
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -13,21 +37,6 @@ pnpm dev
 # or
 bun dev
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 

@@ -1,7 +1,7 @@
 "use client"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import {schedule,  feesAmount, moneyToString} from "../../utils/utils"
+import {amortizationFormatter,  feesAmount, moneyToString} from "../../utils/utils"
 
 import {
   Card,
@@ -32,12 +32,12 @@ const chartConfig = {
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig
-export function Graph() {
+export function GraphAmortization() {
   const finance = useSelector((state) => state.finance.financeDetails);
 
   let mortgage = principalAndInterest(finance)
   let amortization = amortizationSchedule(finance, mortgage)
-  let chartData = schedule(amortization)
+  let chartData = amortizationFormatter(amortization)
 
 
   return (

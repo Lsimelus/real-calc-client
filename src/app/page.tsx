@@ -6,7 +6,7 @@ import { Tax } from "../components/questions/tax";
 import { Loan } from "../components/questions/loan"
 import { Confirm } from "../components/questions/confirm"
 import { useSelector, useDispatch } from "react-redux";
-import { Graph } from "@/components/ui/graph";
+import { GraphAmortization } from "@/components/ui/graphAmortization";
 import { Fees } from "@/components/questions/fees";
 import { Insurance } from "@/components/questions/insurance";
 import {Summary }from "../components/ui/summary";
@@ -58,7 +58,7 @@ export default function Home() {
           }
         <Summary questionCompleted={percentTrue == 100} editInfo={() => editAfterCompletion()}></Summary>
         { percentTrue == 100 &&
-        <Graph/>
+        <GraphAmortization/>
           
             }
         

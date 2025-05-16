@@ -9,7 +9,7 @@ export interface location {
     cityOptions: string[]
     county: string | null;
     medianValue: number;
-    medianTax: string;
+    medianTax: number;
     pending: boolean;
     error: string[];
     complete: boolean;
@@ -25,7 +25,7 @@ export interface location {
       state: "",
       city: "",
       rental: 0,
-      medianTax: "",
+      medianTax: 0,
       medianValue: 0,
       county: "",
       cityOptions: [],
@@ -59,6 +59,8 @@ export interface location {
         state.locationDetails.pending = false
         state.locationDetails.rental = 1500;
         state.locationDetails.city = "";
+        state.locationDetails.medianTax = 0
+        state.locationDetails.medianValue = 0;
       });
       builder.addCase(fetchStateInfo.pending, (state, action) => {
         state.locationDetails.pending = true
@@ -66,8 +68,8 @@ export interface location {
 
       builder.addCase(fetchCityInfo.fulfilled, (state, action) => {
         state.locationDetails.county = action.payload.county;
-        state.locationDetails.medianTax = action.payload.median_ax || "";
-        state.locationDetails.medianValue = action.payload.median_value;
+        state.locationDetails.medianTax = parseFloat(action.payload.median_tax);
+        state.locationDetails.medianValue = parseInt(action.payload.median_value);
         state.locationDetails.city = action.payload.city;
         state.locationDetails.complete = true
       });

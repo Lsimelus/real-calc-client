@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import { Combobox } from "@/components/ui/combobox";
 import { states } from "../../constants/states";
-import {cityOptionsList } from "../../utils/utils"
+import {addcomma, cityOptionsList } from "../../utils/utils"
 import { Label } from "@/components/ui/label"
 
   
@@ -22,6 +22,7 @@ export function Location({ className, ...props }: CardProps) {
     const cityOptions = locationSlice.cityOptions
     const city = locationSlice.city;
     const state = locationSlice.state;
+    
     const dispatch = useDispatch();
 
 
@@ -48,7 +49,19 @@ export function Location({ className, ...props }: CardProps) {
       <div className="grid w-full max-w-sm items-center gap-1.5">
       <Label>City</Label>
       <Combobox frameworks={cityOptionsList(cityOptions)} onSelect={pickCity}  defaultValue={city}/>
-      </div>
+      </div>     
+     {
+        locationSlice.medianValue  &&
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label>Median home value in {locationSlice.county}: {addcomma(locationSlice.medianValue)}</Label>
+        </div>
+      }
+      {
+        locationSlice.medianTax &&
+        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <Label>Median property tax in {locationSlice.county}: {locationSlice.medianTax}%</Label>
+        </div>
+      }
   </CardContent>
     </Card>
   )

@@ -76,7 +76,7 @@ export function Tax({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
       <div className="grid  max-w-sm items-center gap-1.5">
-       <Label>Estimated yearly tax: {addcomma(estimatePropertyTax(financeSlice, locationSlice)[1])}</Label>
+       <Label>Estimated yearly tax: {addcomma(estimatedTax[1])}</Label>
 
       </div>
         <div>

@@ -3,7 +3,8 @@ import { insurance } from "@/lib/insuranceSlice";
 import { tax } from "@/lib/taxSlice";
 import {location } from "@/lib/locationSlice"
 import {  calculateMortgage, calculateMortgageInsurance, calculatePMI } from "./math";
-import { NATIONAL_AVERAGE_PROPERTY_TAX_RATE, NATIONAL_INSURANCE_PREMIUM_RATE_PER_HOUSE_DOLLAR } from "@/constants/rates";
+import { NATIONAL_AVERAGE_PROPERTY_TAX_RATE, NATIONAL_INSURANCE_PREMIUM_RATE_PER_HOUSE_DOLLAR, MORTGAGE_INSURANCE_RATE, PMI_RATE, DOWN_DEPOSIT_RATE } from "@/constants/rates";
+import { loanTypes } from "@/constants/types";
 
 export const propertyTax = (financeSlice: finance, taxSlice:tax, locationSlice:location) =>{
     if (taxSlice.exact > 0){
@@ -16,7 +17,8 @@ export const propertyTax = (financeSlice: finance, taxSlice:tax, locationSlice:l
 }
 
 export const  estimatePropertyTax = (financeSlice: finance, locationSlice:location) =>{
-    if(typeof locationSlice.medianTax !== 'undefined' && locationSlice.medianTax !== ''){
+    console.log()
+    if(financeSlice.priceComplete && locationSlice.medianTax != 0){
         return ["location", locationPropertyTax(financeSlice, locationSlice)]
     }else if (financeSlice.priceComplete ){
         return ["default", defaultPropertyTax(financeSlice)]
@@ -26,14 +28,11 @@ export const  estimatePropertyTax = (financeSlice: finance, locationSlice:locati
 }
 
 export const locationPropertyTax = (financeSlice: finance, locationSlice:location ) =>{
-    if (locationSlice.medianTax == "" || !(financeSlice.priceComplete)) {
-        return ["", 0]
-    }
     let propertyValue = financeSlice.homePrice
 
 
     let medianTax =  parseFloat(locationSlice.medianTax)
-return propertyValue * medianTax;
+    return (propertyValue * medianTax)/12;
 }
 
 export const defaultPropertyTax = (financeSlice: finance) =>{
@@ -104,30 +103,36 @@ export const amortizationSchedule = (financeSlice: finance, principalAndInterest
 
 
 
-export const mortgageInsurance = (financeSlice: finance) =>{
+export const mortgageInsurance = (financeSlice: finance) =>{  
     if (!(financeSlice.loanComplete && financeSlice.priceComplete) ) {
         return 0;
     }
+    if (financeSlice.type == loanTypes.FHA || financeSlice.downPaymentPercent >19 ){
+        return 0
+    }
     let loanAmount = financeSlice.homePrice- financeSlice.downPaymentAmount; // $180,000 loan amount
-let insuranceRate = 0.85; // 0.85% mortgage insurance rate
+    let insuranceRate = MORTGAGE_INSURANCE_RATE;
 
 return calculateMortgageInsurance(loanAmount, insuranceRate);
 
 }
 
 export const pmInsurance = (financeSlice: finance) =>{
-    if (!(financeSlice.loanComplete && financeSlice.priceComplete)) {
+    if (!(financeSlice.loanComplete && financeSlice.priceComplete) ) {
         return 0;
     }
+    if (financeSlice.type != loanTypes.FHA){
+        return 0
+    }
     let loanAmount = calcLoanAmount(financeSlice) // $250,000 loan amount
-let pmiRate = 0.75; // 0.75% PMI rate
+    let pmiRate = PMI_RATE;
 
 return calculatePMI(loanAmount, pmiRate);
 
 }
 
 export const calcDownDeposit = (financeSlice: finance) =>{
-    return calcLoanAmount(financeSlice) * 0.02;
+    return calcLoanAmount(financeSlice) * DOWN_DEPOSIT_RATE;
 }
 
 const calcLoanAmount = (financeSlice: finance) =>{

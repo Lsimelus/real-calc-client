@@ -44,8 +44,8 @@ import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, princip
 
   const [invoices, setInvoices] = React.useState([
     { cost: "Principal & Interest",
-        monthly: "jhvj",
-        yearly: "hjvj",
+        monthly: "",
+        yearly: "",
         desc: "The principal is the amount of money you borrowed to buy the home. The interest is the cost of borrowing that money."
     },
     { cost: "Property Taxes",

@@ -1,7 +1,7 @@
 "use client"
 import { TrendingUp } from "lucide-react"
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import {amortizationFormatter,  feesAmount, moneyToString} from "../../utils/utils"
+import {amortizationFormatter,  feesAmount, moneyToString, equityFormatter, addcomma} from "../../utils/utils"
 
 import {
   Card,
@@ -20,31 +20,38 @@ import {
 import { selectPI, selectAmortization } from '@/lib/loanSlice';
 import { useDispatch, useSelector } from "react-redux"; 
 import React from 'react';
-import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil"
+import { amortizationSchedule, equitySchedule, mortgageInsurance, principalAndInterest } from "@/utils/sliceUtil"
+import { loanTypes } from "@/constants/types"
+
 
 const chartConfig = {
-  interest: {
-    label: "Interest",
-    color: "hsl(var(--chart-1))",
+  balance: {
+    label: "Balance",
+    color: "hsl(var(--chart-3))",
   },
-  principal: {
-    label: "Principal",
-    color: "hsl(var(--chart-2))",
+  cumulativeInterest: {
+    label: "Cumulative Interest",
+    color: "hsl(var(--chart-4))",
+  },
+  principalPaid: {
+    label: "Principal Paid",
+    color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig
-export function GraphAmortization() {
+export function GraphEquity() {
   const finance = useSelector((state) => state.finance.financeDetails);
 
   let mortgage = principalAndInterest(finance)
-  let amortization = amortizationSchedule(finance, mortgage)
-  let chartData = amortizationFormatter(amortization)
+  let amortization = equitySchedule(finance, mortgage)
+  let chartData = equityFormatter(amortization, finance)
+
 
 
   return (
 
-    <Card className='col-span-5 lg:col-span-3 col-span-5'>
+    <Card className='col-span-5'>
       <CardHeader>
-        <CardTitle>Amortization Schedule Graph</CardTitle>
+        <CardTitle>Home Equity Graph</CardTitle>
         <CardDescription>Monthly payment</CardDescription>
       </CardHeader>
       <CardContent>
@@ -67,34 +74,40 @@ export function GraphAmortization() {
             />
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <Line
-              dataKey="interest"
+              dataKey="balance"
               type="monotone"
-              stroke="var(--color-interest)"
+              stroke="var(--color-balance)"
               strokeWidth={2}
               dot={false}
             />
             <Line
-              dataKey="principal"
+              dataKey="cumulativeInterest"
               type="monotone"
-              stroke="var(--color-principal)"
+              stroke="var(--color-cumulativeInterest)"
+              strokeWidth={2}
+              dot={false}
+            />
+            <Line
+              dataKey="principalPaid"
+              type="monotone"
+              stroke="var(--color-principalPaid)"
               strokeWidth={2}
               dot={false}
             />
           </LineChart>
         </ChartContainer>
       </CardContent>
+      {!!(chartData[1] != null & finance.type != loanTypes.FHA) &&
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-             
-            </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              The principal will be more than the interest rate on month {chartData[1]}
+              You will have 20% equity in your home in {chartData[1]} months without having to make any additonal payments. At that point, you will be able to remove the Mortgage Insurance from you Mortgage payment and it will deacrease by {addcomma(mortgageInsurance(finance))} per year
             </div>
           </div>
         </div>
       </CardFooter>
+}
     </Card>
   )
 }

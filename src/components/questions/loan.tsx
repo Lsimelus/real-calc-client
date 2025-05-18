@@ -33,7 +33,7 @@ const CustomHoverCard: React.FC<CustomHoverCardProps> = ({ onClick, buttonText, 
       <HoverCardTrigger>
         <Button variant={active ? "default" : "ghost"} onClick={onClick}>{buttonText}</Button>
       </HoverCardTrigger>
-      {active == false &&
+      {!!(active == false) &&
         <HoverCardContent>
           {contentText}
         </HoverCardContent>
@@ -114,12 +114,12 @@ export function Loan({ className, ...props }: CardProps) {
         {cards.map((card, index) => (
           <React.Fragment key={index}>
             <CustomHoverCard {...card} />
-            {index < cards.length - 1 && <Separator orientation="vertical" />}
+            {!!(index < cards.length - 1) && <Separator orientation="vertical" />}
           </React.Fragment>
         ))}
         
       </div>
-      {type !== loanTypes.None && (
+      {!!(type !== loanTypes.None) && (
         <div>
           <div className="grid w-full max-w-sm items-center gap-1.5 mb-10 mt-10">
           <Label>The lengh of the loan: {loanLength} years</Label>
@@ -130,11 +130,11 @@ export function Loan({ className, ...props }: CardProps) {
           <Label>Typical rate for loan type: {cardTypes[type].rates}{"%"}</Label>
           </div>
           <div className="grid  max-w-sm items-center gap-1.5">
-          <Label>Do you want to use a specifc interest rate instead instead? {exact > 0 && `${exact}%`}</Label>
+          <Label>Do you want to use a specifc interest rate instead instead? {!!(exact > 0) && `${exact}%`}</Label>
           </div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
           <Button onClick={() => {setExactOption(false); setExact(0.0) } }   variant={!exactOption ? "default" : "ghost"}>No</Button>
-          {exactOption && (
+          {!!exactOption && (
             <Input
             type='number'
             step="0.1"

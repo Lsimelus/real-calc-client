@@ -38,7 +38,7 @@ export const feesAmount = (fees: fees) =>{
     return fees.fee * 12;
 }
 
-export const schedule = (unformatted_schdule: number[][]) =>{
+export const amortizationFormatter = (unformatted_schdule: number[][]) =>{
     var chartData = []
     var turned = false
     var turningPoint = 0
@@ -52,6 +52,33 @@ export const schedule = (unformatted_schdule: number[][]) =>{
         }
         var row = { month: (i+1).toString(), interest: interest, principal: principal }
         chartData.push(row)
+    }
+    return [chartData, turningPoint]
+}
+
+export const equityFormatter = (unformatted_schdule: number[][], financeSlice: finance) =>{
+
+    let twentyPercentAmount = (financeSlice.homePrice)* .8;
+    
+    var turned = false
+    var turningPoint = null
+    if (twentyPercentAmount > unformatted_schdule[1][0] || financeSlice.downPaymentPercent >= 20){
+        turned = true
+    }
+
+    var chartData = []
+
+    for (let i = 0; i < unformatted_schdule.length; i++) {
+        let balance = unformatted_schdule[i][0]
+        let cumulativeInterest =  unformatted_schdule[i][1]
+        let principalPaid = unformatted_schdule[i][2]
+        var row = { month: (i+1).toString(), balance: balance, cumulativeInterest: cumulativeInterest, principalPaid: principalPaid }
+        chartData.push(row)
+
+        if (!turned &&  twentyPercentAmount > balance){
+            turningPoint = i
+            turned = true
+        }
     }
     return [chartData, turningPoint]
 }

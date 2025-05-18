@@ -65,7 +65,7 @@ export function Insurance({ className, ...props }: CardProps) {
       <CardContent className="grid gap-4">
           <div className="grid  max-w-sm items-center gap-1.5">
           <Label className="mb-1">Estimated Insurance Premium: {addcomma(estimatedHomeInsurance(financeSlice, insuranceSlice)[1])}</Label>
-          <Label>Is there an exact insurance premium you would want use? {exact > 0 && formatNumber(exact)}</Label>
+          <Label>Is there an exact insurance premium you would want use? {!!(exact > 0) && formatNumber(exact)}</Label>
           </div>
           <div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>

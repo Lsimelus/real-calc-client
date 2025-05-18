@@ -42,6 +42,7 @@ export function Tax({ className, ...props }: CardProps) {
     let currTax = propertyTax(financeSlice, taxSlice, locationSlice)
     setTaxAmount(currTax[1])
     setTaxType(currTax[0])
+    console.log(currTax)
   }, [financeSlice, taxSlice, locationSlice])
 
   const dispatch = useDispatch();
@@ -81,13 +82,13 @@ export function Tax({ className, ...props }: CardProps) {
       </div>
         <div>
           <div className="grid  max-w-sm items-center gap-1.5 mt-5">
-          <Label className="mb-1">Do you have/want to use a exact yearly tax amount? {exact > 0 && formatNumber(exact)}</Label>
+          <Label className="mb-1">Do you have/want to use a exact yearly tax amount? {!!(exact > 0) && formatNumber(exact)}</Label>
           <div>
           <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
           <Button onClick={() => setExactOption(false)}   variant={!exactOption ? "default" : "ghost"}>No</Button>
 
           </div>
-          {exactOption && (
+          {!!exactOption && (
             <Input value={exact} onChange={handleInputChange} ></Input>
           ) }
           

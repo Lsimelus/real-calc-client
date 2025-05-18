@@ -7,6 +7,7 @@ import { Loan } from "../components/questions/loan"
 import { Confirm } from "../components/questions/confirm"
 import { useSelector, useDispatch } from "react-redux";
 import { GraphAmortization } from "@/components/ui/graphAmortization";
+import { GraphEquity } from "@/components/ui/graphEquity";
 import { Fees } from "@/components/questions/fees";
 import { Insurance } from "@/components/questions/insurance";
 import {Summary }from "../components/ui/summary";
@@ -50,17 +51,20 @@ export default function Home() {
       <>
       
     
-          { percentTrue < 100 &&
+          { !!(percentTrue < 100) &&
           <>
 
         <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
         </>
           }
         <Summary questionCompleted={percentTrue == 100} editInfo={() => editAfterCompletion()}></Summary>
-        { percentTrue == 100 &&
+        { !!(percentTrue == 100) &&
+        <>
         <GraphAmortization/>
+        {<GraphEquity/> }
+        </>
           
-            }
+          }
         
     </>      
     </div>

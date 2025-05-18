@@ -27,11 +27,16 @@ export function Location({ className, ...props }: CardProps) {
 
 
     function pickState(state: string){
-      dispatch(fetchStateInfo(state))
+      if (state != ""){
+        dispatch(fetchStateInfo(state))
+      }
     }
     
     function pickCity(city:string){
+      if (city != "" && state != ""){
         dispatch(fetchCityInfo(state+ "/"+city))
+      }
+      
     }
   
 
@@ -51,13 +56,13 @@ export function Location({ className, ...props }: CardProps) {
       <Combobox frameworks={cityOptionsList(cityOptions)} onSelect={pickCity}  defaultValue={city}/>
       </div>     
      {
-        locationSlice.medianValue  &&
+        !!locationSlice.medianValue  &&
         <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label>Median home value in {locationSlice.county}: {addcomma(locationSlice.medianValue)}</Label>
         </div>
       }
       {
-        locationSlice.medianTax &&
+        !!locationSlice.medianTax &&
         <div className="grid w-full max-w-sm items-center gap-1.5">
         <Label>Median property tax in {locationSlice.county}: {locationSlice.medianTax}%</Label>
         </div>

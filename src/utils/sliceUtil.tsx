@@ -17,8 +17,7 @@ export const propertyTax = (financeSlice: finance, taxSlice:tax, locationSlice:l
 }
 
 export const  estimatePropertyTax = (financeSlice: finance, locationSlice:location) =>{
-    console.log()
-    if(financeSlice.priceComplete && locationSlice.medianTax != 0){
+    if(financeSlice.priceComplete && locationSlice.medianTax != 0 && !Number.isNaN(locationSlice.medianTax)){
         return ["location", locationPropertyTax(financeSlice, locationSlice)]
     }else if (financeSlice.priceComplete ){
         return ["default", defaultPropertyTax(financeSlice)]
@@ -96,6 +95,37 @@ export const amortizationSchedule = (financeSlice: finance, principalAndInterest
         i++;
       }
 
+    return scheduleInfo
+
+}
+
+export const equitySchedule = (financeSlice: finance, principalAndInterest:number) =>{
+    var loanAmount = financeSlice.homePrice- financeSlice.downPaymentAmount;
+    
+    let annualInterestRate = financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;
+    let monthlyInterest = annualInterestRate / 1200
+
+
+    var interestPayment = loanAmount * monthlyInterest
+    var principalPaid = principalAndInterest - interestPayment
+    var totalInterestPaid = 0;
+    var totalLoanAmount = loanAmount;
+
+
+    let scheduleInfo = []
+    var i = 1
+    while (i <= financeSlice.length*12) {
+        var interestPayment = loanAmount * monthlyInterest
+        totalInterestPaid += interestPayment;
+        let payments = [loanAmount, totalInterestPaid, totalLoanAmount - loanAmount]
+
+        scheduleInfo.push(payments )
+
+    
+        var principalPaid = principalAndInterest - interestPayment
+        loanAmount -= principalPaid
+        i++;
+      }
     return scheduleInfo
 
 }

@@ -68,7 +68,7 @@ export function Price({ className, ...props }: CardProps) {
       <Input value={price} onChange={handleInputChange} ></Input>
         </div>
 
-        {price > 0 && (
+        {!!(price > 0) && (
                 <div className="grid  max-w-sm items-center gap-1.5 mt-6">
                     <Label>Down payment</Label>
                     <Slider defaultValue={downPayment} min={min} max={max} step={.5} value={downPayment} onValueChange={(downPayment) => setDownPayment(downPayment)} />

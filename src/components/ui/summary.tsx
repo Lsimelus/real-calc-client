@@ -153,7 +153,7 @@ function downDeposit(){
       <TableHeader>
         <TableRow>
           <TableHead className="w-[300px]">
-            {questionCompleted && 
+            {!!questionCompleted && 
             <Button onClick={editInfo}>Edit info</Button>
             }
             

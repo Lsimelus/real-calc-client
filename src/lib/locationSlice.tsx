@@ -68,6 +68,8 @@ export interface location {
 
       builder.addCase(fetchCityInfo.fulfilled, (state, action) => {
         state.locationDetails.county = action.payload.county;
+        //
+        
         state.locationDetails.medianTax = parseFloat(action.payload.median_tax);
         state.locationDetails.medianValue = parseInt(action.payload.median_value);
         state.locationDetails.city = action.payload.city;

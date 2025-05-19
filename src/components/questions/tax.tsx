@@ -42,7 +42,6 @@ export function Tax({ className, ...props }: CardProps) {
     let currTax = propertyTax(financeSlice, taxSlice, locationSlice)
     setTaxAmount(currTax[1])
     setTaxType(currTax[0])
-    console.log(currTax)
   }, [financeSlice, taxSlice, locationSlice])
 
   const dispatch = useDispatch();

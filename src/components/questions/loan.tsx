@@ -50,7 +50,7 @@ export const cardTypes: { [key in loanTypes]: { buttonText: string, contentText:
 };
 
 export function Loan({ className, ...props }: CardProps) {
-  const financeSlice = useSelector((state) => state.finance.financeDetails);
+  const financeSlice = useSelector((state: { finance: { financeDetails: any; }; }) => state.finance.financeDetails);
   const initType = financeSlice.type;
   const initExact = financeSlice.exactRate;
   const initLoanLength = financeSlice.length;
@@ -77,7 +77,7 @@ export function Loan({ className, ...props }: CardProps) {
     dispatch(selectType(type))
   }, [type])
   React.useEffect(() => {
-    dispatch(selectExactRate(parseFloat(exact)))
+    dispatch(selectExactRate((exact)))
   }, [exact])
   
   React.useEffect(() => {
@@ -87,7 +87,7 @@ export function Loan({ className, ...props }: CardProps) {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     let value = event.target.value;
-    setExact(value);
+    setExact(Number(value));
   }
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     let value = parseFloat(event.target.value);
@@ -98,7 +98,7 @@ export function Loan({ className, ...props }: CardProps) {
     } else if (value > 30.0) {
         value = 30.0;
     }
-    setExact(value.toFixed(1));
+    setExact(Number(value.toFixed(1)));
   }
 
 
@@ -123,7 +123,7 @@ export function Loan({ className, ...props }: CardProps) {
         <div>
           <div className="grid w-full max-w-sm items-center gap-1.5 mb-10 mt-10">
           <Label>The lengh of the loan: {loanLength} years</Label>
-          <Slider defaultValue={[30]} max={30} step={5} min={10} value={loanLength} onValueChange={(loanLength) => setLoanLength(loanLength)} />
+          <Slider defaultValue={[30]} max={30} step={5} min={10} value={loanLength} onValueChange={(loanLength: React.SetStateAction<any[]>) => setLoanLength(loanLength)} />
           </div>
 
           <div className="grid w-full max-w-sm items-center gap-1.5">

@@ -17,7 +17,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { selectPI, selectAmortization } from '@/lib/loanSlice';
 import { useDispatch, useSelector } from "react-redux"; 
 import React from 'react';
 import { amortizationSchedule, equitySchedule, mortgageInsurance, principalAndInterest } from "@/utils/sliceUtil"
@@ -39,7 +38,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 export function GraphEquity() {
-  const finance = useSelector((state) => state.finance.financeDetails);
+  const finance = useSelector((state:any) => state.finance.financeDetails);
 
   let mortgage = principalAndInterest(finance)
   let amortization = equitySchedule(finance, mortgage)
@@ -49,7 +48,7 @@ export function GraphEquity() {
 
   return (
 
-    <Card className='col-span-5'>
+    <Card className='col-span-3'>
       <CardHeader>
         <CardTitle>Home Equity Graph</CardTitle>
         <CardDescription>Monthly payment</CardDescription>
@@ -58,7 +57,7 @@ export function GraphEquity() {
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData[0]}
+            data={chartData.data}
             margin={{
               left: 12,
               right: 12,
@@ -97,12 +96,12 @@ export function GraphEquity() {
           </LineChart>
         </ChartContainer>
       </CardContent>
-      {!!(chartData[1] != null & finance.type != loanTypes.FHA) &&
+      {!!(chartData.point > -1 && finance.type != loanTypes.FHA) &&
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              You will have 20% equity in your home in {chartData[1]} months without having to make any additonal payments. At that point, you will be able to remove the Mortgage Insurance from you Mortgage payment and it will deacrease by {addcomma(mortgageInsurance(finance))} per year
+              You will have 20% equity in your home in {chartData.point} months without having to make any additonal payments. At that point, you will be able to remove the Mortgage Insurance from you Mortgage payment and it will deacrease by {addcomma(mortgageInsurance(finance))} per year
             </div>
           </div>
         </div>

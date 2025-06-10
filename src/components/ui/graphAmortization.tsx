@@ -17,7 +17,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart"
-import { selectPI, selectAmortization } from '@/lib/loanSlice';
+
 import { useDispatch, useSelector } from "react-redux"; 
 import React from 'react';
 import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil"
@@ -33,7 +33,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig
 export function GraphAmortization() {
-  const finance = useSelector((state) => state.finance.financeDetails);
+  const finance = useSelector((state: any) => state.finance.financeDetails);
 
   let mortgage = principalAndInterest(finance)
   let amortization = amortizationSchedule(finance, mortgage)
@@ -51,7 +51,7 @@ export function GraphAmortization() {
         <ChartContainer config={chartConfig}>
           <LineChart
             accessibilityLayer
-            data={chartData[0]}
+            data={chartData.data}
             margin={{
               left: 12,
               right: 12,
@@ -90,7 +90,7 @@ export function GraphAmortization() {
              
             </div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              The principal will be more than the interest rate on month {chartData[1]}
+              The principal will be more than the interest rate on month {chartData.point}
             </div>
           </div>
         </div>

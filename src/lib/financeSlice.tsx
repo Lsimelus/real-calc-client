@@ -4,8 +4,8 @@ import { cardTypes } from "../components/questions/loan"
 
 export interface finance {
     type: loanTypes;
-    rate: number | null;
-    exactRate: number | null;
+    rate: number;
+    exactRate: number;
     length: number;
     priceComplete: boolean;
     loanComplete: boolean;
@@ -26,8 +26,8 @@ export interface finance {
   const initialState: financeState = {
     financeDetails: {
       type: loanTypes.None,
-      rate: null,
-      exactRate: 0.0,
+      rate: -1,
+      exactRate: -1,
       length: 30,
       priceComplete: false,
       loanComplete: false,
@@ -62,7 +62,7 @@ export interface finance {
       state.financeDetails.exactRate = action.payload;
     },
     selectLength: (state, action:PayloadAction<loanTypes>) => {
-      state.financeDetails.length = action.payload;
+      //state.financeDetails.length = action.payload;
     },
 
     selectPrice: (state, action:PayloadAction<number>) => {

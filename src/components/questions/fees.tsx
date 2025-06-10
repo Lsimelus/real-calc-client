@@ -10,7 +10,6 @@ import { Slider } from "@/components/ui/slider"
 import * as React from "react"
 import { Input } from "@/components/ui/input"
 import { useDispatch, useSelector } from "react-redux";
-import { selectPrice, selectDownPayment, selectDownPaymentAmount } from "@/lib/priceSlice"
 import { setFee } from "@/lib/feesSlice"
 import { Label } from "../ui/label"
 import { formatNumber } from "@/utils/utils"
@@ -18,7 +17,7 @@ import { formatNumber } from "@/utils/utils"
 type CardProps = React.ComponentProps<typeof Card>
 
 export function Fees({ className, ...props }: CardProps) {
-    const initPrice = useSelector((state) => state.fees.feesDetails.fee);
+    const initPrice = useSelector((state: { fees: { feesDetails: { fee: any } } }) => state.fees.feesDetails.fee);
     const [feeAmount, setFeeAmount] = React.useState(initPrice)
 
 

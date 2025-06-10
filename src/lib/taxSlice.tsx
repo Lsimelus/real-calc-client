@@ -30,9 +30,6 @@ export interface tax {
     clearState: (state) => {
         state = initialState
     },
-    selectLocal: (state, action:PayloadAction<number>) => {
-      state.taxDetails.local = action.payload;
-    },
     selectExact: (state, action:PayloadAction<number>) => {
 
       state.taxDetails.exact = action.payload;

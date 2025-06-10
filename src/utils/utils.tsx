@@ -2,7 +2,7 @@ import {finance} from "../lib/financeSlice"
 import {tax} from "../lib/taxSlice"
 import { insurance } from "@/lib/insuranceSlice"
 import { fees } from "../lib/feesSlice"
-import { calculateMortgage,  calculateMortgageInsurance, calculatePropertyTax, calculatePMI } from "./math"
+import { calculateMortgage,  calculateMortgageInsurance,  calculatePMI } from "./math"
 import { ComboboxItemProps } from "@/components/ui/combobox"
 
 export const formatNumber = (num: number) => {
@@ -38,6 +38,11 @@ export const feesAmount = (fees: fees) =>{
     return fees.fee * 12;
 }
 
+interface amortizationInfo {
+    data: any[];
+    point: number;
+}
+
 export const amortizationFormatter = (unformatted_schdule: number[][]) =>{
     var chartData = []
     var turned = false
@@ -50,10 +55,11 @@ export const amortizationFormatter = (unformatted_schdule: number[][]) =>{
             turningPoint = i
             turned = true
         }
-        var row = { month: (i+1).toString(), interest: interest, principal: principal }
+        var row:any = { month: (i+1).toString(), interest: interest, principal: principal }
         chartData.push(row)
     }
-    return [chartData, turningPoint]
+    var data: amortizationInfo = {data: chartData, point: turningPoint}
+    return data
 }
 
 export const equityFormatter = (unformatted_schdule: number[][], financeSlice: finance) =>{
@@ -61,7 +67,7 @@ export const equityFormatter = (unformatted_schdule: number[][], financeSlice: f
     let twentyPercentAmount = (financeSlice.homePrice)* .8;
     
     var turned = false
-    var turningPoint = null
+    var turningPoint = -1
     if (twentyPercentAmount > unformatted_schdule[1][0] || financeSlice.downPaymentPercent >= 20){
         turned = true
     }
@@ -80,7 +86,8 @@ export const equityFormatter = (unformatted_schdule: number[][], financeSlice: f
             turned = true
         }
     }
-    return [chartData, turningPoint]
+    var data: amortizationInfo = {data: chartData, point: turningPoint}
+    return data
 }
 
 const formatForCombo = (rawString:string) => {

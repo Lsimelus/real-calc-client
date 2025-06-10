@@ -80,6 +80,3 @@ export interface location {
       });
     }
   });
-
-  export const { selectCity, selectState} = locationSlice.actions;
-

@@ -19,13 +19,13 @@ const questions = [<Location />,<Loan/>, <Price />,<Tax />, <Fees/>, <Insurance/
 
 
 export default function Home() {
-  const locationCompleted = useSelector((state) => state.location.locationDetails.complete);
-  const priceCompleted = useSelector((state) => state.finance.financeDetails.priceComplete);
-  const loanCompleted = useSelector((state) => state.finance.financeDetails.loanComplete);
-  const taxCompleted = useSelector((state) => state.tax.taxDetails.complete);
-  const confirmCompleted = useSelector((state) => state.confirm.confirmDetails.complete);
-  const feesCompleted = useSelector((state) => state.fees.feesDetails.complete);
-  const insuranceCompleted = useSelector((state) => state.insurance.insuranceDetails.complete);
+  const locationCompleted = useSelector((state: { location: { locationDetails: { complete: any; }; }; }) => state.location.locationDetails.complete);
+  const priceCompleted = useSelector((state: { finance: { financeDetails: { priceComplete: any; }; }; }) => state.finance.financeDetails.priceComplete);
+  const loanCompleted = useSelector((state: { finance: { financeDetails: { loanComplete: any; }; }; }) => state.finance.financeDetails.loanComplete);
+  const taxCompleted = useSelector((state: { tax: { taxDetails: { complete: any; }; }; }) => state.tax.taxDetails.complete);
+  const confirmCompleted = useSelector((state: { confirm: { confirmDetails: { complete: any; }; }; }) => state.confirm.confirmDetails.complete);
+  const feesCompleted = useSelector((state: { fees: { feesDetails: { complete: any; }; }; }) => state.fees.feesDetails.complete);
+  const insuranceCompleted = useSelector((state: { insurance: { insuranceDetails: { complete: any; }; }; }) => state.insurance.insuranceDetails.complete);
   
   const completedQuestions = [locationCompleted, loanCompleted, priceCompleted, taxCompleted, feesCompleted, insuranceCompleted , confirmCompleted];
   

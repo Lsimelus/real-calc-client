@@ -9,7 +9,7 @@ import { loanTypes } from "@/constants/types";
 export const propertyTax = (financeSlice: finance, taxSlice:tax, locationSlice:location) =>{
     if (taxSlice.exact > 0){
         return ["exact", taxSlice.exact]
-    }else if(locationSlice.medianTax != "" ||financeSlice.priceComplete ){
+    }else if(locationSlice.medianTax > 0 ||financeSlice.priceComplete ){
         return estimatePropertyTax(financeSlice, locationSlice)
     }else{
         return ["", 0]
@@ -30,8 +30,7 @@ export const locationPropertyTax = (financeSlice: finance, locationSlice:locatio
     let propertyValue = financeSlice.homePrice
 
 
-    let medianTax =  parseFloat(locationSlice.medianTax)
-    return (propertyValue * medianTax)/12;
+    return (propertyValue * locationSlice.medianTax)/12;
 }
 
 export const defaultPropertyTax = (financeSlice: finance) =>{

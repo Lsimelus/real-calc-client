@@ -22,15 +22,15 @@ import { init } from "next/dist/compiled/webpack/webpack";
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Tax({ className, ...props }: CardProps) {
-  const financeSlice = useSelector((state) => state.finance.financeDetails);
-  const taxSlice = useSelector((state) => state.tax.taxDetails);
-  const locationSlice = useSelector((state) => state.location.locationDetails);
+  const financeSlice = useSelector((state: { finance: { financeDetails: any; }; }) => state.finance.financeDetails);
+  const taxSlice = useSelector((state: { tax: { taxDetails: any; }; }) => state.tax.taxDetails);
+  const locationSlice = useSelector((state: { location: { locationDetails: any; }; }) => state.location.locationDetails);
 
   const estimatedTax = estimatePropertyTax(financeSlice, locationSlice)
 
-  const price = useSelector((state) => state.finance.financeDetails.homePrice);
+  const price = useSelector((state: { finance: { financeDetails: { homePrice: any; }; }; }) => state.finance.financeDetails.homePrice);
 
-  const initExact = useSelector((state) => state.finance.financeDetails.exactRate);
+  const initExact = useSelector((state: { finance: { financeDetails: { exactRate: any; }; }; }) => state.finance.financeDetails.exactRate);
   const [exact, setExact] = React.useState(initExact);
   const [exactOption, setExactOption] = React.useState(false);
 
@@ -40,8 +40,8 @@ export function Tax({ className, ...props }: CardProps) {
 
   React.useEffect(() => {
     let currTax = propertyTax(financeSlice, taxSlice, locationSlice)
-    setTaxAmount(currTax[1])
-    setTaxType(currTax[0])
+    setTaxAmount(Number(currTax[1]))
+    setTaxType(String(currTax[0]))
   }, [financeSlice, taxSlice, locationSlice])
 
   const dispatch = useDispatch();
@@ -76,7 +76,7 @@ export function Tax({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
       <div className="grid  max-w-sm items-center gap-1.5">
-       <Label>Estimated yearly tax: {addcomma(estimatedTax[1])}</Label>
+       <Label>Estimated yearly tax: {addcomma(Number(estimatedTax[1]))}</Label>
 
       </div>
         <div>

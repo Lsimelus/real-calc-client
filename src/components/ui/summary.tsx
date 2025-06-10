@@ -2,8 +2,7 @@
 import React from 'react';
 import {addcomma, feesAmount, moneyToString} from "../../utils/utils"
 
-import { useDispatch, useSelector } from "react-redux";
-import { selectPI, selectAmortization } from '@/lib/loanSlice';
+import { useDispatch, useSelector } from "react-redux"; 
 import {
     Table,
     TableBody,
@@ -34,11 +33,11 @@ import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, princip
   
   
   export const Summary: React.FC<SummaryProps> = ({questionCompleted, editInfo}: SummaryProps)=>{
-  const finance = useSelector((state) => state.finance.financeDetails);
-  const tax = useSelector((state) => state.tax.taxDetails);
-  const insurance = useSelector((state) => state.insurance.insuranceDetails);
-  const fees = useSelector((state) => state.fees.feesDetails);
-  const location = useSelector((state) => state.location.locationDetails);
+  const finance = useSelector((state:any) => state.finance.financeDetails);
+  const tax = useSelector((state:any) => state.tax.taxDetails);
+  const insurance = useSelector((state:any) => state.insurance.insuranceDetails);
+  const fees = useSelector((state:any) => state.fees.feesDetails);
+  const location = useSelector((state:any) => state.location.locationDetails);
 
   const dispatch = useDispatch();
 
@@ -79,8 +78,9 @@ import { calcDownDeposit, homeInsurance, mortgageInsurance, pmInsurance, princip
     setInvoices(prevInvoices => {
       const newInvoices = [...prevInvoices];
       if (Array.isArray(value)){
-        value  = value[1]
+        value  = Number(value[1])
       }
+
 
 
       newInvoices[index].monthly = addcomma(value / 12);

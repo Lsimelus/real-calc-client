@@ -18,8 +18,8 @@ import { estimatedHomeInsurance, homeInsurance } from "@/utils/sliceUtil";
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Insurance({ className, ...props }: CardProps) {
-  const financeSlice = useSelector((state) => state.finance.financeDetails);
-  const insuranceSlice =  useSelector((state) => state.insurance.insuranceDetails);
+  const financeSlice = useSelector((state: { finance: { financeDetails: any; }; }) => state.finance.financeDetails);
+  const insuranceSlice =  useSelector((state: { insurance: { insuranceDetails: any; }; }) => state.insurance.insuranceDetails);
   const exactAmount = insuranceSlice.exact;
 
   const [exact, setExact] = React.useState(exactAmount);
@@ -64,7 +64,7 @@ export function Insurance({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
           <div className="grid  max-w-sm items-center gap-1.5">
-          <Label className="mb-1">Estimated Insurance Premium: {addcomma(estimatedHomeInsurance(financeSlice, insuranceSlice)[1])}</Label>
+          <Label className="mb-1">Estimated Insurance Premium: {addcomma(Number(estimatedHomeInsurance(financeSlice)[1]))}</Label>
           <Label>Is there an exact insurance premium you would want use? {!!(exact > 0) && formatNumber(exact)}</Label>
           </div>
           <div>

@@ -22,11 +22,11 @@ import * as React from "react"
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Confirm({ className, ...props }: CardProps) {
-  const location = useSelector((state) => state.location.locationDetails);
-  const finance = useSelector((state) => state.finance.financeDetails);
-  const tax = useSelector((state) => state.tax.taxDetails);
-  const insurance = useSelector((state) => state.insurance.insuranceDetails);
-  const fees = useSelector((state) => state.fees.feesDetails);
+  const location = useSelector((state: { location: { locationDetails: any; }; }) => state.location.locationDetails);
+  const finance = useSelector((state: { finance: { financeDetails: any; }; }) => state.finance.financeDetails);
+  const tax = useSelector((state: { tax: { taxDetails: any; }; }) => state.tax.taxDetails);
+  const insurance = useSelector((state: { insurance: { insuranceDetails: any; }; }) => state.insurance.insuranceDetails);
+  const fees = useSelector((state: { fees: { feesDetails: any; }; }) => state.fees.feesDetails);
   const dispatch = useDispatch();
 
 
@@ -54,11 +54,11 @@ export function Confirm({ className, ...props }: CardProps) {
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label>The total yearly premium for home insurance is  {addcomma(homeInsurance(finance, insurance)[1])}</Label>
+        <Label>The total yearly premium for home insurance is  {addcomma(Number(homeInsurance(finance, insurance)[1]))}</Label>
       </div>
 
       <div className="grid w-full max-w-sm items-center gap-1.5">
-        <Label>The total yearly taxes is {addcomma(propertyTax(finance, tax, location)[1])}</Label>
+        <Label>The total yearly taxes is {addcomma(Number(propertyTax(finance, tax, location)[1]))}</Label>
       </div> 
 
       <Button onClick={() => dispatch(selectCompleteness(true))}>Confirm info</Button>

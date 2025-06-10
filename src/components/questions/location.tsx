@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCityInfo ,fetchStateInfo } from "@/api/fetchhData";
-import { selectCity, selectState } from "@/lib/locationSlice";
 import { cn } from "@/lib/utils"
 import {
   Card,
@@ -18,12 +17,12 @@ import { Label } from "@/components/ui/label"
 type CardProps = React.ComponentProps<typeof Card>
  
 export function Location({ className, ...props }: CardProps) {
-    const locationSlice =  useSelector((state) => state.location.locationDetails);
+    const locationSlice =  useSelector((state: { location: { locationDetails: any; }; }) => state.location.locationDetails);
     const cityOptions = locationSlice.cityOptions
     const city = locationSlice.city;
     const state = locationSlice.state;
     
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
 
     function pickState(state: string){

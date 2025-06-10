@@ -17,10 +17,10 @@ import { Label } from "../ui/label";
 type CardProps = React.ComponentProps<typeof Card>
 
 export function Price({ className, ...props }: CardProps) {
-    const min = useSelector((state) => state.finance.financeDetails.minDownpayment);
+    const min = useSelector((state: { finance: { financeDetails: { minDownpayment: any; }; }; }) => state.finance.financeDetails.minDownpayment);
     const max = 40 //Todo: Add max interest var
-    const initPrice = useSelector((state) => state.finance.financeDetails.homePrice);
-    const initDownPayment = useSelector((state) => state.finance.financeDetails.downPaymentPercent);
+    const initPrice = useSelector((state: { finance: { financeDetails: { homePrice: any; }; }; }) => state.finance.financeDetails.homePrice);
+    const initDownPayment = useSelector((state: { finance: { financeDetails: { downPaymentPercent: any; }; }; }) => state.finance.financeDetails.downPaymentPercent);
     
     const [downPayment, setDownPayment] = React.useState([initDownPayment])
     const [price, setPrice] = React.useState(initPrice)
@@ -71,7 +71,7 @@ export function Price({ className, ...props }: CardProps) {
         {!!(price > 0) && (
                 <div className="grid  max-w-sm items-center gap-1.5 mt-6">
                     <Label>Down payment</Label>
-                    <Slider defaultValue={downPayment} min={min} max={max} step={.5} value={downPayment} onValueChange={(downPayment) => setDownPayment(downPayment)} />
+                    <Slider defaultValue={downPayment} min={min} max={max} step={.5} value={downPayment} onValueChange={(downPayment: React.SetStateAction<any[]>) => setDownPayment(downPayment)} />
                     <p>{downPayment + "%"}</p>
                     <p>{formattedDownPayment}</p>
                 </div>

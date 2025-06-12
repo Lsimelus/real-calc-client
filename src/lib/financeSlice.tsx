@@ -27,7 +27,7 @@ export interface finance {
     financeDetails: {
       type: loanTypes.None,
       rate: -1,
-      exactRate: -1,
+      exactRate: 0,
       length: 30,
       priceComplete: false,
       loanComplete: false,
@@ -61,8 +61,8 @@ export interface finance {
     selectExactRate: (state, action:PayloadAction<number>) => {
       state.financeDetails.exactRate = action.payload;
     },
-    selectLength: (state, action:PayloadAction<loanTypes>) => {
-      //state.financeDetails.length = action.payload;
+    selectLength: (state, action:PayloadAction<number>) => {
+      state.financeDetails.length = action.payload;
     },
 
     selectPrice: (state, action:PayloadAction<number>) => {

@@ -1,73 +1,109 @@
 "use client";
 import { QuestionCarousel } from "@/components/ui/questioncarousel";
-import { Price } from "../components/questions/price"
-import { Location } from "../components/questions/location"
+import { Price } from "../components/questions/price";
+import { Location } from "../components/questions/location";
 import { Tax } from "../components/questions/tax";
-import { Loan } from "../components/questions/loan"
-import { Confirm } from "../components/questions/confirm"
+import { Loan } from "../components/questions/loan";
+import { Confirm } from "../components/questions/confirm";
 import { useSelector, useDispatch } from "react-redux";
 import { GraphAmortization } from "@/components/ui/graphAmortization";
 import { GraphEquity } from "@/components/ui/graphEquity";
 import { Fees } from "@/components/questions/fees";
 import { Insurance } from "@/components/questions/insurance";
-import {Summary }from "../components/ui/summary";
-import * as React from "react"
+import { Summary } from "../components/ui/summary";
+import * as React from "react";
 import { selectCompleteness } from "@/lib/confirmSlice";
 
-
-const questions = [<Location />,<Loan/>, <Price />,<Tax />, <Fees/>, <Insurance/>, <Confirm />]
-
+const questions = [
+  <Location />,
+  <Loan />,
+  <Price />,
+  <Tax />,
+  <Fees />,
+  <Insurance />,
+  <Confirm />,
+];
 
 export default function Home() {
-  const locationCompleted = useSelector((state: { location: { locationDetails: { complete: any; }; }; }) => state.location.locationDetails.complete);
-  const priceCompleted = useSelector((state: { finance: { financeDetails: { priceComplete: any; }; }; }) => state.finance.financeDetails.priceComplete);
-  const loanCompleted = useSelector((state: { finance: { financeDetails: { loanComplete: any; }; }; }) => state.finance.financeDetails.loanComplete);
-  const taxCompleted = useSelector((state: { tax: { taxDetails: { complete: any; }; }; }) => state.tax.taxDetails.complete);
-  const confirmCompleted = useSelector((state: { confirm: { confirmDetails: { complete: any; }; }; }) => state.confirm.confirmDetails.complete);
-  const feesCompleted = useSelector((state: { fees: { feesDetails: { complete: any; }; }; }) => state.fees.feesDetails.complete);
-  const insuranceCompleted = useSelector((state: { insurance: { insuranceDetails: { complete: any; }; }; }) => state.insurance.insuranceDetails.complete);
-  
-  const completedQuestions = [locationCompleted, loanCompleted, priceCompleted, taxCompleted, feesCompleted, insuranceCompleted , confirmCompleted];
-  
-  const trueCount = completedQuestions.filter(question => question === true).length;
+  const locationCompleted = useSelector(
+    (state: { location: { locationDetails: { complete: any } } }) =>
+      state.location.locationDetails.complete,
+  );
+  const priceCompleted = useSelector(
+    (state: { finance: { financeDetails: { priceComplete: any } } }) =>
+      state.finance.financeDetails.priceComplete,
+  );
+  const loanCompleted = useSelector(
+    (state: { finance: { financeDetails: { loanComplete: any } } }) =>
+      state.finance.financeDetails.loanComplete,
+  );
+  const taxCompleted = useSelector(
+    (state: { tax: { taxDetails: { complete: any } } }) =>
+      state.tax.taxDetails.complete,
+  );
+  const confirmCompleted = useSelector(
+    (state: { confirm: { confirmDetails: { complete: any } } }) =>
+      state.confirm.confirmDetails.complete,
+  );
+  const feesCompleted = useSelector(
+    (state: { fees: { feesDetails: { complete: any } } }) =>
+      state.fees.feesDetails.complete,
+  );
+  const insuranceCompleted = useSelector(
+    (state: { insurance: { insuranceDetails: { complete: any } } }) =>
+      state.insurance.insuranceDetails.complete,
+  );
+
+  const completedQuestions = [
+    locationCompleted,
+    loanCompleted,
+    priceCompleted,
+    taxCompleted,
+    feesCompleted,
+    insuranceCompleted,
+    confirmCompleted,
+  ];
+
+  const trueCount = completedQuestions.filter(
+    (question) => question === true,
+  ).length;
   const [percentTrue, setPercentTrue] = React.useState(0);
 
   const dispatch = useDispatch();
 
-
   React.useEffect(() => {
     setPercentTrue((trueCount / completedQuestions.length) * 100);
-  }, [completedQuestions])
+  }, [completedQuestions]);
 
-
-  function editAfterCompletion(){
-    dispatch(selectCompleteness(false))
+  function editAfterCompletion() {
+    dispatch(selectCompleteness(false));
   }
-
 
   return (
     <div className="grid grid-cols-5 gap-8 m-6 p-6">
-      <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white" >Making real estate make sense</div>
+      <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white">
+        Making real estate make sense
+      </div>
       <>
-      
-    
-          { !!(percentTrue < 100) &&
+        {!!(percentTrue < 100) && (
           <>
-
-        <QuestionCarousel completedQuestions={completedQuestions} questionPages={questions}/>
-        </>
-          }
-        <Summary questionCompleted={percentTrue == 100} editInfo={() => editAfterCompletion()}></Summary>
-        { !!(percentTrue == 100) &&
-        <>
-        <GraphAmortization/>
-        {<GraphEquity/> }
-        </>
-          
-          }
-        
-    </>      
+            <QuestionCarousel
+              completedQuestions={completedQuestions}
+              questionPages={questions}
+            />
+          </>
+        )}
+        <Summary
+          questionCompleted={percentTrue == 100}
+          editInfo={() => editAfterCompletion()}
+        ></Summary>
+        {!!(percentTrue == 100) && (
+          <>
+            <GraphAmortization />
+            {<GraphEquity />}
+          </>
+        )}
+      </>
     </div>
-    
   );
 }

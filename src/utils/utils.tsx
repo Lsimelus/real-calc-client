@@ -1,109 +1,123 @@
-import {finance} from "../lib/financeSlice"
-import {tax} from "../lib/taxSlice"
-import { insurance } from "@/lib/insuranceSlice"
-import { fees } from "../lib/feesSlice"
-import { calculateMortgage,  calculateMortgageInsurance,  calculatePMI } from "./math"
-import { ComboboxItemProps } from "@/components/ui/combobox"
+import { finance } from "../lib/financeSlice";
+import { tax } from "../lib/taxSlice";
+import { insurance } from "@/lib/insuranceSlice";
+import { fees } from "../lib/feesSlice";
+import {
+  calculateMortgage,
+  calculateMortgageInsurance,
+  calculatePMI,
+} from "./math";
+import { ComboboxItemProps } from "@/components/ui/combobox";
 
 export const formatNumber = (num: number) => {
-    if (num >= 1000000) {
-        const mValue = num / 1000000;
-        if (Number.isInteger(mValue)) {
-            return '$' + mValue + 'M';
-        } else {
-            return '$' + mValue.toFixed(1) + 'M';
-        }
-    } else if (num >= 1000) {
-        const kValue = num / 1000;
-        if (Number.isInteger(kValue)) {
-            return '$' + kValue + 'K';
-        } else {
-            return '$' + kValue.toFixed(1) + 'K';
-        }
+  if (num >= 1000000) {
+    const mValue = num / 1000000;
+    if (Number.isInteger(mValue)) {
+      return "$" + mValue + "M";
     } else {
-        return '$' + num.toString();
+      return "$" + mValue.toFixed(1) + "M";
     }
-}
+  } else if (num >= 1000) {
+    const kValue = num / 1000;
+    if (Number.isInteger(kValue)) {
+      return "$" + kValue + "K";
+    } else {
+      return "$" + kValue.toFixed(1) + "K";
+    }
+  } else {
+    return "$" + num.toString();
+  }
+};
 
 export const addcomma = (num: number) => {
-    return '$' + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,');
-}
+  return "$" + num.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, "$&,");
+};
 
-export const moneyToString= (num: string) => {
-    return parseFloat(num.replace(/[$,]/g, ''));
-}
+export const moneyToString = (num: string) => {
+  return parseFloat(num.replace(/[$,]/g, ""));
+};
 
-
-export const feesAmount = (fees: fees) =>{
-    return fees.fee * 12;
-}
+export const feesAmount = (fees: fees) => {
+  return fees.fee * 12;
+};
 
 interface amortizationInfo {
-    data: any[];
-    point: number;
+  data: any[];
+  point: number;
 }
 
-export const amortizationFormatter = (unformatted_schdule: number[][]) =>{
-    var chartData = []
-    var turned = false
-    var turningPoint = 0
+export const amortizationFormatter = (unformatted_schdule: number[][]) => {
+  var chartData = [];
+  var turned = false;
+  var turningPoint = 0;
 
-    for (let i = 0; i < unformatted_schdule.length; i++) {
-        let interest = unformatted_schdule[i][1]
-        let principal =  unformatted_schdule[i][0]
-        if (!turned && principal > interest){
-            turningPoint = i
-            turned = true
-        }
-        var row:any = { month: (i+1).toString(), interest: interest, principal: principal }
-        chartData.push(row)
+  for (let i = 0; i < unformatted_schdule.length; i++) {
+    let interest = unformatted_schdule[i][1];
+    let principal = unformatted_schdule[i][0];
+    if (!turned && principal > interest) {
+      turningPoint = i;
+      turned = true;
     }
-    var data: amortizationInfo = {data: chartData, point: turningPoint}
-    return data
-}
+    var row: any = {
+      month: (i + 1).toString(),
+      interest: interest,
+      principal: principal,
+    };
+    chartData.push(row);
+  }
+  var data: amortizationInfo = { data: chartData, point: turningPoint };
+  return data;
+};
 
-export const equityFormatter = (unformatted_schdule: number[][], financeSlice: finance) =>{
+export const equityFormatter = (
+  unformatted_schdule: number[][],
+  financeSlice: finance,
+) => {
+  let twentyPercentAmount = financeSlice.homePrice * 0.8;
 
-    let twentyPercentAmount = (financeSlice.homePrice)* .8;
-    
-    var turned = false
-    var turningPoint = -1
-    if (twentyPercentAmount > unformatted_schdule[1][0] || financeSlice.downPaymentPercent >= 20){
-        turned = true
+  var turned = false;
+  var turningPoint = -1;
+  if (
+    twentyPercentAmount > unformatted_schdule[1][0] ||
+    financeSlice.downPaymentPercent >= 20
+  ) {
+    turned = true;
+  }
+
+  var chartData = [];
+
+  for (let i = 0; i < unformatted_schdule.length; i++) {
+    let balance = unformatted_schdule[i][0];
+    let cumulativeInterest = unformatted_schdule[i][1];
+    let principalPaid = unformatted_schdule[i][2];
+    var row = {
+      month: (i + 1).toString(),
+      balance: balance,
+      cumulativeInterest: cumulativeInterest,
+      principalPaid: principalPaid,
+    };
+    chartData.push(row);
+
+    if (!turned && twentyPercentAmount > balance) {
+      turningPoint = i;
+      turned = true;
     }
+  }
+  var data: amortizationInfo = { data: chartData, point: turningPoint };
+  return data;
+};
 
-    var chartData = []
-
-    for (let i = 0; i < unformatted_schdule.length; i++) {
-        let balance = unformatted_schdule[i][0]
-        let cumulativeInterest =  unformatted_schdule[i][1]
-        let principalPaid = unformatted_schdule[i][2]
-        var row = { month: (i+1).toString(), balance: balance, cumulativeInterest: cumulativeInterest, principalPaid: principalPaid }
-        chartData.push(row)
-
-        if (!turned &&  twentyPercentAmount > balance){
-            turningPoint = i
-            turned = true
-        }
-    }
-    var data: amortizationInfo = {data: chartData, point: turningPoint}
-    return data
-}
-
-const formatForCombo = (rawString:string) => {
-    return rawString
-} 
+const formatForCombo = (rawString: string) => {
+  return rawString;
+};
 
 export const cityOptionsList = (cityOptions: string[]) => {
-    var list: ComboboxItemProps[] = []
-    for (let i = 0; i < cityOptions.length; i++) {
-        list.push({
-            value: cityOptions[i],
-            label: cityOptions[i],
-          })
-
-    }
-    return list
-}
-
-
+  var list: ComboboxItemProps[] = [];
+  for (let i = 0; i < cityOptions.length; i++) {
+    list.push({
+      value: cityOptions[i],
+      label: cityOptions[i],
+    });
+  }
+  return list;
+};

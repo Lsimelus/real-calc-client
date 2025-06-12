@@ -1,7 +1,7 @@
-import { BellRing, Check } from "lucide-react"
- 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { BellRing, Check } from "lucide-react";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -9,9 +9,9 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Switch } from "@/components/ui/switch"
- 
+} from "@/components/ui/card";
+import { Switch } from "@/components/ui/switch";
+
 const notifications = [
   {
     title: "Your call has been confirmed.",
@@ -25,10 +25,10 @@ const notifications = [
     title: "Your subscription is expiring soon!",
     description: "2 hours ago",
   },
-]
- 
-type CardProps = React.ComponentProps<typeof Card>
- 
+];
+
+type CardProps = React.ComponentProps<typeof Card>;
+
 export function QuestionCard({ className, ...props }: CardProps) {
   return (
     <Card className={cn("w-[380px]", className)} {...props}>
@@ -69,13 +69,13 @@ export function QuestionCard({ className, ...props }: CardProps) {
         </div>
       </CardContent>
       <CardContent>
-    <p>Card Content</p>
-  </CardContent>
+        <p>Card Content</p>
+      </CardContent>
       <CardFooter>
         <Button className="w-full">
           <Check className="mr-2 h-4 w-4" /> Mark all as read
         </Button>
       </CardFooter>
     </Card>
-  )
+  );
 }

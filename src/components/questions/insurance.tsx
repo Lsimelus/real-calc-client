@@ -1,60 +1,58 @@
-import { cn } from "@/lib/utils"
+import { cn } from "@/lib/utils";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input"
-import React from 'react';
+import { Input } from "@/components/ui/input";
+import React from "react";
 import { selectExact } from "../../lib/insuranceSlice";
 import { Label } from "../ui/label";
 import { addcomma, formatNumber } from "@/utils/utils";
 import { estimatedHomeInsurance, homeInsurance } from "@/utils/sliceUtil";
 
-type CardProps = React.ComponentProps<typeof Card>
- 
+type CardProps = React.ComponentProps<typeof Card>;
+
 export function Insurance({ className, ...props }: CardProps) {
-  const financeSlice = useSelector((state: { finance: { financeDetails: any; }; }) => state.finance.financeDetails);
-  const insuranceSlice =  useSelector((state: { insurance: { insuranceDetails: any; }; }) => state.insurance.insuranceDetails);
+  const financeSlice = useSelector(
+    (state: { finance: { financeDetails: any } }) =>
+      state.finance.financeDetails,
+  );
+  const insuranceSlice = useSelector(
+    (state: { insurance: { insuranceDetails: any } }) =>
+      state.insurance.insuranceDetails,
+  );
   const exactAmount = insuranceSlice.exact;
 
   const [exact, setExact] = React.useState(exactAmount);
-  const [exactOption, setExactOption] = React.useState(exactAmount >0 );
+  const [exactOption, setExactOption] = React.useState(exactAmount > 0);
   const dispatch = useDispatch();
-
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (value === '') {
-        setExact(0);
+    if (value === "") {
+      setExact(0);
     } else {
-        const intValue = parseInt(value, 10);
-        if (!isNaN(intValue)) {
-            setExact(intValue);
-        }
+      const intValue = parseInt(value, 10);
+      if (!isNaN(intValue)) {
+        setExact(intValue);
+      }
     }
-  }
+  };
 
   React.useEffect(() => {
-    dispatch(selectExact(exact))
-  }, [exact])
+    dispatch(selectExact(exact));
+  }, [exact]);
 
   React.useEffect(() => {
-    if (!exactOption){
-      setExact(0)
+    if (!exactOption) {
+      setExact(0);
     }
-
-  }, [exactOption])
-
-
-
-
-
-
+  }, [exactOption]);
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -63,22 +61,34 @@ export function Insurance({ className, ...props }: CardProps) {
         <CardDescription>Where is your next property?</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-          <div className="grid  max-w-sm items-center gap-1.5">
-          <Label className="mb-1">Estimated Insurance Premium: {addcomma(Number(estimatedHomeInsurance(financeSlice)[1]))}</Label>
-          <Label>Is there an exact insurance premium you would want use? {!!(exact > 0) && formatNumber(exact)}</Label>
-          </div>
-          <div>
-          <Button onClick={() => setExactOption(true)} variant={exactOption ? "default" : "ghost"} >Yes</Button>
-          <Button onClick={() => setExactOption(false)} variant={!exactOption ? "default" : "ghost"}>No</Button>
+        <div className="grid  max-w-sm items-center gap-1.5">
+          <Label className="mb-1">
+            Estimated Insurance Premium:{" "}
+            {addcomma(Number(estimatedHomeInsurance(financeSlice)[1]))}
+          </Label>
+          <Label>
+            Is there an exact insurance premium you would want use?{" "}
+            {!!(exact > 0) && formatNumber(exact)}
+          </Label>
+        </div>
+        <div>
+          <Button
+            onClick={() => setExactOption(true)}
+            variant={exactOption ? "default" : "ghost"}
+          >
+            Yes
+          </Button>
+          <Button
+            onClick={() => setExactOption(false)}
+            variant={!exactOption ? "default" : "ghost"}
+          >
+            No
+          </Button>
           {exactOption && (
-            <Input value={exact} onChange={handleInputChange} ></Input>
-          ) }
-
-          </div>
-          
-          </CardContent>
-          
-      
+            <Input value={exact} onChange={handleInputChange}></Input>
+          )}
+        </div>
+      </CardContent>
     </Card>
-  )
+  );
 }

@@ -1,7 +1,11 @@
-"use client"
-import { TrendingUp } from "lucide-react"
-import { CartesianGrid, Line, LineChart, XAxis } from "recharts"
-import {amortizationFormatter,  feesAmount, moneyToString} from "../../utils/utils"
+"use client";
+import { TrendingUp } from "lucide-react";
+import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
+import {
+  amortizationFormatter,
+  feesAmount,
+  moneyToString,
+} from "../../utils/utils";
 
 import {
   Card,
@@ -10,17 +14,17 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart"
+} from "@/components/ui/chart";
 
-import { useDispatch, useSelector } from "react-redux"; 
-import React from 'react';
-import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil"
+import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil";
 
 const chartConfig = {
   interest: {
@@ -31,18 +35,16 @@ const chartConfig = {
     label: "Principal",
     color: "hsl(var(--chart-2))",
   },
-} satisfies ChartConfig
+} satisfies ChartConfig;
 export function GraphAmortization() {
   const finance = useSelector((state: any) => state.finance.financeDetails);
 
-  let mortgage = principalAndInterest(finance)
-  let amortization = amortizationSchedule(finance, mortgage)
-  let chartData = amortizationFormatter(amortization)
-
+  let mortgage = principalAndInterest(finance);
+  let amortization = amortizationSchedule(finance, mortgage);
+  let chartData = amortizationFormatter(amortization);
 
   return (
-
-    <Card className='col-span-5 lg:col-span-3 col-span-5'>
+    <Card className="col-span-5 lg:col-span-3 col-span-5">
       <CardHeader>
         <CardTitle>Amortization Schedule Graph</CardTitle>
         <CardDescription>Monthly payment</CardDescription>
@@ -86,15 +88,14 @@ export function GraphAmortization() {
       <CardFooter>
         <div className="flex w-full items-start gap-2 text-sm">
           <div className="grid gap-2">
-            <div className="flex items-center gap-2 font-medium leading-none">
-             
-            </div>
+            <div className="flex items-center gap-2 font-medium leading-none"></div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              The principal will be more than the interest rate on month {chartData.point}
+              The principal will be more than the interest rate on month{" "}
+              {chartData.point}
             </div>
           </div>
         </div>
       </CardFooter>
     </Card>
-  )
+  );
 }

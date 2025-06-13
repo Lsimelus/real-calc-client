@@ -111,11 +111,7 @@ export const Summary: React.FC<SummaryProps> = ({
 
   function row0() {
     let mortgage = principalAndInterest(finance);
-    //dispatch(selectPI(mortgage))
     let value = mortgage * 12;
-
-    //let amortization = amortizationSchedule(price, loan, mortgage)
-    //dispatch(selectAmortization(amortization))
     updateInvoiceRow(0, value);
   }
 

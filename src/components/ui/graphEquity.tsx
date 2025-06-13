@@ -47,12 +47,21 @@ const chartConfig = {
     color: "hsl(var(--chart-5))",
   },
 } satisfies ChartConfig;
-export function GraphEquity() {
-  const finance = useSelector((state: any) => state.finance.financeDetails);
 
-  let mortgage = principalAndInterest(finance);
-  let amortization = equitySchedule(finance, mortgage);
-  let chartData = equityFormatter(amortization, finance);
+export interface chartInfo {
+  data: any[];
+  point: number;
+}
+
+interface GraphEquityProps {
+  chartData: chartInfo;
+}
+
+export const GraphEquity: React.FC<GraphEquityProps> = ({
+  chartData,
+}: GraphEquityProps) => {
+
+  const finance = useSelector((state: any) => state.finance.financeDetails);
 
   return (
     <Card className="col-span-3">

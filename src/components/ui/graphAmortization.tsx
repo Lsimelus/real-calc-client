@@ -25,6 +25,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import React from "react";
 import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil";
+import { chartInfo } from "./graphEquity";
 
 const chartConfig = {
   interest: {
@@ -36,12 +37,15 @@ const chartConfig = {
     color: "hsl(var(--chart-2))",
   },
 } satisfies ChartConfig;
-export function GraphAmortization() {
-  const finance = useSelector((state: any) => state.finance.financeDetails);
 
-  let mortgage = principalAndInterest(finance);
-  let amortization = amortizationSchedule(finance, mortgage);
-  let chartData = amortizationFormatter(amortization);
+
+interface GraphEquityProps {
+  chartData: chartInfo;
+}
+
+export const GraphAmortization: React.FC<GraphEquityProps> = ({
+  chartData,
+}: GraphEquityProps) => {
 
   return (
     <Card className="col-span-5 lg:col-span-3 col-span-5">

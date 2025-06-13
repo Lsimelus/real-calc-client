@@ -1,13 +1,7 @@
 import { finance } from "../lib/financeSlice";
-import { tax } from "../lib/taxSlice";
-import { insurance } from "@/lib/insuranceSlice";
 import { fees } from "../lib/feesSlice";
-import {
-  calculateMortgage,
-  calculateMortgageInsurance,
-  calculatePMI,
-} from "./math";
 import { ComboboxItemProps } from "@/components/ui/combobox";
+import { chartInfo } from "@/components/ui/graphEquity";
 
 export const formatNumber = (num: number) => {
   if (num >= 1000000) {
@@ -41,10 +35,7 @@ export const feesAmount = (fees: fees) => {
   return fees.fee * 12;
 };
 
-interface amortizationInfo {
-  data: any[];
-  point: number;
-}
+
 
 export const amortizationFormatter = (unformatted_schdule: number[][]) => {
   var chartData = [];
@@ -65,7 +56,7 @@ export const amortizationFormatter = (unformatted_schdule: number[][]) => {
     };
     chartData.push(row);
   }
-  var data: amortizationInfo = { data: chartData, point: turningPoint };
+  var data: chartInfo = { data: chartData, point: turningPoint };
   return data;
 };
 
@@ -103,7 +94,7 @@ export const equityFormatter = (
       turned = true;
     }
   }
-  var data: amortizationInfo = { data: chartData, point: turningPoint };
+  var data: chartInfo = { data: chartData, point: turningPoint };
   return data;
 };
 

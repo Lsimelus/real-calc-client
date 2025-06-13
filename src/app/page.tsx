@@ -13,6 +13,9 @@ import { Insurance } from "@/components/questions/insurance";
 import { Summary } from "../components/ui/summary";
 import * as React from "react";
 import { selectCompleteness } from "@/lib/confirmSlice";
+import { ExtraPayment } from "@/components/ui/extraPayment";
+import { amortizationSchedule, equitySchedule, principalAndInterest } from "@/utils/sliceUtil";
+import { amortizationFormatter, equityFormatter } from "@/utils/utils";
 
 const questions = [
   <Location />,
@@ -68,6 +71,8 @@ export default function Home() {
     (question) => question === true,
   ).length;
   const [percentTrue, setPercentTrue] = React.useState(0);
+  const finance = useSelector((state: any) => state.finance.financeDetails);
+
 
   const dispatch = useDispatch();
 
@@ -78,6 +83,13 @@ export default function Home() {
   function editAfterCompletion() {
     dispatch(selectCompleteness(false));
   }
+
+  let mortgage = principalAndInterest(finance);
+  let equityRaw = equitySchedule(finance, mortgage);
+  let equityData = equityFormatter(equityRaw, finance);
+
+  let amortizationRaw = amortizationSchedule(finance, mortgage);
+  let amortizationData = amortizationFormatter(amortizationRaw);
 
   return (
     <div className="grid grid-cols-5 gap-8 m-6 p-6">
@@ -97,10 +109,18 @@ export default function Home() {
           questionCompleted={percentTrue == 100}
           editInfo={() => editAfterCompletion()}
         ></Summary>
-        {!!(percentTrue == 100) && (
+        {!(percentTrue == 100) && (
           <>
-            <GraphAmortization />
-            {<GraphEquity />}
+            <GraphAmortization 
+              chartData={amortizationData}/>
+            <GraphEquity 
+            chartData={equityData}
+            />
+            <ExtraPayment
+              equityRaw={equityRaw}
+              mortgage={mortgage}
+            
+            />
           </>
         )}
       </>

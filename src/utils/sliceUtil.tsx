@@ -160,7 +160,8 @@ export const equityEvaluater = (
 export const equitySchedule = (
   financeSlice: finance,
   principalAndInterest: number,
-  extraPayment: number = 0
+  extraPayment: number = 0,
+  monthlyExtraPayment: number = 0
 ) => {
   var loanAmount = financeSlice.homePrice - financeSlice.downPaymentAmount- extraPayment;
 
@@ -187,7 +188,7 @@ export const equitySchedule = (
     scheduleInfo.push(payments);
 
     var principalPaid = principalAndInterest - interestPayment;
-    loanAmount -= principalPaid;
+    loanAmount -= principalPaid + monthlyExtraPayment;
     i++;
   }
   return scheduleInfo;

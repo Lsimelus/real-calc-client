@@ -48,7 +48,9 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
   const finance = useSelector((state: any) => state.finance.financeDetails); 
 
     const [paymentAmount, setPaymentAmount] = React.useState(0);
-    let equityRawExtraPayment = equitySchedule(finance, mortgage, paymentAmount);;
+    const [monthlyPaymentAmount, setMonthlyPaymentAmount] = React.useState(0);
+
+    let equityRawExtraPayment = equitySchedule(finance, mortgage, paymentAmount, monthlyPaymentAmount);;
     let equityEvaluation = equityEvaluater(equityRaw, equityRawExtraPayment)
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,6 +61,18 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
           const intValue = parseInt(value, 10);
           if (!isNaN(intValue)) {
             setPaymentAmount(intValue);
+          }
+        }
+      };
+
+      const handleMonthlyInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        if (value === "") {
+          setMonthlyPaymentAmount(0);
+        } else {
+          const intValue = parseInt(value, 10);
+          if (!isNaN(intValue)) {
+            setMonthlyPaymentAmount(intValue);
           }
         }
       };
@@ -76,7 +90,13 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
           <Label>What is the extra amount you would like to pay?</Label>
           <Input value={paymentAmount} onChange={handleInputChange} />
       </div>
-      {!!(paymentAmount > 0) &&
+
+      <div className="grid  max-w-sm items-center gap-1.5">
+          <Label>What is the extra amount you would like to pay monthly?</Label>
+          <Input value={monthlyPaymentAmount} onChange={handleMonthlyInputChange} />
+      </div>
+
+      {!!(paymentAmount + monthlyPaymentAmount> 0 ) &&
       <div className="grid  max-w-sm items-center gap-1.5 mt-4">
         <Label>Fewer Payments: {equityEvaluation.months} months</Label>
         <Label>Saved in interest: {addcomma(equityEvaluation.interest)}</Label>

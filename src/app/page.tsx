@@ -109,7 +109,7 @@ export default function Home() {
           questionCompleted={percentTrue == 100}
           editInfo={() => editAfterCompletion()}
         ></Summary>
-        {!(percentTrue == 100) && (
+        {!!(percentTrue == 100) && (
           <>
             <GraphAmortization 
               chartData={amortizationData}/>

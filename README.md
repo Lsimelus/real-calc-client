@@ -4,24 +4,18 @@ This application is designed to provide users with insight into how U.S. real es
 
 Currently, the application calculates the user's down payment, closing costs, and the estimated mortgage for a property in the area of their choosing. The rest of the capabilities have not yet been added.
 
+Live link: https://real-calc-client-blush.vercel.app
+
 ### Next steps
 
-1. Get feedback - On points 4,5,9 (relating to how the slices are split out), also file structure for possible change
-3. Add Eslint/prettier
-4. Add Typescript testing sweet
-5. Deploy using Vercel
-6. Update CSV to add rental income
-7. Make UI decorative
-8. Add Equity building feature
-9. Add a comparitive feature
-10. Reconstruct back end as DB for better searching or at least consider it? Or stick to CSV approach pros vs con
+1. Get feedback
+2. Add Typescript testing sweet
+3. Update CSV to add rental income
+4. Make UI decorative
+5. Reconstruct back end as DB for better searching or at least consider it? Or stick to CSV approach pros vs con
 
 
-
-
-
-
-The [backend](https://github.com/Lsimelus/real-calc-script) for this application is a python flask app that will eventually get updated
+The [backend](https://github.com/Lsimelus/flask-backend) for this application is a python flask app that will eventually get updated
 
 
 ## Getting Started

@@ -47,6 +47,19 @@ export const GraphAmortization: React.FC<GraphEquityProps> = ({
   chartData,
 }: GraphEquityProps) => {
 
+  const [turningDate, setTurninDate] = React.useState('');
+
+  React.useEffect(() => {
+    const date = new Date();
+    const newDate = new Date(new Date(date).setMonth(date.getMonth() + chartData.point));
+    // Format the date as desired, for example:
+    
+    const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
+    const month =  newDate.getMonth().toString();
+    // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
+    setTurninDate(month + "/" + year);
+  }, [chartData.point]); // The empty dependency array ensures this runs only once on mount
+
   return (
     <Card className="col-span-5 lg:col-span-3 col-span-5">
       <CardHeader>
@@ -94,8 +107,7 @@ export const GraphAmortization: React.FC<GraphEquityProps> = ({
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none"></div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              The principal will be more than the interest rate on month{" "}
-              {chartData.point}
+              During {turningDate}, the principal will be more than the interest.
             </div>
           </div>
         </div>

@@ -45,13 +45,34 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
   equityRaw,
   mortgage
 }: ExtraPaymentProps) => {
+  
   const finance = useSelector((state: any) => state.finance.financeDetails); 
 
     const [paymentAmount, setPaymentAmount] = React.useState(0);
     const [monthlyPaymentAmount, setMonthlyPaymentAmount] = React.useState(0);
-
     let equityRawExtraPayment = equitySchedule(finance, mortgage, paymentAmount, monthlyPaymentAmount);;
     let equityEvaluation = equityEvaluater(equityRaw, equityRawExtraPayment)
+
+
+    const [turningDate, setTurninDate] = React.useState('');
+    
+    React.useEffect(() => {
+      const date = new Date();
+      const newDate = new Date(new Date(date).setMonth(date.getMonth() + equityEvaluation.months));
+      // Format the date as desired, for example:
+      
+      const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
+      const month =  newDate.getMonth().toString();
+      // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
+
+      if(month == "0"){
+        setTurninDate(year);
+      }else{
+        setTurninDate(month + "/" + year);
+      }
+      setTurninDate(month + "/" + year);
+  }, [equityEvaluation.months]); // The empty dependency array ensures this runs only once on mount
+
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
@@ -98,10 +119,9 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
 
       {!!(paymentAmount + monthlyPaymentAmount> 0 ) &&
       <div className="grid  max-w-sm items-center gap-1.5 mt-4">
-        <Label>Fewer Payments: {equityEvaluation.months} months</Label>
+        <Label>New ending of the mortage: {turningDate}</Label>
         <Label>Saved in interest: {addcomma(equityEvaluation.interest)}</Label>
         </div>
-      
       }
 
     </div>

@@ -12,6 +12,7 @@ import { Combobox } from "@/components/ui/combobox";
 import { states } from "../../constants/states";
 import { addcomma, cityOptionsList } from "../../utils/utils";
 import { Label } from "@/components/ui/label";
+import React from "react";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -38,11 +39,25 @@ export function Location({ className, ...props }: CardProps) {
     }
   }
 
+  const [currentDate, setCurrentDate] = React.useState('');
+
+  React.useEffect(() => {
+    const date = new Date();
+    const newDate = new Date(new Date(date).setMonth(date.getMonth() + 25));
+    // Format the date as desired, for example:
+    
+    const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
+    const month =  newDate.getMonth().toString();
+    // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
+    setCurrentDate(month + "/" + year);
+  }, []); // The empty dependency array ensures this runs only once on mount
+
+
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
         <CardTitle>Location</CardTitle>
-        <CardDescription>Just incase</CardDescription>
+        <CardDescription>Where is your next property?</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid w-full max-w-sm items-center gap-1.5">

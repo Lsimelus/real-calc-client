@@ -58,7 +58,7 @@ export function Insurance({ className, ...props }: CardProps) {
     <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
         <CardTitle>Insurance</CardTitle>
-        <CardDescription>Where is your next property?</CardDescription>
+        <CardDescription>Just in case</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid  max-w-sm items-center gap-1.5">

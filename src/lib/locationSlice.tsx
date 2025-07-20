@@ -10,6 +10,7 @@ export interface location {
   county: string | null;
   medianValue: number;
   medianTax: number;
+  medianRent: number;
   pending: boolean;
   error: string[];
   complete: boolean;
@@ -28,6 +29,7 @@ const initialState: locationState = {
     medianTax: 0,
     medianValue: 0,
     county: "",
+    medianRent: 0,
     cityOptions: [],
     pending: false,
     error: [],
@@ -42,15 +44,6 @@ export const locationSlice = createSlice({
     clearState: (state) => {
       state = initialState;
     },
-    // selectState: (state, action:PayloadAction<string>) => {
-    //     state.locationDetails.state = action.payload;
-    //     state.locationDetails.city = ""
-    //     state.locationDetails.complete = false
-    // },
-    // selectCity: (state,  action:PayloadAction<string>) => {
-    //     state.locationDetails.city = action.payload;
-    //     state.locationDetails.complete = !(action.payload == "");
-    // }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchStateInfo.fulfilled, (state, action) => {
@@ -61,6 +54,7 @@ export const locationSlice = createSlice({
       state.locationDetails.city = "";
       state.locationDetails.medianTax = 0;
       state.locationDetails.medianValue = 0;
+      state.locationDetails.medianRent = 0;
     });
     builder.addCase(fetchStateInfo.pending, (state, action) => {
       state.locationDetails.pending = true;
@@ -68,10 +62,10 @@ export const locationSlice = createSlice({
 
     builder.addCase(fetchCityInfo.fulfilled, (state, action) => {
       state.locationDetails.county = action.payload.county;
-      //
 
       state.locationDetails.medianTax = parseFloat(action.payload.median_tax);
       state.locationDetails.medianValue = parseInt(action.payload.median_value);
+      state.locationDetails.medianRent = parseInt(action.payload.median_rent);
       state.locationDetails.city = action.payload.city;
       state.locationDetails.complete = true;
     });

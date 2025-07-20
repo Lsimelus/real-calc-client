@@ -92,6 +92,14 @@ export function Location({ className, ...props }: CardProps) {
             </Label>
           </div>
         )}
+        {!!locationSlice.medianRent && (
+          <div className="grid w-full max-w-sm items-center gap-1.5">
+            <Label>
+              Median unit rental in {locationSlice.city}:{" "}
+              ${locationSlice.medianRent}
+            </Label>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

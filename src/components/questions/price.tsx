@@ -72,7 +72,7 @@ export function Price({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid  max-w-sm items-center gap-1.5">
-          <Label>Property price: {formatNumber(price)}</Label>
+          <Label>Property price: <span className="font-bold">{formatNumber(price)}</span></Label>
           <Input value={price} onChange={handleInputChange}></Input>
         </div>
 
@@ -89,8 +89,8 @@ export function Price({ className, ...props }: CardProps) {
                 setDownPayment(downPayment)
               }
             />
-            <p>{downPayment + "%"}</p>
-            <p>{formattedDownPayment}</p>
+            <p className="font-bold">{downPayment + "%"}</p>
+            <p className="font-bold">{formattedDownPayment}</p>
           </div>
         )}
       </CardContent>

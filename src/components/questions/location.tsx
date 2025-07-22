@@ -39,19 +39,18 @@ export function Location({ className, ...props }: CardProps) {
     }
   }
 
-  const [currentDate, setCurrentDate] = React.useState('');
+  const [currentDate, setCurrentDate] = React.useState("");
 
   React.useEffect(() => {
     const date = new Date();
     const newDate = new Date(new Date(date).setMonth(date.getMonth() + 25));
     // Format the date as desired, for example:
-    
+
     const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
-    const month =  newDate.getMonth().toString();
+    const month = newDate.getMonth().toString();
     // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
     setCurrentDate(month + "/" + year);
   }, []); // The empty dependency array ensures this runs only once on mount
-
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -80,7 +79,7 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median home value in {locationSlice.county}:{" "}
-              {addcomma(locationSlice.medianValue)}
+              <span className="font-bold">{addcomma(locationSlice.medianValue)}</span>
             </Label>
           </div>
         )}
@@ -88,7 +87,7 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median property tax in {locationSlice.county}:{" "}
-              {locationSlice.medianTax}%
+              <span className="font-bold">{locationSlice.medianTax}%</span>
             </Label>
           </div>
         )}
@@ -96,7 +95,7 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median unit rental in {locationSlice.city}:{" "}
-              ${locationSlice.medianRent}
+              <span className="font-bold">{addcomma(locationSlice.medianRent)}</span>
             </Label>
           </div>
         )}

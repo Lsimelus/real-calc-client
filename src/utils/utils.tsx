@@ -35,8 +35,6 @@ export const feesAmount = (fees: fees) => {
   return fees.fee * 12;
 };
 
-
-
 export const amortizationFormatter = (unformatted_schdule: number[][]) => {
   var chartData = [];
   var turned = false;

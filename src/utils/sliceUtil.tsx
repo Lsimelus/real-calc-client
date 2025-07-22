@@ -122,8 +122,6 @@ export const amortizationSchedule = (
   return scheduleInfo;
 };
 
-
-
 export interface equityEvaluation {
   months: number;
   interest: number;
@@ -132,38 +130,37 @@ export const equityEvaluater = (
   equityRaw: any[][],
   extraPaymentEquityRaw: any[][],
 ) => {
-  var extraPaymentLength = 0
+  var extraPaymentLength = 0;
   for (let i = 0; i < extraPaymentEquityRaw.length; i++) {
-    if (extraPaymentEquityRaw[i][0]< 0){
-      break
+    if (extraPaymentEquityRaw[i][0] < 0) {
+      break;
     }
-    extraPaymentLength = i
+    extraPaymentLength = i;
   }
 
-  var interestSaved = extraPaymentEquityRaw[extraPaymentLength][1]
-  if (interestSaved < 0){
-    interestSaved = 0
+  var interestSaved = extraPaymentEquityRaw[extraPaymentLength][1];
+  if (interestSaved < 0) {
+    interestSaved = 0;
   }
 
-
-  let interestDifference = equityRaw[equityRaw.length -1][1] -interestSaved
+  let interestDifference = equityRaw[equityRaw.length - 1][1] - interestSaved;
 
   let data: equityEvaluation = {
     months: equityRaw.length - extraPaymentLength,
-    interest: interestDifference
-  }
+    interest: interestDifference,
+  };
 
-  return data
-
+  return data;
 };
 
 export const equitySchedule = (
   financeSlice: finance,
   principalAndInterest: number,
   extraPayment: number = 0,
-  monthlyExtraPayment: number = 0
+  monthlyExtraPayment: number = 0,
 ) => {
-  var loanAmount = financeSlice.homePrice - financeSlice.downPaymentAmount- extraPayment;
+  var loanAmount =
+    financeSlice.homePrice - financeSlice.downPaymentAmount - extraPayment;
 
   let annualInterestRate =
     financeSlice.exactRate > 0 ? financeSlice.exactRate : financeSlice.rate;

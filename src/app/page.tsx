@@ -14,7 +14,11 @@ import { Summary } from "../components/ui/summary";
 import * as React from "react";
 import { selectCompleteness } from "@/lib/confirmSlice";
 import { ExtraPayment } from "@/components/ui/extraPayment";
-import { amortizationSchedule, equitySchedule, principalAndInterest } from "@/utils/sliceUtil";
+import {
+  amortizationSchedule,
+  equitySchedule,
+  principalAndInterest,
+} from "@/utils/sliceUtil";
 import { amortizationFormatter, equityFormatter } from "@/utils/utils";
 
 const questions = [
@@ -73,7 +77,6 @@ export default function Home() {
   const [percentTrue, setPercentTrue] = React.useState(0);
   const finance = useSelector((state: any) => state.finance.financeDetails);
 
-
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -111,16 +114,9 @@ export default function Home() {
         ></Summary>
         {!!(percentTrue == 100) && (
           <>
-            <GraphAmortization 
-              chartData={amortizationData}/>
-            <GraphEquity 
-            chartData={equityData}
-            />
-            <ExtraPayment
-              equityRaw={equityRaw}
-              mortgage={mortgage}
-            
-            />
+            <GraphAmortization chartData={amortizationData} />
+            <GraphEquity chartData={equityData} />
+            <ExtraPayment equityRaw={equityRaw} mortgage={mortgage} />
           </>
         )}
       </>

@@ -38,7 +38,6 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-
 interface GraphEquityProps {
   chartData: chartInfo;
 }
@@ -46,16 +45,17 @@ interface GraphEquityProps {
 export const GraphAmortization: React.FC<GraphEquityProps> = ({
   chartData,
 }: GraphEquityProps) => {
-
-  const [turningDate, setTurninDate] = React.useState('');
+  const [turningDate, setTurninDate] = React.useState("");
 
   React.useEffect(() => {
     const date = new Date();
-    const newDate = new Date(new Date(date).setMonth(date.getMonth() + chartData.point));
+    const newDate = new Date(
+      new Date(date).setMonth(date.getMonth() + chartData.point),
+    );
     // Format the date as desired, for example:
-    
+
     const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
-    const month =  newDate.getMonth().toString();
+    const month = newDate.getMonth().toString();
     // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
     setTurninDate(month + "/" + year);
   }, [chartData.point]); // The empty dependency array ensures this runs only once on mount
@@ -107,11 +107,12 @@ export const GraphAmortization: React.FC<GraphEquityProps> = ({
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none"></div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              During {turningDate}, the principal will be more than the interest.
+              During <span className="font-bold">{turningDate}</span>, the principal will be more than the
+              interest.
             </div>
           </div>
         </div>
       </CardFooter>
     </Card>
   );
-}
+};

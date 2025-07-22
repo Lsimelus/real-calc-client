@@ -33,7 +33,6 @@ import {
 } from "@/utils/sliceUtil";
 import { loanTypes } from "@/constants/types";
 
-
 const chartConfig = {
   balance: {
     label: "Balance",
@@ -61,10 +60,9 @@ interface GraphEquityProps {
 export const GraphEquity: React.FC<GraphEquityProps> = ({
   chartData,
 }: GraphEquityProps) => {
-
   const finance = useSelector((state: any) => state.finance.financeDetails);
 
-  const [turningDate, setTurninDate] = React.useState('');
+  const [turningDate, setTurninDate] = React.useState("");
   React.useEffect(() => {
     const date = new Date();
     const newDate = new Date(new Date(date).setMonth(date.getMonth() + chartData.point));
@@ -143,4 +141,4 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({
       )}
     </Card>
   );
-}
+};

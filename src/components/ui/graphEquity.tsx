@@ -50,7 +50,7 @@ const chartConfig = {
 
 export interface chartInfo {
   data: any[];
-  point: number;
+  point: string;
 }
 
 interface GraphEquityProps {

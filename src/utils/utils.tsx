@@ -40,6 +40,9 @@ export const amortizationFormatter = (unformatted_schdule: number[][]) => {
   var turned = false;
   var turningPoint = 0;
 
+  const date = new Date();
+  var year = date.getFullYear()
+
   for (let i = 0; i < unformatted_schdule.length; i++) {
     let interest = unformatted_schdule[i][1];
     let principal = unformatted_schdule[i][0];
@@ -48,13 +51,19 @@ export const amortizationFormatter = (unformatted_schdule: number[][]) => {
       turned = true;
     }
     var row: any = {
-      month: (i + 1).toString(),
+      month: (Math.round(i/12) + year).toString(),
       interest: interest,
       principal: principal,
     };
     chartData.push(row);
   }
-  var data: chartInfo = { data: chartData, point: turningPoint };
+
+  const turningDate = new Date(
+      new Date(date).setMonth(date.getMonth() + turningPoint),
+    );
+    const dateFormatted = (turningDate.getMonth().toString() + "/" + turningDate.getFullYear().toString())
+    
+  var data: chartInfo = { data: chartData, point:  dateFormatted};
   return data;
 };
 

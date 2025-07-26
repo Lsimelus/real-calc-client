@@ -166,8 +166,8 @@ export function Loan({ className, ...props }: CardProps) {
           <div>
             <div className="grid w-full max-w-sm items-center gap-1.5 mb-10 mt-10">
               <Label>
-                The lengh of the loan: <span className="font-bold">{loanLength}</span>{" "}
-                years
+                The lengh of the loan:{" "}
+                <span className="font-bold">{loanLength}</span> years
               </Label>
               <Slider
                 defaultValue={[30]}
@@ -183,7 +183,8 @@ export function Loan({ className, ...props }: CardProps) {
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <Label>
-                Typical rate for loan type: <span className="font-bold">{cardTypes[type].rates}</span>
+                Typical rate for loan type:{" "}
+                <span className="font-bold">{cardTypes[type].rates}</span>
                 {"%"}
               </Label>
             </div>

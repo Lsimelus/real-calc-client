@@ -79,7 +79,9 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median home value in {locationSlice.county}:{" "}
-              <span className="font-bold">{addcomma(locationSlice.medianValue)}</span>
+              <span className="font-bold">
+                {addcomma(locationSlice.medianValue)}
+              </span>
             </Label>
           </div>
         )}
@@ -95,7 +97,9 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median unit rental in {locationSlice.city}:{" "}
-              <span className="font-bold">{addcomma(locationSlice.medianRent)}</span>
+              <span className="font-bold">
+                {addcomma(locationSlice.medianRent)}
+              </span>
             </Label>
           </div>
         )}

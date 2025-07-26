@@ -73,7 +73,7 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
       setTurninDate(year);
     } else {
       setTurninDate(month + "/" + year);
-    }   
+    }
     //setTurninDate(month + "/" + year);
   }, [equityEvaluation.months]); // The empty dependency array ensures this runs only once on mount
 

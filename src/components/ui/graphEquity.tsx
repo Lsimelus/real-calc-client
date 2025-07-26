@@ -65,15 +65,16 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({
   const [turningDate, setTurninDate] = React.useState("");
   React.useEffect(() => {
     const date = new Date();
-    const newDate = new Date(new Date(date).setMonth(date.getMonth() + chartData.point));
+    const newDate = new Date(
+      new Date(date).setMonth(date.getMonth() + chartData.point),
+    );
     // Format the date as desired, for example:
-    
+
     const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
-    const month =  newDate.getMonth().toString();
+    const month = newDate.getMonth().toString();
     // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
     setTurninDate(month + "/" + year);
   }, [chartData.point]); // The empty dependency array ensures this runs only once on mount
-
 
   return (
     <Card className="col-span-3">
@@ -129,10 +130,10 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({
           <div className="flex w-full items-start gap-2 text-sm">
             <div className="grid gap-2">
               <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                During {turningDate}, you will have 20% equity in your home, which means you
-                will not have to make any additonal payments. At that
-                point, you will be able to remove the Mortgage Insurance from
-                you Mortgage payment and it will deacrease by{" "}
+                During {turningDate}, you will have 20% equity in your home,
+                which means you will not have to make any additonal payments. At
+                that point, you will be able to remove the Mortgage Insurance
+                from you Mortgage payment and it will deacrease by{" "}
                 {addcomma(mortgageInsurance(finance))} per year
               </div>
             </div>

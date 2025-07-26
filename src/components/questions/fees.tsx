@@ -48,7 +48,10 @@ export function Fees({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid  max-w-sm items-center gap-1.5">
-          <Label>Total monthly fees: <span className="font-bold">{formatNumber(feeAmount)}</span></Label>
+          <Label>
+            Total monthly fees:{" "}
+            <span className="font-bold">{formatNumber(feeAmount)}</span>
+          </Label>
           <Input value={feeAmount} onChange={handleInputChange} />
         </div>
       </CardContent>

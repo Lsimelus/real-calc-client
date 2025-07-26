@@ -64,7 +64,9 @@ export function Insurance({ className, ...props }: CardProps) {
         <div className="grid  max-w-sm items-center gap-1.5">
           <Label className="mb-1">
             Estimated Insurance Premium:{" "}
-            <span className="font-bold">{addcomma(Number(estimatedHomeInsurance(financeSlice)[1]))}</span>
+            <span className="font-bold">
+              {addcomma(Number(estimatedHomeInsurance(financeSlice)[1]))}
+            </span>
           </Label>
           <Label>
             Is there an exact insurance premium you would want use?{" "}

@@ -49,22 +49,30 @@ export function Confirm({ className, ...props }: CardProps) {
       <CardContent className="grid gap-4">
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
-            Location: <span className="font-bold">{location.city}</span>, <span className="font-bold">{location.state}</span>
+            Location: <span className="font-bold">{location.city}</span>,{" "}
+            <span className="font-bold">{location.state}</span>
           </Label>
         </div>
 
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
             {finance.length} year {finance.type} with a{" "}
-            <span className="font-bold">{finance.exact > 0 ? finance.exact : finance.rate}%</span>
+            <span className="font-bold">
+              {finance.exact > 0 ? finance.exact : finance.rate}%
+            </span>
           </Label>
         </div>
 
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
-            The property value is <span className="font-bold">{formatNumber(finance.homePrice)}</span> and a{" "}
-            <span className="font-bold">{finance.downPaymentPercent}%-
-            {formatNumber(finance.downPaymentAmount)}</span> will be put down
+            The property value is{" "}
+            <span className="font-bold">{formatNumber(finance.homePrice)}</span>{" "}
+            and a{" "}
+            <span className="font-bold">
+              {finance.downPaymentPercent}%-
+              {formatNumber(finance.downPaymentAmount)}
+            </span>{" "}
+            will be put down
           </Label>
         </div>
 
@@ -79,14 +87,18 @@ export function Confirm({ className, ...props }: CardProps) {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
             The total yearly premium for home insurance is{" "}
-            <span className="font-bold">{addcomma(Number(homeInsurance(finance, insurance)[1]))}</span>
+            <span className="font-bold">
+              {addcomma(Number(homeInsurance(finance, insurance)[1]))}
+            </span>
           </Label>
         </div>
 
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
             The total yearly taxes is{" "}
-            <span className="font-bold">{addcomma(Number(propertyTax(finance, tax, location)[1]))}</span>
+            <span className="font-bold">
+              {addcomma(Number(propertyTax(finance, tax, location)[1]))}
+            </span>
           </Label>
         </div>
 

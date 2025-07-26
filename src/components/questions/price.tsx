@@ -72,7 +72,10 @@ export function Price({ className, ...props }: CardProps) {
       </CardHeader>
       <CardContent className="grid gap-4">
         <div className="grid  max-w-sm items-center gap-1.5">
-          <Label>Property price: <span className="font-bold">{formatNumber(price)}</span></Label>
+          <Label>
+            Property price:{" "}
+            <span className="font-bold">{formatNumber(price)}</span>
+          </Label>
           <Input value={price} onChange={handleInputChange}></Input>
         </div>
 

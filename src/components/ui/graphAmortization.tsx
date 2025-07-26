@@ -92,8 +92,8 @@ export const GraphAmortization: React.FC<GraphEquityProps> = ({
           <div className="grid gap-2">
             <div className="flex items-center gap-2 font-medium leading-none"></div>
             <div className="flex items-center gap-2 leading-none text-muted-foreground">
-              During <span className="font-bold">{chartData.point}</span>, the principal will be more than the
-              interest.
+              During <span className="font-bold">{chartData.point}</span>, the
+              principal will be more than the interest.
             </div>
           </div>
         </div>

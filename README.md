@@ -2,17 +2,15 @@
 
 This application is designed to provide users with insight into how U.S. real estate markets compare in terms of affordability and profitability. It also allows for easy comparison between locations and shows how a loan can be paid off over time, as well as how that affects the equity you build in your home.
 
-Currently, the application calculates the user's down payment, closing costs, and the estimated mortgage for a property in the area of their choosing. The rest of the capabilities have not yet been added.
-
 Live link: https://real-calc-client-blush.vercel.app
 
 ### Next steps
 
-1. Get feedback
-2. Add Typescript testing sweet
-3. Update CSV to add rental income
-4. Make UI decorative
-5. Reconstruct back end as DB for better searching or at least consider it? Or stick to CSV approach pros vs con
+1. Refactor small details. Function and variable names, remove unused imports, identify redundant functions, remove hard coded values and turn into constants
+3. Add Typescript testing sweet
+4. Add test for JS
+5. Make UI decorative and responsive
+6. Implement AI
 
 
 The [backend](https://github.com/Lsimelus/flask-backend) for this application is a python flask app that will eventually get updated

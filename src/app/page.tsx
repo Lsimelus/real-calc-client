@@ -109,10 +109,12 @@ export default function Home() {
       <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white">
         Real property, Real Sense
       </div>
-      <div className="col-span-5 flex items-center text-2xl dark:text-white">
-        <a href="https://github.com"
+      <div className="col-span-5  text-2xl dark:text-white">
+        <a className="group text-sky-600 transition duration-300"  href="https://github.com/Lsimelus"
           target='_blank'
-          rel="noopener">coded </a> <span> </span>by <a>Lyndbergh Simelus</a>
+          rel="noopener">coded</a> by <a className="group text-sky-600 transition duration-300" href="https://www.lyndbergh.net/"
+          target='_blank'>Lyndbergh Simelus <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-sky-600"></span>
+</a>
       </div>
       <>
         {!!(percentTrue < 100) && (

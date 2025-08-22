@@ -1,12 +1,10 @@
 "use client";
 import React from "react";
-import { addcomma} from "../../utils/utils";
-
-import {  useSelector } from "react-redux";
-
+import { addcomma } from "../../utils/utils";
+import { useSelector } from "react-redux";
 import {
   equityEvaluater,
-  equitySchedule
+  equitySchedule,
 } from "@/utils/sliceUtil";
 import { CardDescription, CardHeader, CardTitle } from "./card";
 import { Label } from "@radix-ui/react-label";
@@ -20,62 +18,51 @@ interface ExtraPaymentProps {
 export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
   equityRaw,
   mortgage,
-}: ExtraPaymentProps) => {
+}) => {
   const finance = useSelector((state: any) => state.finance.financeDetails);
 
-  const [paymentAmount, setPaymentAmount] = React.useState(0);
-  const [monthlyPaymentAmount, setMonthlyPaymentAmount] = React.useState(0);
-  let equityRawExtraPayment = equitySchedule(
+  const [paymentAmount, setPaymentAmount] = React.useState<number>(0);
+  const [monthlyPaymentAmount, setMonthlyPaymentAmount] = React.useState<number>(0);
+
+  const equityRawExtraPayment = equitySchedule(
     finance,
     mortgage,
     paymentAmount,
     monthlyPaymentAmount,
   );
-  let equityEvaluation = equityEvaluater(equityRaw, equityRawExtraPayment);
+  const equityEvaluation = equityEvaluater(equityRaw, equityRawExtraPayment);
 
   const [turningDate, setTurningDate] = React.useState("");
 
   React.useEffect(() => {
     const date = new Date();
-    const newDate = new Date(
-      new Date(date).setMonth(date.getMonth() + equityEvaluation.months),
-    );
-    // Format the date as desired, for example:
+    const newDate = new Date(date.setMonth(date.getMonth() + equityEvaluation.months));
+    const year = newDate.getFullYear().toString();
+    const month = (newDate.getMonth() + 1).toString(); // Month is zero-based
 
-    const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
-    const month = newDate.getMonth().toString();
-    // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
-
-    if (month == "0") {
-      setTurningDate(year);
-    } else {
-      setTurningDate(month + "/" + year);
-    }
-    //setTurninDate(month + "/" + year);
-  }, [equityEvaluation.months]); // The empty dependency array ensures this runs only once on mount
+    setTurningDate(month === "1" ? year : `${month}/${year}`);
+  }, [equityEvaluation.months]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (value === "") {
+    if (value.trim() === "") {
       setPaymentAmount(0);
     } else {
-      const intValue = parseInt(value, 10);
-      if (!isNaN(intValue)) {
-        setPaymentAmount(intValue);
+      const floatValue = parseFloat(value);
+      if (!isNaN(floatValue)) {
+        setPaymentAmount(floatValue);
       }
     }
   };
 
-  const handleMonthlyInputChange = (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => {
+  const handleMonthlyInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (value === "") {
+    if (value.trim() === "") {
       setMonthlyPaymentAmount(0);
     } else {
-      const intValue = parseInt(value, 10);
-      if (!isNaN(intValue)) {
-        setMonthlyPaymentAmount(intValue);
+      const floatValue = parseFloat(value);
+      if (!isNaN(floatValue)) {
+        setMonthlyPaymentAmount(floatValue);
       }
     }
   };
@@ -89,22 +76,31 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
         <CardDescription>You will save a bunch on interest!</CardDescription>
       </CardHeader>
 
-      <div className="grid  max-w-sm items-center gap-1.5">
+      <div className="grid max-w-sm items-center gap-1.5">
         <Label>What is the extra amount you would like to pay?</Label>
-        <Input value={paymentAmount} onChange={handleInputChange} />
+        <Input
+          value={paymentAmount === 0 ? "" : paymentAmount}
+          onChange={handleInputChange}
+          type="number"
+          min="0"
+          step="0.01"
+        />
       </div>
 
-      <div className="grid  max-w-sm items-center gap-1.5">
+      <div className="grid max-w-sm items-center gap-1.5">
         <Label>What is the extra amount you would like to pay monthly?</Label>
         <Input
-          value={monthlyPaymentAmount}
+          value={monthlyPaymentAmount === 0 ? "" : monthlyPaymentAmount}
           onChange={handleMonthlyInputChange}
+          type="number"
+          min="0"
+          step="0.01"
         />
       </div>
 
       {!!(paymentAmount + monthlyPaymentAmount > 0) && (
-        <div className="grid  max-w-sm items-center gap-1.5 mt-4">
-          <Label>New ending of the mortage: {turningDate}</Label>
+        <div className="grid max-w-sm items-center gap-1.5 mt-4">
+          <Label>New ending of the mortgage: {turningDate}</Label>
           <Label>
             Saved in interest: {addcomma(equityEvaluation.interest)}
           </Label>

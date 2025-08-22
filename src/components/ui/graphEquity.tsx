@@ -1,9 +1,6 @@
 "use client";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import {
-  addcomma
-} from "../../utils/utils";
-
+import { addcomma } from "../../utils/utils";
 import {
   Card,
   CardContent,
@@ -20,12 +17,10 @@ import {
 } from "@/components/ui/chart";
 import { useSelector } from "react-redux";
 import React from "react";
-import {
-  mortgageInsurance
-} from "@/utils/sliceUtil";
+import { mortgageInsurance } from "@/utils/sliceUtil";
 import { loanTypes } from "@/constants/types";
 
-const chartConfig = {
+const chartConfig: ChartConfig = {
   balance: {
     label: "Balance",
     color: "hsl(var(--chart-3))",
@@ -38,35 +33,28 @@ const chartConfig = {
     label: "Principal Paid",
     color: "hsl(var(--chart-5))",
   },
-} satisfies ChartConfig;
+};
 
 export interface chartInfo {
   data: any[];
-  point: string;
+  point: number;
 }
 
 interface GraphEquityProps {
   chartData: chartInfo;
 }
 
-export const GraphEquity: React.FC<GraphEquityProps> = ({
-  chartData,
-}: GraphEquityProps) => {
+export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {
   const finance = useSelector((state: any) => state.finance.financeDetails);
 
-  const [turningDate, setTurninDate] = React.useState("");
+  const [turningDate, setTurningDate] = React.useState("");
   React.useEffect(() => {
     const date = new Date();
-    const newDate = new Date(
-      new Date(date).setMonth(date.getMonth() + chartData.point),
-    );
-    // Format the date as desired, for example:
-
-    const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
-    const month = newDate.getMonth().toString();
-    // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
-    setTurninDate(month + "/" + year);
-  }, [chartData.point]); // The empty dependency array ensures this runs only once on mount
+    date.setMonth(date.getMonth() + chartData.point);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Month is zero-based
+    setTurningDate(`${month}/${year}`);
+  }, [chartData.point]);
 
   return (
     <Card className="col-span-3">
@@ -79,10 +67,7 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({
           <LineChart
             accessibilityLayer
             data={chartData.data}
-            margin={{
-              left: 12,
-              right: 12,
-            }}
+            margin={{ left: 12, right: 12 }}
           >
             <CartesianGrid vertical={false} />
             <XAxis
@@ -117,16 +102,16 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({
           </LineChart>
         </ChartContainer>
       </CardContent>
-      {!!(chartData.point > -1 && finance.type != loanTypes.FHA) && (
+      {!!(chartData.point > -1 && finance.type !== loanTypes.FHA) && (
         <CardFooter>
           <div className="flex w-full items-start gap-2 text-sm">
             <div className="grid gap-2">
               <div className="flex items-center gap-2 leading-none text-muted-foreground">
                 During {turningDate}, you will have 20% equity in your home,
-                which means you will not have to make any additonal payments. At
+                which means you will not have to make any additional payments. At
                 that point, you will be able to remove the Mortgage Insurance
-                from you Mortgage payment and it will deacrease by{" "}
-                {addcomma(mortgageInsurance(finance))} per year
+                from your mortgage payment and it will decrease by{" "}
+                {addcomma(mortgageInsurance(finance))} per year.
               </div>
             </div>
           </div>

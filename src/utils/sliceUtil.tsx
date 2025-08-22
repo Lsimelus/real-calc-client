@@ -1,4 +1,4 @@
-import { finance } from "@/lib/financeSlice";
+import { finance, financeSlice } from "@/lib/financeSlice";
 import { insurance } from "@/lib/insuranceSlice";
 import { tax } from "@/lib/taxSlice";
 import { location } from "@/lib/locationSlice";
@@ -146,7 +146,7 @@ export const equityEvaluater = (
   let interestDifference = equityRaw[equityRaw.length - 1][1] - interestSaved;
 
   let data: equityEvaluation = {
-    months: equityRaw.length - extraPaymentLength,
+    months: extraPaymentLength,
     interest: interestDifference,
   };
 

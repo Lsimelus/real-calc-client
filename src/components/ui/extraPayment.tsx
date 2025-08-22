@@ -56,7 +56,7 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
   );
   let equityEvaluation = equityEvaluater(equityRaw, equityRawExtraPayment);
 
-  const [turningDate, setTurninDate] = React.useState("");
+  const [turningDate, setTurningDate] = React.useState("");
 
   React.useEffect(() => {
     const date = new Date();
@@ -70,9 +70,9 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
     // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
 
     if (month == "0") {
-      setTurninDate(year);
+      setTurningDate(year);
     } else {
-      setTurninDate(month + "/" + year);
+      setTurningDate(month + "/" + year);
     }
     //setTurninDate(month + "/" + year);
   }, [equityEvaluation.months]); // The empty dependency array ensures this runs only once on mount

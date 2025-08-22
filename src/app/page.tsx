@@ -20,6 +20,16 @@ import {
   principalAndInterest,
 } from "@/utils/sliceUtil";
 import { amortizationFormatter, equityFormatter } from "@/utils/utils";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+import {
+  Sheet,
+  SheetContent,
+  SheetDescription,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 const questions = [
   <Location />,
@@ -97,7 +107,12 @@ export default function Home() {
   return (
     <div className="grid grid-cols-5 gap-8 m-6 p-6">
       <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white">
-        Making real estate make sense
+        Real property, Real Sense
+      </div>
+      <div className="col-span-5 flex items-center text-2xl dark:text-white">
+        <a href="https://github.com"
+          target='_blank'
+          rel="noopener">coded </a> <span> </span>by <a>Lyndbergh Simelus</a>
       </div>
       <>
         {!!(percentTrue < 100) && (
@@ -120,6 +135,24 @@ export default function Home() {
           </>
         )}
       </>
+
+      <Sheet>
+        <SheetTrigger>
+          <Avatar>
+            <AvatarImage src="/prof.png" className="hover:bg-sky-700" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Are you absolutely sure?</SheetTitle>
+            <SheetDescription>
+              This action cannot be undone. This will permanently delete your
+              account and remove your data from our servers.
+            </SheetDescription>
+          </SheetHeader>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

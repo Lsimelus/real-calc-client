@@ -78,6 +78,8 @@ export const equityFormatter = (
 
   var turned = false;
   var turningPoint = -1;
+  const date = new Date();
+  var year = date.getFullYear();
   if (
     twentyPercentAmount > unformatted_schdule[1][0] ||
     financeSlice.downPaymentPercent >= 20

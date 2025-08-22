@@ -60,7 +60,7 @@ export function Footer() {
                 <SheetDescription>
                   The purpose of this site is to provide a seamless experience for users to calculate and visualize their mortgage and equity information prior to looking at property.
                   To learn more about the tech stack, future plans, and/or look at the code please visit this projects <a target="_blank" href="https://github.com/Lsimelus/real-calc-client" className="text-sky-600">GitHub page.</a>
-                  To look at other various projects that I've created, please visit my <a target="_blank" href="https://github.com/Lsimelus" className="text-sky-600">GitHub profile</a> or my <a target="_blank" href="todo" className="text-sky-600">live portfolio website</a>.
+                  To look at other various projects that I've created, please visit my <a target="_blank" href="https://github.com/Lsimelus" className="text-sky-600">GitHub profile</a> or my <a target="_blank" href="thttps://portfolio-orcin-theta-51.vercel.app/" className="text-sky-600">live portfolio website</a>.
                   <br />
                   <br />
                   If you want to connect with me please reach out via my email: <strong>Lsimelus@gmail.com</strong> and my <a  target="_blank" href="https://www.linkedin.com/in/lyndbergh-simelus/" className="text-sky-600">LinkedIn profile.</a>

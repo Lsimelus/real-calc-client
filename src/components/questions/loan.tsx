@@ -39,20 +39,16 @@ const CustomHoverCard: React.FC<CustomHoverCardProps> = ({
   buttonText,
   contentText,
   active = false,
-}) => {
-  return (
-    <HoverCard>
-      <HoverCardTrigger>
-        <Button variant={active ? "default" : "ghost"} onClick={onClick}>
-          {buttonText}
-        </Button>
-      </HoverCardTrigger>
-      {!!(active == false) && (
-        <HoverCardContent>{contentText}</HoverCardContent>
-      )}
-    </HoverCard>
-  );
-};
+}) => (
+  <HoverCard>
+    <HoverCardTrigger>
+      <Button variant={active ? "default" : "ghost"} onClick={onClick}>
+        {buttonText}
+      </Button>
+    </HoverCardTrigger>
+    {!active && <HoverCardContent>{contentText}</HoverCardContent>}
+  </HoverCard>
+);
 
 export const cardTypes: {
   [key in loanTypes]: {
@@ -71,7 +67,7 @@ export const cardTypes: {
   [loanTypes.FHA]: {
     buttonText: "F.H.A.",
     contentText:
-      "First time home buyer. Great for those with low credit and low down payment. Typically refinanced wthin the first trimester of loan life time",
+      "First time home buyer. Great for those with low credit and low down payment. Typically refinanced within the first trimester of loan life time",
     rates: 6,
     minDownpayment: 2.5,
   },
@@ -91,10 +87,7 @@ export const cardTypes: {
 };
 
 export function Loan({ className, ...props }: CardProps) {
-  const financeSlice = useSelector(
-    (state: { finance: { financeDetails: any } }) =>
-      state.finance.financeDetails,
-  );
+  const financeSlice = useSelector((state: any) => state.finance.financeDetails);
   const initType = financeSlice.type;
   const initExact = financeSlice.exactRate;
   const initLoanLength = financeSlice.length;
@@ -104,35 +97,32 @@ export function Loan({ className, ...props }: CardProps) {
   const [exact, setExact] = React.useState<number>(initExact);
   const [exactOption, setExactOption] = React.useState(initExact !== 0);
 
-  const cards = Object.entries(cardTypes)
-    .slice(1)
-    .map(([cardType, { buttonText, contentText, rates }]) => ({
-      buttonText,
-      contentText,
-      onClick: () =>
-        setType((prevType) =>
-          prevType === cardType ? loanTypes.None : (cardType as loanTypes),
-        ),
-      active: type === cardType,
-    }));
-
   const dispatch = useDispatch();
 
   React.useEffect(() => {
     dispatch(selectType(type));
-  }, [type]);
+  }, [type, dispatch]);
+
   React.useEffect(() => {
     dispatch(selectExactRate(exact));
-  }, [exact]);
+  }, [exact, dispatch]);
 
   React.useEffect(() => {
     dispatch(selectLength(loanLength[0]));
-  }, [loanLength]);
+  }, [loanLength, dispatch]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let value = event.target.value;
-    setExact(Number(value));
+    const value = event.target.value;
+    if (value.trim() === "") {
+      setExact(0);
+    } else {
+      const floatValue = parseFloat(value);
+      if (!isNaN(floatValue)) {
+        setExact(floatValue);
+      }
+    }
   };
+
   const handleInputBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     let value = parseFloat(event.target.value);
     if (isNaN(value)) {
@@ -145,6 +135,18 @@ export function Loan({ className, ...props }: CardProps) {
     setExact(Number(value.toFixed(1)));
   };
 
+  const cards = Object.entries(cardTypes)
+    .filter(([cardType]) => cardType !== loanTypes.None)
+    .map(([cardType, { buttonText, contentText, rates }]) => ({
+      buttonText,
+      contentText,
+      onClick: () =>
+        setType((prevType) =>
+          prevType === cardType ? loanTypes.None : (cardType as loanTypes),
+        ),
+      active: type === cardType,
+    }));
+
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
@@ -156,17 +158,17 @@ export function Loan({ className, ...props }: CardProps) {
           {cards.map((card, index) => (
             <React.Fragment key={index}>
               <CustomHoverCard {...card} />
-              {!!(index < cards.length - 1) && (
+              {index < cards.length - 1 && (
                 <Separator orientation="vertical" />
               )}
             </React.Fragment>
           ))}
         </div>
-        {!!(type !== loanTypes.None) && (
+        {type !== loanTypes.None && (
           <div>
             <div className="grid w-full max-w-sm items-center gap-1.5 mb-10 mt-10">
               <Label>
-                The lengh of the loan:{" "}
+                The length of the loan:{" "}
                 <span className="font-bold">{loanLength}</span> years
               </Label>
               <Slider
@@ -175,9 +177,7 @@ export function Loan({ className, ...props }: CardProps) {
                 step={5}
                 min={10}
                 value={loanLength}
-                onValueChange={(loanLength: React.SetStateAction<any[]>) =>
-                  setLoanLength(loanLength)
-                }
+                onValueChange={setLoanLength}
               />
             </div>
 
@@ -188,10 +188,10 @@ export function Loan({ className, ...props }: CardProps) {
                 {"%"}
               </Label>
             </div>
-            <div className="grid  max-w-sm items-center gap-1.5">
+            <div className="grid max-w-sm items-center gap-1.5">
               <Label>
-                Do you want to use a specifc interest rate instead instead?{" "}
-                {!!(exact > 0) && `${exact}%`}
+                Do you want to use a specific interest rate instead?{" "}
+                {exact > 0 && `${exact}%`}
               </Label>
             </div>
             <Button
@@ -209,16 +209,16 @@ export function Loan({ className, ...props }: CardProps) {
             >
               No
             </Button>
-            {!!exactOption && (
+            {exactOption && (
               <Input
                 type="number"
                 step="0.1"
                 min="0.0"
                 max="30"
-                value={exact}
+                value={exact === 0 ? "" : exact}
                 onChange={handleInputChange}
                 onBlur={handleInputBlur}
-              ></Input>
+              />
             )}
             <div className="grid w-full max-w-sm items-center gap-1.5"></div>
           </div>

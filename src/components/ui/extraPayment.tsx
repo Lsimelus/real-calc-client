@@ -1,35 +1,12 @@
 "use client";
 import React from "react";
-import { addcomma, feesAmount, moneyToString } from "../../utils/utils";
+import { addcomma} from "../../utils/utils";
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TableFooter,
-} from "@/components/ui/table";
+import {  useSelector } from "react-redux";
 
 import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import {
-  calcDownDeposit,
   equityEvaluater,
-  equitySchedule,
-  homeInsurance,
-  mortgageInsurance,
-  pmInsurance,
-  principalAndInterest,
-  propertyTax,
+  equitySchedule
 } from "@/utils/sliceUtil";
 import { CardDescription, CardHeader, CardTitle } from "./card";
 import { Label } from "@radix-ui/react-label";

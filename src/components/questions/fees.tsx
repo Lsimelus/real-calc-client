@@ -6,7 +6,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Slider } from "@/components/ui/slider";
 import * as React from "react";
 import { Input } from "@/components/ui/input";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,11 +16,8 @@ import { formatNumber } from "@/utils/utils";
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Fees({ className, ...props }: CardProps) {
-  const initPrice = useSelector(
-    (state: { fees: { feesDetails: { fee: any } } }) =>
-      state.fees.feesDetails.fee,
-  );
-  const [feeAmount, setFeeAmount] = React.useState(initPrice);
+  const initFee = useSelector((state: any) => state.fees.feesDetails.fee);
+  const [feeAmount, setFeeAmount] = React.useState(initFee);
 
   const dispatch = useDispatch();
 
@@ -30,15 +26,16 @@ export function Fees({ className, ...props }: CardProps) {
     if (value === "") {
       setFeeAmount(0);
     } else {
-      const intValue = parseInt(value, 10);
-      if (!isNaN(intValue)) {
-        setFeeAmount(intValue);
+      const floatValue = parseFloat(value);
+      if (!isNaN(floatValue)) {
+        setFeeAmount(floatValue);
       }
     }
   };
+
   React.useEffect(() => {
     dispatch(setFee(feeAmount));
-  }, [feeAmount]);
+  }, [feeAmount, dispatch]);
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -47,12 +44,18 @@ export function Fees({ className, ...props }: CardProps) {
         <CardDescription>HOA and miscellaneous fees</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="grid  max-w-sm items-center gap-1.5">
+        <div className="grid max-w-sm items-center gap-1.5">
           <Label>
             Total monthly fees:{" "}
             <span className="font-bold">{formatNumber(feeAmount)}</span>
           </Label>
-          <Input value={feeAmount} onChange={handleInputChange} />
+          <Input
+            value={feeAmount === 0 ? "" : feeAmount}
+            onChange={handleInputChange}
+            type="number"
+            min="0"
+            step="0.01"
+          />
         </div>
       </CardContent>
     </Card>

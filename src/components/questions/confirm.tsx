@@ -1,45 +1,30 @@
-import { BellRing, Check } from "lucide-react";
-
+import * as React from "react";
 import { useDispatch, useSelector } from "react-redux";
-//import { fetchTax, fetchRent } from "@/api/fetchhData";
 import { selectCompleteness } from "@/lib/confirmSlice";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { homeInsurance, propertyTax } from "../../utils/sliceUtil";
 import { Label } from "../ui/label";
 import { addcomma, formatNumber } from "@/utils/utils";
-import { financeSlice } from "@/lib/financeSlice";
-import * as React from "react";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Confirm({ className, ...props }: CardProps) {
-  const location = useSelector(
-    (state: { location: { locationDetails: any } }) =>
-      state.location.locationDetails,
-  );
-  const finance = useSelector(
-    (state: { finance: { financeDetails: any } }) =>
-      state.finance.financeDetails,
-  );
-  const tax = useSelector(
-    (state: { tax: { taxDetails: any } }) => state.tax.taxDetails,
-  );
-  const insurance = useSelector(
-    (state: { insurance: { insuranceDetails: any } }) =>
-      state.insurance.insuranceDetails,
-  );
-  const fees = useSelector(
-    (state: { fees: { feesDetails: any } }) => state.fees.feesDetails,
-  );
+  const location = useSelector((state: any) => state.location.locationDetails);
+  const finance = useSelector((state: any) => state.finance.financeDetails);
+  const tax = useSelector((state: any) => state.tax.taxDetails);
+  const insurance = useSelector((state: any) => state.insurance.insuranceDetails);
+  const fees = useSelector((state: any) => state.fees.feesDetails);
   const dispatch = useDispatch();
+
+  const yearlyInsurance = addcomma(Number(homeInsurance(finance, insurance)[1]));
+  const yearlyTax = addcomma(Number(propertyTax(finance, tax, location)[1]));
 
   return (
     <Card className={cn("h-[520px]", className)} {...props}>
@@ -87,18 +72,14 @@ export function Confirm({ className, ...props }: CardProps) {
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
             The total yearly premium for home insurance is{" "}
-            <span className="font-bold">
-              {addcomma(Number(homeInsurance(finance, insurance)[1]))}
-            </span>
+            <span className="font-bold">{yearlyInsurance}</span>
           </Label>
         </div>
 
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>
             The total yearly taxes is{" "}
-            <span className="font-bold">
-              {addcomma(Number(propertyTax(finance, tax, location)[1]))}
-            </span>
+            <span className="font-bold">{yearlyTax}</span>
           </Label>
         </div>
 

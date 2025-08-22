@@ -11,68 +11,27 @@ import { addcomma, formatNumber } from "../../utils/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import React from "react";
-import { selectExact, taxSlice } from "../../lib/taxSlice";
+import { selectExact } from "../../lib/taxSlice";
 import { Label } from "../ui/label";
 import {
   estimatePropertyTax,
-  locationPropertyTax,
   propertyTax,
 } from "@/utils/sliceUtil";
-import { financeSlice } from "@/lib/financeSlice";
-import { locationSlice } from "@/lib/locationSlice";
-import { init } from "next/dist/compiled/webpack/webpack";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Tax({ className, ...props }: CardProps) {
-  const financeSlice = useSelector(
-    (state: { finance: { financeDetails: any } }) =>
-      state.finance.financeDetails,
-  );
-  const taxSlice = useSelector(
-    (state: { tax: { taxDetails: any } }) => state.tax.taxDetails,
-  );
-  const locationSlice = useSelector(
-    (state: { location: { locationDetails: any } }) =>
-      state.location.locationDetails,
-  );
+  const finance = useSelector((state: any) => state.finance.financeDetails);
+  const tax = useSelector((state: any) => state.tax.taxDetails);
+  const location = useSelector((state: any) => state.location.locationDetails);
 
-  const estimatedTax = estimatePropertyTax(financeSlice, locationSlice);
+  const estimatedTax = estimatePropertyTax(finance, location);
 
-  const price = useSelector(
-    (state: { finance: { financeDetails: { homePrice: any } } }) =>
-      state.finance.financeDetails.homePrice,
-  );
-
-  const initExact = useSelector(
-    (state: { finance: { financeDetails: { exactRate: any } } }) =>
-      state.finance.financeDetails.exactRate,
-  );
+  const initExact = tax.exact;
   const [exact, setExact] = React.useState(initExact);
   const [exactOption, setExactOption] = React.useState(false);
 
-  const [taxType, setTaxType] = React.useState("");
-  const [taxAmount, setTaxAmount] = React.useState(0);
-
-  React.useEffect(() => {
-    let currTax = propertyTax(financeSlice, taxSlice, locationSlice);
-    setTaxAmount(Number(currTax[1]));
-    setTaxType(String(currTax[0]));
-  }, [financeSlice, taxSlice, locationSlice]);
-
   const dispatch = useDispatch();
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value === "") {
-      setExact(0);
-    } else {
-      const intValue = parseInt(value, 10);
-      if (!isNaN(intValue)) {
-        setExact(intValue);
-      }
-    }
-  };
 
   React.useEffect(() => {
     dispatch(selectExact(exact));
@@ -80,16 +39,28 @@ export function Tax({ className, ...props }: CardProps) {
 
   React.useEffect(() => {
     setExact(initExact);
-  }, [exactOption]);
+  }, [exactOption, initExact]);
+
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    if (value.trim() === "") {
+      setExact(0);
+    } else {
+      const floatValue = parseFloat(value);
+      if (!isNaN(floatValue)) {
+        setExact(floatValue);
+      }
+    }
+  };
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
       <CardHeader>
         <CardTitle>Taxes</CardTitle>
-        <CardDescription>Everyones favorite part</CardDescription>
+        <CardDescription>Everyone's favorite part</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="grid  max-w-sm items-center gap-1.5">
+        <div className="grid max-w-sm items-center gap-1.5">
           <Label>
             Estimated yearly tax:{" "}
             <span className="font-bold">
@@ -98,10 +69,10 @@ export function Tax({ className, ...props }: CardProps) {
           </Label>
         </div>
         <div>
-          <div className="grid  max-w-sm items-center gap-1.5 mt-5">
+          <div className="grid max-w-sm items-center gap-1.5 mt-5">
             <Label className="mb-1">
-              Do you have/want to use a exact yearly tax amount?{" "}
-              {!!(exact > 0) && formatNumber(exact)}
+              Do you have/want to use an exact yearly tax amount?{" "}
+              {exact > 0 && formatNumber(exact)}
             </Label>
             <div>
               <Button
@@ -117,8 +88,11 @@ export function Tax({ className, ...props }: CardProps) {
                 No
               </Button>
             </div>
-            {!!exactOption && (
-              <Input value={exact} onChange={handleInputChange}></Input>
+            {exactOption && (
+              <Input
+                value={exact === 0 ? "" : exact}
+                onChange={handleInputChange}
+              />
             )}
           </div>
         </div>

@@ -1,12 +1,7 @@
 "use client";
-import { TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
 import {
-  amortizationFormatter,
-  feesAmount,
-  moneyToString,
-  equityFormatter,
-  addcomma,
+  addcomma
 } from "../../utils/utils";
 
 import {
@@ -23,13 +18,10 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import React from "react";
 import {
-  amortizationSchedule,
-  equitySchedule,
-  mortgageInsurance,
-  principalAndInterest,
+  mortgageInsurance
 } from "@/utils/sliceUtil";
 import { loanTypes } from "@/constants/types";
 

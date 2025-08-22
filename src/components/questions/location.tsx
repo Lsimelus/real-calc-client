@@ -17,40 +17,28 @@ import React from "react";
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Location({ className, ...props }: CardProps) {
-  const locationSlice = useSelector(
-    (state: { location: { locationDetails: any } }) =>
-      state.location.locationDetails,
-  );
-  const cityOptions = locationSlice.cityOptions;
-  const city = locationSlice.city;
-  const state = locationSlice.state;
-
+  const location = useSelector((state: any) => state.location.locationDetails);
   const dispatch = useDispatch<any>();
 
-  function pickState(state: string) {
-    if (state != "") {
-      dispatch(fetchStateInfo(state));
+  const handleStateSelect = (selectedState: string) => {
+    if (selectedState) {
+      dispatch(fetchStateInfo(selectedState));
     }
-  }
+  };
 
-  function pickCity(city: string) {
-    if (city != "" && state != "") {
-      dispatch(fetchCityInfo(state + "/" + city));
+  const handleCitySelect = (selectedCity: string) => {
+    if (selectedCity && location.state) {
+      dispatch(fetchCityInfo(`${location.state}/${selectedCity}`));
     }
-  }
+  };
 
+  // Example: If you want to show a future date, you can keep this logic.
   const [currentDate, setCurrentDate] = React.useState("");
-
   React.useEffect(() => {
     const date = new Date();
-    const newDate = new Date(new Date(date).setMonth(date.getMonth() + 25));
-    // Format the date as desired, for example:
-
-    const year = newDate.getFullYear().toString(); // e.g., "7/10/2025"
-    const month = newDate.getMonth().toString();
-    // const formattedDate = date.toDateString(); // e.g., "Thu Jul 10 2025"
-    setCurrentDate(month + "/" + year);
-  }, []); // The empty dependency array ensures this runs only once on mount
+    const futureDate = new Date(date.setMonth(date.getMonth() + 25));
+    setCurrentDate(`${futureDate.getMonth()}/${futureDate.getFullYear()}`);
+  }, []);
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>
@@ -63,42 +51,42 @@ export function Location({ className, ...props }: CardProps) {
           <Label>State</Label>
           <Combobox
             frameworks={states}
-            onSelect={pickState}
-            defaultValue={state}
+            onSelect={handleStateSelect}
+            defaultValue={location.state}
           />
         </div>
         <div className="grid w-full max-w-sm items-center gap-1.5">
           <Label>City</Label>
           <Combobox
-            frameworks={cityOptionsList(cityOptions)}
-            onSelect={pickCity}
-            defaultValue={city}
+            frameworks={cityOptionsList(location.cityOptions)}
+            onSelect={handleCitySelect}
+            defaultValue={location.city}
           />
         </div>
-        {!!locationSlice.medianValue && (
+        {!!location.medianValue && (
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
-              Median home value in {locationSlice.county}:{" "}
+              Median home value in {location.county}:{" "}
               <span className="font-bold">
-                {addcomma(locationSlice.medianValue)}
+                {addcomma(location.medianValue)}
               </span>
             </Label>
           </div>
         )}
-        {!!locationSlice.medianTax && (
+        {!!location.medianTax && (
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
-              Median property tax in {locationSlice.county}:{" "}
-              <span className="font-bold">{locationSlice.medianTax}%</span>
+              Median property tax in {location.county}:{" "}
+              <span className="font-bold">{location.medianTax}%</span>
             </Label>
           </div>
         )}
-        {!!locationSlice.medianRent && (
+        {!!location.medianRent && (
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
-              Median unit rental in {locationSlice.city}:{" "}
+              Median unit rental in {location.city}:{" "}
               <span className="font-bold">
-                {addcomma(locationSlice.medianRent)}
+                {addcomma(location.medianRent)}
               </span>
             </Label>
           </div>

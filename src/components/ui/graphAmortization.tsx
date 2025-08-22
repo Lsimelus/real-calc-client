@@ -1,11 +1,5 @@
 "use client";
-import { TrendingUp } from "lucide-react";
 import { CartesianGrid, Line, LineChart, XAxis } from "recharts";
-import {
-  amortizationFormatter,
-  feesAmount,
-  moneyToString,
-} from "../../utils/utils";
 
 import {
   Card,
@@ -22,9 +16,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-import { useDispatch, useSelector } from "react-redux";
 import React from "react";
-import { amortizationSchedule, principalAndInterest } from "@/utils/sliceUtil";
 import { chartInfo } from "./graphEquity";
 
 const chartConfig = {

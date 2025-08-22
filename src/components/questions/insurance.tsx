@@ -13,19 +13,13 @@ import React from "react";
 import { selectExact } from "../../lib/insuranceSlice";
 import { Label } from "../ui/label";
 import { addcomma, formatNumber } from "@/utils/utils";
-import { estimatedHomeInsurance, homeInsurance } from "@/utils/sliceUtil";
+import { estimatedHomeInsurance } from "@/utils/sliceUtil";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Insurance({ className, ...props }: CardProps) {
-  const financeSlice = useSelector(
-    (state: { finance: { financeDetails: any } }) =>
-      state.finance.financeDetails,
-  );
-  const insuranceSlice = useSelector(
-    (state: { insurance: { insuranceDetails: any } }) =>
-      state.insurance.insuranceDetails,
-  );
+  const financeSlice = useSelector((state: any) => state.finance.financeDetails);
+  const insuranceSlice = useSelector((state: any) => state.insurance.insuranceDetails);
   const exactAmount = insuranceSlice.exact;
 
   const [exact, setExact] = React.useState(exactAmount);
@@ -34,19 +28,19 @@ export function Insurance({ className, ...props }: CardProps) {
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    if (value === "") {
+    if (value.trim() === "") {
       setExact(0);
     } else {
-      const intValue = parseInt(value, 10);
-      if (!isNaN(intValue)) {
-        setExact(intValue);
+      const floatValue = parseFloat(value);
+      if (!isNaN(floatValue)) {
+        setExact(floatValue);
       }
     }
   };
 
   React.useEffect(() => {
     dispatch(selectExact(exact));
-  }, [exact]);
+  }, [exact, dispatch]);
 
   React.useEffect(() => {
     if (!exactOption) {
@@ -61,7 +55,7 @@ export function Insurance({ className, ...props }: CardProps) {
         <CardDescription>Just in case</CardDescription>
       </CardHeader>
       <CardContent className="grid gap-4">
-        <div className="grid  max-w-sm items-center gap-1.5">
+        <div className="grid max-w-sm items-center gap-1.5">
           <Label className="mb-1">
             Estimated Insurance Premium:{" "}
             <span className="font-bold">
@@ -69,8 +63,8 @@ export function Insurance({ className, ...props }: CardProps) {
             </span>
           </Label>
           <Label>
-            Is there an exact insurance premium you would want use?{" "}
-            {!!(exact > 0) && formatNumber(exact)}
+            Is there an exact insurance premium you would want to use?{" "}
+            {exact > 0 && formatNumber(exact)}
           </Label>
         </div>
         <div>
@@ -87,7 +81,13 @@ export function Insurance({ className, ...props }: CardProps) {
             No
           </Button>
           {exactOption && (
-            <Input value={exact} onChange={handleInputChange}></Input>
+            <Input
+              value={exact === 0 ? "" : exact}
+              onChange={handleInputChange}
+              type="number"
+              min="0"
+              step="0.01"
+            />
           )}
         </div>
       </CardContent>

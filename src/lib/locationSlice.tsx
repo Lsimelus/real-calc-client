@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice} from "@reduxjs/toolkit";
 import { fetchStateInfo, fetchCityInfo } from "@/api/fetchhData";
 
 // Define the interface for the location object

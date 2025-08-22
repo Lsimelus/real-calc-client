@@ -110,10 +110,6 @@ export const equityFormatter = (
   return data;
 };
 
-const formatForCombo = (rawString: string) => {
-  return rawString;
-};
-
 export const cityOptionsList = (cityOptions: string[]) => {
   var list: ComboboxItemProps[] = [];
   for (let i = 0; i < cityOptions.length; i++) {

@@ -30,6 +30,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Footer, Header } from "@/components/ui/margins";
 
 const questions = [
   <Location />,
@@ -106,16 +107,7 @@ export default function Home() {
 
   return (
     <div className="grid grid-cols-5 gap-8 m-6 p-6">
-      <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white">
-        Real property, Real Sense
-      </div>
-      <div className="col-span-5  text-2xl dark:text-white">
-        <a className="group text-sky-600 transition duration-300"  href="https://github.com/Lsimelus"
-          target='_blank'
-          rel="noopener">coded</a> by <a className="group text-sky-600 transition duration-300" href="https://www.lyndbergh.net/"
-          target='_blank'>Lyndbergh Simelus <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-sky-600"></span>
-</a>
-      </div>
+      <Header />
       <>
         {!!(percentTrue < 100) && (
           <>
@@ -137,24 +129,9 @@ export default function Home() {
           </>
         )}
       </>
+      <Footer />
 
-      <Sheet>
-        <SheetTrigger>
-          <Avatar>
-            <AvatarImage src="/prof.png" className="hover:bg-sky-700" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-        </SheetTrigger>
-        <SheetContent>
-          <SheetHeader>
-            <SheetTitle>Are you absolutely sure?</SheetTitle>
-            <SheetDescription>
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
-            </SheetDescription>
-          </SheetHeader>
-        </SheetContent>
-      </Sheet>
+
     </div>
   );
 }

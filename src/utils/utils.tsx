@@ -1,7 +1,8 @@
 import { finance } from "../lib/financeSlice";
 import { fees } from "../lib/feesSlice";
 import { ComboboxItemProps } from "@/components/ui/combobox";
-import { chartInfo } from "@/components/ui/graphEquity";
+import { equityChartInfo } from "@/components/ui/graphEquity";
+import { amortizationChartInfo } from "@/components/ui/graphAmortization";
 
 export const formatNumber = (num: number) => {
   if (num >= 1000000) {
@@ -66,7 +67,7 @@ export const amortizationFormatter = (unformatted_schdule: number[][]) => {
     "/" +
     turningDate.getFullYear().toString();
 
-  var data: chartInfo = { data: chartData, point: dateFormatted };
+  var data: amortizationChartInfo = { data: chartData, point: dateFormatted };
   return data;
 };
 
@@ -106,7 +107,7 @@ export const equityFormatter = (
       turned = true;
     }
   }
-  var data: chartInfo = { data: chartData, point: turningPoint };
+  var data: equityChartInfo= { data: chartData, point: turningPoint };
   return data;
 };
 

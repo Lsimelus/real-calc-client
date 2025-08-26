@@ -35,13 +35,13 @@ const chartConfig: ChartConfig = {
   },
 };
 
-export interface chartInfo {
+export interface equityChartInfo {
   data: any[];
   point: number;
 }
 
 interface GraphEquityProps {
-  chartData: chartInfo;
+  chartData: equityChartInfo;
 }
 
 export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {

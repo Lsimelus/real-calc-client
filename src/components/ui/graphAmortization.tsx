@@ -15,7 +15,16 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import React from "react";
-import { chartInfo } from "./graphEquity";
+
+
+export interface amortizationChartInfo {
+  data: any[];
+  point: string;
+}
+
+interface GraphAmortizationProps {
+  chartData: amortizationChartInfo;
+}
 
 const chartConfig: ChartConfig = {
   interest: {
@@ -28,9 +37,6 @@ const chartConfig: ChartConfig = {
   },
 };
 
-interface GraphAmortizationProps {
-  chartData: chartInfo;
-}
 
 export const GraphAmortization: React.FC<GraphAmortizationProps> = ({
   chartData,

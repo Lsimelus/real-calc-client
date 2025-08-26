@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { addcomma, feesAmount, moneyToString } from "../../utils/utils";
-import { useSelector } from "react-redux";
+
+import { useDispatch, useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -12,6 +13,7 @@ import {
   TableRow,
   TableFooter,
 } from "@/components/ui/table";
+
 import {
   Tooltip,
   TooltipContent,
@@ -33,68 +35,123 @@ interface SummaryProps {
   editInfo: () => void;
 }
 
-const INVOICE_CONFIG = [
-  {
-    cost: "Principal & Interest",
-    desc: "The principal is the amount of money you borrowed to buy the home. The interest is the cost of borrowing that money.",
-    getValue: (finance: any) => principalAndInterest(finance) * 12,
-  },
-  {
-    cost: "Property Taxes",
-    desc: "Property taxes are assessed by the local government and are based on the value of your home.",
-    getValue: (finance: any, tax: any, location: any) => propertyTax(finance, tax, location),
-  },
-  {
-    cost: "Homeowners Insurance",
-    desc: "Homeowners insurance protects your home and belongings from damage or theft.",
-    getValue: (finance: any, insurance: any) => homeInsurance(finance, insurance),
-  },
-  {
-    cost: "Mortgage Insurance",
-    desc: "Mortgage insurance protects the lender if you stop making payments on your loan.",
-    getValue: (finance: any) => mortgageInsurance(finance),
-  },
-  {
-    cost: "Premium Mortgage Insurance",
-    desc: "Premium mortgage insurance is a type of mortgage insurance that is only required for certain loans.",
-    getValue: (finance: any) => pmInsurance(finance),
-  },
-  {
-    cost: "HOA Dues + fees",
-    desc: "HOA dues are fees that are paid to a homeowners association for the upkeep of common areas.",
-    getValue: (_finance: any, _tax: any, _location: any, _insurance: any, fees: any) => feesAmount(fees),
-  },
-];
-
-export const Summary: React.FC<SummaryProps> = ({ questionCompleted, editInfo }) => {
+export const Summary: React.FC<SummaryProps> = ({
+  questionCompleted,
+  editInfo,
+}: SummaryProps) => {
   const finance = useSelector((state: any) => state.finance.financeDetails);
   const tax = useSelector((state: any) => state.tax.taxDetails);
-  const insurance = useSelector((state: any) => state.insurance.insuranceDetails);
+  const insurance = useSelector(
+    (state: any) => state.insurance.insuranceDetails,
+  );
   const fees = useSelector((state: any) => state.fees.feesDetails);
   const location = useSelector((state: any) => state.location.locationDetails);
 
-  // Calculate invoice rows
-  const invoices = React.useMemo(() => {
-    return INVOICE_CONFIG.map((row, idx) => {
-      let value;
-      if (idx === 0) value = row.getValue(finance);
-      else if (idx === 1) value = row.getValue(finance, tax, location);
-      else if (idx === 2) value = row.getValue(finance, insurance);
-      else if (idx === 3) value = row.getValue(finance);
-      else if (idx === 4) value = row.getValue(finance);
-      else value = row.getValue(finance, tax, location, insurance, fees);
+  const dispatch = useDispatch();
 
-      if (Array.isArray(value)) value = Number(value[1]);
-      const monthly = addcomma(value / 12);
-      const yearly = addcomma(value);
-      return { ...row, monthly, yearly };
+  const [invoices, setInvoices] = React.useState([
+    {
+      cost: "Principal & Interest",
+      monthly: "",
+      yearly: "",
+      desc: "The principal is the amount of money you borrowed to buy the home. The interest is the cost of borrowing that money.",
+    },
+    {
+      cost: "Property Taxes",
+      monthly: "",
+      yearly: "",
+      desc: "Property taxes are assessed by the local government and are based on the value of your home.",
+    },
+    {
+      cost: "Homeowners Insurance",
+      monthly: "",
+      yearly: "",
+      desc: "Homeowners insurance protects your home and belongings from damage or theft.",
+    },
+    {
+      cost: "Mortgage Insurance",
+      monthly: "",
+      yearly: "",
+      desc: "Mortgage insurance protects the lender if you stop making payments on your loan.",
+    },
+    {
+      cost: "Premium Mortgage Insurance",
+      monthly: "",
+      yearly: "",
+      desc: "Premium mortgage insurance is a type of mortgage insurance that is only required for certain loans.",
+    },
+    {
+      cost: "HOA Dues + fees",
+      monthly: "",
+      yearly: "",
+      desc: "HOA dues are fees that are paid to a homeowners association for the upkeep of common areas.",
+    },
+  ]);
+
+  const updateInvoiceRow = (index: number, value: number | any[]) => {
+    setInvoices((prevInvoices) => {
+      const newInvoices = [...prevInvoices];
+      if (Array.isArray(value)) {
+        value = Number(value[1]);
+      }
+
+      newInvoices[index].monthly = addcomma(value / 12);
+      newInvoices[index].yearly = addcomma(value);
+      return newInvoices;
     });
-  }, [finance, tax, insurance, fees, location]);
+  };
 
-  const getSumOfRows = () =>
-    invoices.reduce((sum, invoice) => sum + moneyToString(invoice.monthly), 0);
+  function getSumOfRows() {
+    let sum = 0;
+    for (let i = 0; i < 6; i++) {
+      sum += moneyToString(invoices[i].monthly);
+    }
+    return sum;
+  }
 
-  const downDeposit = React.useMemo(() => calcDownDeposit(finance), [finance]);
+  function row0() {
+    let mortgage = principalAndInterest(finance);
+    let value = mortgage * 12;
+    updateInvoiceRow(0, value);
+  }
+
+  function row1() {
+    var value = propertyTax(finance, tax, location);
+    updateInvoiceRow(1, value);
+  }
+
+  function row2() {
+    var value = homeInsurance(finance, insurance);
+    updateInvoiceRow(2, value);
+  }
+
+  function row3() {
+    var value = mortgageInsurance(finance);
+    updateInvoiceRow(3, value);
+  }
+
+  function row4() {
+    var value = pmInsurance(finance);
+    updateInvoiceRow(4, value);
+  }
+
+  function row5() {
+    var value = feesAmount(fees);
+    updateInvoiceRow(5, value);
+  }
+
+  function downDeposit() {
+    return calcDownDeposit(finance);
+  }
+
+  React.useEffect(() => {
+    row0();
+    row1();
+    row2();
+    row3();
+    row4();
+    row5();
+  }, [finance, insurance, tax, fees]);
 
   return (
     <div className="col-span-5 lg:col-span-2">
@@ -124,6 +181,7 @@ export const Summary: React.FC<SummaryProps> = ({ questionCompleted, editInfo })
                   </Tooltip>
                 </TooltipProvider>
               </TableCell>
+
               <TableCell>{invoice.monthly}</TableCell>
               <TableCell>{invoice.yearly}</TableCell>
             </TableRow>
@@ -141,7 +199,7 @@ export const Summary: React.FC<SummaryProps> = ({ questionCompleted, editInfo })
           <TableRow>
             <TableCell colSpan={3}>Down Payment + Closing Cost</TableCell>
             <TableCell className="text-right">
-              {addcomma(getSumOfRows() + downDeposit)}
+              {addcomma(getSumOfRows() + downDeposit())}
             </TableCell>
           </TableRow>
         </TableFooter>

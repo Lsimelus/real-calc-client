@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loanTypes } from "../constants/types";
-import { cardTypes } from "../components/questions/loan";
+import { cardTypes } from "../components/custom/loan";
 
 export interface finance {
   type: loanTypes;
@@ -24,7 +24,7 @@ interface financeState {
 
 const initialState: financeState = {
   financeDetails: {
-    type: loanTypes.None,
+    type: loanTypes.Conventional,
     rate: -1,
     exactRate: 0,
     length: 30,

@@ -1,8 +1,8 @@
 import { finance } from "../lib/financeSlice";
 import { fees } from "../lib/feesSlice";
 import { ComboboxItemProps } from "@/components/ui/combobox";
-import { equityChartInfo } from "@/components/ui/graphEquity";
-import { amortizationChartInfo } from "@/components/ui/graphAmortization";
+import { equityChartInfo } from "@/components/custom/graphEquity";
+import { amortizationChartInfo } from "@/components/custom/graphAmortization";
 
 export const formatNumber = (num: number) => {
   if (num >= 1000000) {

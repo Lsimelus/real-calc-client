@@ -9,7 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ChatBot } from "../questions/chatBot";
+import { ChatBot } from "./chatBot";
 
 // Constants
 const TITLE = "Real property, Real Sense";
@@ -31,7 +31,7 @@ const LINKEDIN_URL = "https://www.linkedin.com/in/lyndbergh-simelus/";
 
 export function Header() {
   return (
-    <>
+    <div className="gap-8 m-6">
       <div className="col-span-5 flex items-center text-5xl font-extrabold dark:text-white">
         {TITLE}
       </div>
@@ -54,7 +54,7 @@ export function Header() {
           <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-sky-600"></span>
         </a>
       </div>
-    </>
+    </div>
   );
 }
 

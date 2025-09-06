@@ -80,11 +80,9 @@ export const GraphAmortization: React.FC<GraphAmortizationProps> = ({
     <CardFooter>
       <div className="flex w-full items-start gap-2 text-sm">
         <div className="grid gap-2">
-          <div className="flex items-center gap-2 font-medium leading-none"></div>
-          <div className="flex items-center gap-2 leading-none text-muted-foreground">
-            During <span className="font-bold">{chartData.point}</span>, the
-            principal will be more than the interest.
-          </div>
+<div className="flex items-center gap-2 leading-none text-muted-foreground">
+  The principal will be more than the interest<span className="font-bold text-black">{chartData.point}</span>
+</div>
         </div>
       </div>
     </CardFooter>

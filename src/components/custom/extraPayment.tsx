@@ -3,9 +3,10 @@ import React from "react";
 import { addcomma } from "../../utils/utils";
 import { useSelector } from "react-redux";
 import { equityEvaluater, equitySchedule } from "@/utils/sliceUtil";
-import { CardDescription, CardHeader, CardTitle } from "./card";
+import { CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Label } from "@radix-ui/react-label";
-import { Input } from "./input";
+import { Input } from "../ui/input";
+import { parse } from "path";
 
 interface ExtraPaymentProps {
   equityRaw: any[][];
@@ -45,6 +46,7 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
+
     if (value.trim() === "") {
       setPaymentAmount(0);
     } else {
@@ -70,7 +72,7 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
   };
 
   return (
-    <div className="col-span-5 lg:col-span-2">
+    <div className="col-span-5 lg:col-span-2 m-2">
       <CardHeader>
         <CardTitle>
           What if I make an extra one time principal payment?
@@ -83,9 +85,6 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
         <Input
           value={paymentAmount === 0 ? "" : paymentAmount}
           onChange={handleInputChange}
-          type="number"
-          min="0"
-          step="0.01"
         />
       </div>
 
@@ -94,9 +93,6 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
         <Input
           value={monthlyPaymentAmount === 0 ? "" : monthlyPaymentAmount}
           onChange={handleMonthlyInputChange}
-          type="number"
-          min="0"
-          step="0.01"
         />
       </div>
 

@@ -22,7 +22,15 @@ export function ChatBot() {
   const [conversationMessages, setConversationMessages] = React.useState<
     { message: string; source: conversationSender }[]
   >([{ message: "Hello, how can I help you?", source: "bot" }]);
-  const [userInput, setUserInput] = React.useState(""); // <-- Add this line
+  const [userInput, setUserInput] = React.useState("");
+
+    const messagesEndRef = React.useRef<HTMLDivElement>(null);
+      React.useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollTop = messagesEndRef.current.scrollHeight;
+    }
+  }, [conversationMessages]);
+
 
   return (
     <>
@@ -30,7 +38,9 @@ export function ChatBot() {
         Not seeing what you are looking for? Ask the chatbot
       </SheetTitle>
 
-      <div className="left-0 right-0 bottom-0 p-4 bg-gray overflow-auto">
+      <div className="left-0 right-0 bottom-0 p-4 bg-gray overflow-auto"
+      ref={messagesEndRef}
+      >
         {conversationMessages.map((msg, idx) => (
           <p
             key={idx}

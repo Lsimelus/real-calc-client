@@ -1,26 +1,26 @@
 "use client";
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { QuestionCarousel } from "@/components/ui/questioncarousel";
-import { Price } from "../components/questions/price";
-import { Location } from "../components/questions/location";
-import { Tax } from "../components/questions/tax";
-import { Loan } from "../components/questions/loan";
-import { Confirm } from "../components/questions/confirm";
-import { GraphAmortization } from "@/components/ui/graphAmortization";
-import { GraphEquity } from "@/components/ui/graphEquity";
-import { Fees } from "@/components/questions/fees";
-import { Insurance } from "@/components/questions/insurance";
-import { Summary } from "../components/ui/summary";
+import { QuestionCarousel } from "../components/custom/questioncarousel";
+import { Price } from "../components/custom/price";
+import { Location } from "../components/custom/location";
+import { Tax } from "../components/custom/tax";
+import { Loan } from "../components/custom/loan";
+import { Confirm } from "../components/custom/confirm";
+import { GraphAmortization } from "@/components/custom/graphAmortization";
+import { GraphEquity } from "@/components/custom/graphEquity";
+import { Fees } from "@/components/custom/fees";
+import { Insurance } from "@/components/custom/insurance";
+import { Summary } from "../components/custom/summary";
 import { selectCompleteness } from "@/lib/confirmSlice";
-import { ExtraPayment } from "@/components/ui/extraPayment";
+import { ExtraPayment } from "@/components/custom/extraPayment";
 import {
   amortizationSchedule,
   equitySchedule,
   principalAndInterest,
 } from "@/utils/sliceUtil";
 import { amortizationFormatter, equityFormatter } from "@/utils/utils";
-import { Footer, Header } from "@/components/ui/margins";
+import { Footer, Header } from "@/components/custom/margins";
 
 // Question components in order
 const questions = [
@@ -69,9 +69,14 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div className="grid grid-cols-5 gap-8 m-6 p-6">
-      <Header />
-      <>
+    <div className="relative min-h-screen bg-background">
+      {/* Fixed Header */}
+      <div className="fixed top-0 left-0 right-0 z-30 bg-background max-h-[140px]">
+        <Header />
+      </div>
+
+      {/* Scrollable grid content */}
+      <div className="grid grid-cols-5 mt-[150px] mb-[100px] p-6  overflow-y-auto h-screen">
         {percentTrue < 100 && (
           <QuestionCarousel
             completedQuestions={completedQuestions}
@@ -89,8 +94,12 @@ export default function Home() {
             <ExtraPayment equityRaw={equityRaw} mortgage={mortgage} />
           </>
         )}
-      </>
-      <Footer />
+      </div>
+
+      {/* Fixed Footer */}
+      <div className="fixed bottom-0 left-0 right-0 z-30 bg-transparent p-5">
+        <Footer />
+      </div>
     </div>
   );
 }

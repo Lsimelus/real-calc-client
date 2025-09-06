@@ -13,11 +13,14 @@ import { states } from "../../constants/states";
 import { addcomma, cityOptionsList } from "../../utils/utils";
 import { Label } from "@/components/ui/label";
 import React from "react";
-
+import {
+  selectPrice
+} from "@/lib/financeSlice";
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Location({ className, ...props }: CardProps) {
   const location = useSelector((state: any) => state.location.locationDetails);
+  const finance = useSelector((state: any) => state.finance.financeDetails);
   const dispatch = useDispatch<any>();
 
   const handleStateSelect = (selectedState: string) => {
@@ -39,6 +42,14 @@ export function Location({ className, ...props }: CardProps) {
     const futureDate = new Date(date.setMonth(date.getMonth() + 25));
     setCurrentDate(`${futureDate.getMonth()}/${futureDate.getFullYear()}`);
   }, []);
+
+  
+  React.useEffect(() => {
+    
+    if (location.medianValue !== 0 && finance.homePrice === 0) {
+      dispatch(selectPrice(location.medianValue));
+    }
+  }, [location.medianValue]);
 
   return (
     <Card className={cn("h-[580px]", className)} {...props}>

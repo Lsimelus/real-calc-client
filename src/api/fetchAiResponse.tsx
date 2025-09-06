@@ -5,6 +5,10 @@ import OpenAI from "openai";
 export async function fetchAiResponse(
   input: string
 ): Promise<{ message: string; source: conversationSender; success: boolean }> {
+
+  try {
+
+  
   const client = new OpenAI({
     apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true,
@@ -20,4 +24,9 @@ export async function fetchAiResponse(
   } catch (error :any) {
       return { message: error.error.message, source: "bot", success: false }
   }
+
+} catch (error :any) {
+  return { message: "Secrets failed to load", source: "bot", success: false }
+}
+
 }

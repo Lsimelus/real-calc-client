@@ -74,7 +74,7 @@ export const DebtToIncome: React.FC<DebtToIncomeProps> = ({
     }
   };
 
-  const ratioInfo = {
+  const ratioInfo: Record<1 | 2 | 3, { color: string; text: string }> = {
     1: {
       color: "green",
       text: "Low (less than 36%). Generally considered a healthy DTI",
@@ -89,7 +89,7 @@ export const DebtToIncome: React.FC<DebtToIncomeProps> = ({
     },
   };
   const [ratio, setRatio] = React.useState(0);
-  const [ratioLevel, setRatioLevel] = React.useState(0);
+  const [ratioLevel, setRatioLevel] = React.useState<1 | 2 | 3>(1);
 
   React.useEffect(() => {
     if (income > 0 && debt > 0) {

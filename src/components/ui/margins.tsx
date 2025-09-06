@@ -15,7 +15,6 @@ import { ChatBot } from "../questions/chatBot";
 const TITLE = "Real property, Real Sense";
 const GITHUB_CLIENT_URL = "https://github.com/Lsimelus/real-calc-client";
 const AUTHOR_NAME = "Lyndbergh Simelus";
-const AUTHOR_URL = "https://www.lyndbergh.net/";
 const AVATAR_SRC = "/prof.png";
 const AVATAR_FALLBACK = "Chat Bot";
 const SHEET_TITLE = "Hi!";
@@ -48,7 +47,7 @@ export function Header() {
         by{" "}
         <a
           className="group text-sky-600 transition duration-300"
-          href={AUTHOR_URL}
+          href={PORTFOLIO_URL}
           target="_blank"
         >
           {AUTHOR_NAME}{" "}

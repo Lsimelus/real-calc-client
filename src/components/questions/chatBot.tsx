@@ -34,7 +34,7 @@ export function ChatBot() {
         {conversationMessages.map((msg, idx) => (
           <p
             key={idx}
-            className={`block w-full max-w-xs px-4 py-2 mb-2 rounded-2xl shadow-md w-3/5 ${
+            className={`w-3/5 block px-4 py-2 mb-2 rounded-2xl shadow-md  ${
               msg.source === "user"
                 ? "ml-auto bg-blue-100 text-right"
                 : "bg-white"

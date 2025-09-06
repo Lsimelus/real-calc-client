@@ -1,7 +1,7 @@
 "use client";
 import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { QuestionCarousel } from "../components/custom/questioncarousel";
+import { QuestionCarousel } from "../components/custom/questionCarousel";
 import { Price } from "../components/custom/price";
 import { Location } from "../components/custom/location";
 import { Tax } from "../components/custom/tax";

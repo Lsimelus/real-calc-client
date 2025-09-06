@@ -9,6 +9,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { Textarea } from "@/components/ui/textarea"
+import { Separator } from "@radix-ui/react-separator";
 
 // Constants
 const TITLE = "Real property, Real Sense";
@@ -28,6 +30,8 @@ const GITHUB_PROFILE_URL = "https://github.com/Lsimelus";
 const PORTFOLIO_URL = "https://portfolio-orcin-theta-51.vercel.app/";
 const EMAIL = "Lsimelus@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/lyndbergh-simelus/";
+
+
 
 export function Header() {
   return (
@@ -107,8 +111,16 @@ export function Footer() {
             >
               LinkedIn profile.
             </a>
+
+            <Separator className="my-4" />
+
           </SheetDescription>
         </SheetHeader>
+
+        <Separator/>
+
+        <SheetTitle >Not seeing what you are looking for? Ask the chatbot</SheetTitle>
+          <Textarea className={"bottom-0"}placeholder="Type your message here." />
       </SheetContent>
     </Sheet>
   );

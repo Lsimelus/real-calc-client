@@ -2,7 +2,7 @@
 import React from "react";
 import { addcomma, feesAmount, moneyToString } from "../../utils/utils";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   Table,
   TableBody,
@@ -29,15 +29,8 @@ import {
   principalAndInterest,
   propertyTax,
 } from "@/utils/sliceUtil";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+
 import { Label } from "../ui/label";
-import { Input } from "../ui/input";
 import { initSummary } from "@/constants/misc";
 import { DebtToIncome } from "./debtToIncome";
 
@@ -55,6 +48,11 @@ export const Summary: React.FC<SummaryProps> = ({
   const insurance = useSelector(
     (state: any) => state.insurance.insuranceDetails,
   );
+
+  // const toPrint = useSelector((state: any) => state);
+  // console.log("~~~~~~~~~~~~~~~~~~~~")
+  // console.log(toPrint)
+
   const fees = useSelector((state: any) => state.fees.feesDetails);
   const location = useSelector((state: any) => state.location.locationDetails);
 
@@ -73,69 +71,7 @@ export const Summary: React.FC<SummaryProps> = ({
     }
   };
 
-  const [income, setIncome] = React.useState(0);
-  const handleIncomeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    if (value.trim() === "") {
-      setIncome(0);
-    } else {
-      const floatValue = parseFloat(value);
-      if (!isNaN(floatValue)) {
-        setIncome(floatValue);
-      }
-    }
-  };
 
-  const ratioInfo = {
-    1: {
-      color: "green",
-      text: "Low (less than 36%). Generally considered a healthy DTI",
-    },
-    2: {
-      color: "yellow",
-      text: "Fair (between 36% and 43%). A level that may cause some concern for lenders.",
-    },
-    3: {
-      color: "red",
-      text: "High (more than 43%). Often considered too high, which can affect your ability to qualify for certain loans",
-    },
-  };
-  const [ratio, setRatio] = React.useState(0);
-  const [ratioLevel, setRatioLevel] = React.useState(0);
-
-  React.useEffect(() => {
-    if (income > 0 && debt > 0) {
-      var newRatio = (debt / income) * 100;
-      if (newRatio > 100) newRatio = 100;
-      setRatio(newRatio);
-      if (newRatio < 36) {
-        setRatioLevel(1);
-      } else if (newRatio < 44) {
-        setRatioLevel(2);
-      } else {
-        setRatioLevel(3);
-      }
-    }
-  }, [income, debt]);
-
-  function getRatioLabel() {
-    const colorMap: Record<string, string> = {
-      green: "text-green-600",
-      yellow: "text-yellow-400",
-      red: "text-red-600",
-    };
-    const colorClass =
-      colorMap[ratioInfo[ratioLevel]?.color] || "text-blue-600";
-    const ratioText = ratioInfo[ratioLevel]?.text || "No info available";
-    return (
-      <>
-        <Label className={`text-4xl font-bold m-2 ${colorClass}`}>
-          {ratio.toFixed(0)}%
-        </Label>
-        {ratioText}
-      </>
-    );
-  }
 
   const updateInvoiceRow = (index: number, value: number | any[]) => {
     setInvoices((prevInvoices) => {
@@ -201,9 +137,6 @@ export const Summary: React.FC<SummaryProps> = ({
     row4();
     row5();
   }, [finance, insurance, tax, fees, location]);
-
-  const idealMortgage = income * 0.28;
-  const validIncome = getSumOfRows() <= Number(idealMortgage);
 
   return (
     <div className="col-span-5 lg:col-span-2">

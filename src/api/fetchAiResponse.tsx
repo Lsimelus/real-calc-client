@@ -6,7 +6,7 @@ export async function fetchAiResponse(
   input: string
 ): Promise<{ message: string; source: conversationSender; success: boolean }> {
   const client = new OpenAI({
-    apiKey: process.env.PI_KEY,
+    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
     dangerouslyAllowBrowser: true,
   });
   try {

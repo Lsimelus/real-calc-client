@@ -88,7 +88,7 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median property tax in {location.county}:{" "}
-              <span className="font-bold">{location.medianTax}%</span>
+              <span className="font-bold">{(location.medianTax*12).toFixed(2)}%</span>
             </Label>
           </div>
         )}

@@ -60,7 +60,7 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {
     <Card className="col-span-3">
       <CardHeader>
         <CardTitle>Home Equity Graph</CardTitle>
-        <CardDescription>Monthly payment</CardDescription>
+        <CardDescription>A Home Equity Graph is a visual representation, often a line or bar chart, of a homeowner's home equity over time. It illustrates how home equity changes as a result of factors like principal mortgage payments. It does not include home value appreciation, extra principal payments, or property improvements.</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>

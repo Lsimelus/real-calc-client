@@ -3,3 +3,4 @@ export const NATIONAL_INSURANCE_PREMIUM_RATE_PER_HOUSE_DOLLAR = 0.006;
 export const MORTGAGE_INSURANCE_RATE = 0.85;
 export const PMI_RATE = 0.75;
 export const DOWN_DEPOSIT_RATE = 0.02;
+export const MAX_PERCENT_DOWN = 40;

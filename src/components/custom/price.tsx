@@ -17,6 +17,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "../ui/label";
+import { MAX_PERCENT_DOWN } from "@/constants/rates";
 
 type CardProps = React.ComponentProps<typeof Card>;
 
@@ -24,13 +25,17 @@ export function Price({ className, ...props }: CardProps) {
   const min = useSelector(
     (state: any) => state.finance.financeDetails.minDownpayment,
   );
-  const max = 40; // TODO: Add max interest var
+
   const initPrice = useSelector(
     (state: any) => state.finance.financeDetails.homePrice,
   );
   const initDownPayment = useSelector(
     (state: any) => state.finance.financeDetails.downPaymentPercent,
   );
+
+    React.useEffect(() => {
+    setPrice(initPrice);
+  }, [initPrice]);
 
   const [downPayment, setDownPayment] = React.useState([initDownPayment]);
   const [price, setPrice] = React.useState(initPrice);
@@ -92,7 +97,7 @@ export function Price({ className, ...props }: CardProps) {
             <Slider
               defaultValue={downPayment}
               min={min}
-              max={max}
+              max={MAX_PERCENT_DOWN}
               step={0.5}
               value={downPayment}
               onValueChange={setDownPayment}

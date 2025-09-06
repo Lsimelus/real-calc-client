@@ -86,29 +86,3 @@
       @apply bg-background text-foreground;
     }
   }
-
-  .speech-bubble {
-  position: relative;
-}
-
-.speech-bubble.bg-white::after {
-  content: "";
-  position: absolute;
-  left: 20px;
-  bottom: -12px;
-  width: 0;
-  height: 0;
-  border: 12px solid transparent;
-  border-top-color: #fff;
-}
-
-.speech-bubble.bg-blue-100::after {
-  content: "";
-  position: absolute;
-  right: 20px;
-  bottom: -12px;
-  width: 0;
-  height: 0;
-  border: 12px solid transparent;
-  border-top-color: #bfdbfe; /* Tailwind's blue-100 */
-}

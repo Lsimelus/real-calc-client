@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCityInfo, fetchStateInfo } from "@/api/fetchhData";
+import { fetchCityInfo, fetchStateInfo } from "@/api/fetchData";
 import { cn } from "@/lib/utils";
 import {
   Card,

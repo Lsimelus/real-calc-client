@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { fetchStateInfo, fetchCityInfo } from "@/api/fetchhData";
+import { fetchStateInfo, fetchCityInfo } from "@/api/fetchData";
 
 // Define the interface for the location object
 export interface location {

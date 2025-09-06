@@ -2,7 +2,7 @@ import OpenAI from "openai";
 
 export async function fetchAiResponse(input: string) {
   const client = new OpenAI({
-    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
+    apiKey: process.env.PI_KEY,
     dangerouslyAllowBrowser: true,
   });
   try {
@@ -12,9 +12,8 @@ export async function fetchAiResponse(input: string) {
       input,
     });
 
-    console.log(response);
     return { message: "The world will never know", source: "bot", success: true }
-  } catch (error) {
+  } catch (error :any) {
       return { message: error.error.message, source: "bot", success: false }
   }
 }

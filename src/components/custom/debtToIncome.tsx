@@ -1,34 +1,8 @@
 "use client";
 import React from "react";
-import { addcomma, feesAmount, moneyToString } from "../../utils/utils";
+import { addcomma } from "../../utils/utils";
 
-import { useDispatch, useSelector } from "react-redux";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-  TableFooter,
-} from "@/components/ui/table";
 
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import { Button } from "@/components/ui/button";
-import {
-  calculateCashToClose,
-  homeInsurance,
-  mortgageInsurance,
-  pmInsurance,
-  principalAndInterest,
-  propertyTax,
-} from "@/utils/sliceUtil";
 import {
   Card,
   CardContent,
@@ -38,7 +12,6 @@ import {
 } from "@/components/ui/card";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { initSummary } from "@/constants/misc";
 
 interface DebtToIncomeProps {
   mortgage: number

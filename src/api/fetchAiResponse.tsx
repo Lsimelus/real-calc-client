@@ -13,11 +13,8 @@ export async function fetchAiResponse(input: string) {
     });
 
     console.log(response);
-    return response.output_text;
+    return { message: "The world will never know", source: "bot", success: true }
   } catch (error) {
-    console.log(error);
-    return "Stop wil done show?";
-  } finally {
-    console.log("Done~~~~");
+      return { message: error.error.message, source: "bot", success: false }
   }
 }

@@ -63,12 +63,12 @@ export function ChatBot() {
               { message: userMessage, source: "user", success: true },
             ]);
             setLoading(true);
-            console.log(await fetchAiResponse(userInput));
+            const response = (await fetchAiResponse(userInput));
             setLoading(false);
             setUserInput(""); // Clear the input field after sending
             setConversationMessages((prev) => [
               ...prev,
-              { message: "default response", source: "bot", success: true },
+              response,
             ]);
           }
         }}

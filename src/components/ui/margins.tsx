@@ -9,8 +9,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { Textarea } from "@/components/ui/textarea"
-import { Separator } from "@radix-ui/react-separator";
+import { ChatBot } from "../questions/chatBot";
 
 // Constants
 const TITLE = "Real property, Real Sense";
@@ -30,8 +29,6 @@ const GITHUB_PROFILE_URL = "https://github.com/Lsimelus";
 const PORTFOLIO_URL = "https://portfolio-orcin-theta-51.vercel.app/";
 const EMAIL = "Lsimelus@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/lyndbergh-simelus/";
-
-
 
 export function Header() {
   return (
@@ -71,16 +68,12 @@ export function Footer() {
           <AvatarFallback>{AVATAR_FALLBACK}</AvatarFallback>
         </Avatar>
       </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
+      <SheetContent className="p-3 m-1">
+        <SheetHeader className="z-20 relative">
           <SheetTitle>{SHEET_TITLE}</SheetTitle>
           <SheetDescription>
             {SHEET_DESCRIPTION}
-            <a
-              target="_blank"
-              href={GITHUB_PAGE_URL}
-              className="text-sky-600"
-            >
+            <a target="_blank" href={GITHUB_PAGE_URL} className="text-sky-600">
               GitHub page.
             </a>
             To look at other various projects that I've created, please visit my{" "}
@@ -92,11 +85,7 @@ export function Footer() {
               GitHub profile
             </a>{" "}
             or my{" "}
-            <a
-              target="_blank"
-              href={PORTFOLIO_URL}
-              className="text-sky-600"
-            >
+            <a target="_blank" href={PORTFOLIO_URL} className="text-sky-600">
               live portfolio website
             </a>
             .
@@ -104,23 +93,12 @@ export function Footer() {
             <br />
             If you want to connect with me please reach out via my email:{" "}
             <strong>{EMAIL}</strong> and my{" "}
-            <a
-              target="_blank"
-              href={LINKEDIN_URL}
-              className="text-sky-600"
-            >
+            <a target="_blank" href={LINKEDIN_URL} className="text-sky-600">
               LinkedIn profile.
             </a>
-
-            <Separator className="my-4" />
-
           </SheetDescription>
         </SheetHeader>
-
-        <Separator/>
-
-        <SheetTitle >Not seeing what you are looking for? Ask the chatbot</SheetTitle>
-          <Textarea className={"bottom-0"}placeholder="Type your message here." />
+        <ChatBot />
       </SheetContent>
     </Sheet>
   );

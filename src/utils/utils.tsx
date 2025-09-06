@@ -107,7 +107,7 @@ export const equityFormatter = (
       turned = true;
     }
   }
-  var data: equityChartInfo= { data: chartData, point: turningPoint };
+  var data: equityChartInfo = { data: chartData, point: turningPoint };
   return data;
 };
 

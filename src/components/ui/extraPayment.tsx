@@ -2,10 +2,7 @@
 import React from "react";
 import { addcomma } from "../../utils/utils";
 import { useSelector } from "react-redux";
-import {
-  equityEvaluater,
-  equitySchedule,
-} from "@/utils/sliceUtil";
+import { equityEvaluater, equitySchedule } from "@/utils/sliceUtil";
 import { CardDescription, CardHeader, CardTitle } from "./card";
 import { Label } from "@radix-ui/react-label";
 import { Input } from "./input";
@@ -22,7 +19,8 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
   const finance = useSelector((state: any) => state.finance.financeDetails);
 
   const [paymentAmount, setPaymentAmount] = React.useState<number>(0);
-  const [monthlyPaymentAmount, setMonthlyPaymentAmount] = React.useState<number>(0);
+  const [monthlyPaymentAmount, setMonthlyPaymentAmount] =
+    React.useState<number>(0);
 
   const equityRawExtraPayment = equitySchedule(
     finance,
@@ -36,7 +34,9 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
 
   React.useEffect(() => {
     const date = new Date();
-    const newDate = new Date(date.setMonth(date.getMonth() + equityEvaluation.months));
+    const newDate = new Date(
+      date.setMonth(date.getMonth() + equityEvaluation.months),
+    );
     const year = newDate.getFullYear().toString();
     const month = (newDate.getMonth() + 1).toString(); // Month is zero-based
 
@@ -55,7 +55,9 @@ export const ExtraPayment: React.FC<ExtraPaymentProps> = ({
     }
   };
 
-  const handleMonthlyInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleMonthlyInputChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const value = event.target.value;
     if (value.trim() === "") {
       setMonthlyPaymentAmount(0);

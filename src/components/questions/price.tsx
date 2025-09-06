@@ -21,17 +21,26 @@ import { Label } from "../ui/label";
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Price({ className, ...props }: CardProps) {
-  const min = useSelector((state: any) => state.finance.financeDetails.minDownpayment);
+  const min = useSelector(
+    (state: any) => state.finance.financeDetails.minDownpayment,
+  );
   const max = 40; // TODO: Add max interest var
-  const initPrice = useSelector((state: any) => state.finance.financeDetails.homePrice);
-  const initDownPayment = useSelector((state: any) => state.finance.financeDetails.downPaymentPercent);
+  const initPrice = useSelector(
+    (state: any) => state.finance.financeDetails.homePrice,
+  );
+  const initDownPayment = useSelector(
+    (state: any) => state.finance.financeDetails.downPaymentPercent,
+  );
 
   const [downPayment, setDownPayment] = React.useState([initDownPayment]);
   const [price, setPrice] = React.useState(initPrice);
 
   const dispatch = useDispatch();
 
-  const downPaymentValue = React.useMemo(() => (price * downPayment[0]) / 100, [price, downPayment]);
+  const downPaymentValue = React.useMemo(
+    () => (price * downPayment[0]) / 100,
+    [price, downPayment],
+  );
   const formattedDownPayment = addcomma(downPaymentValue);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {

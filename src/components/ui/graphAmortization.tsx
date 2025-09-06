@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/chart";
 import React from "react";
 
-
 export interface amortizationChartInfo {
   data: any[];
   point: string;
@@ -36,7 +35,6 @@ const chartConfig: ChartConfig = {
     color: "hsl(var(--chart-2))",
   },
 };
-
 
 export const GraphAmortization: React.FC<GraphAmortizationProps> = ({
   chartData,

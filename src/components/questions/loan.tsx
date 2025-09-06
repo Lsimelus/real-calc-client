@@ -87,7 +87,9 @@ export const cardTypes: {
 };
 
 export function Loan({ className, ...props }: CardProps) {
-  const financeSlice = useSelector((state: any) => state.finance.financeDetails);
+  const financeSlice = useSelector(
+    (state: any) => state.finance.financeDetails,
+  );
   const initType = financeSlice.type;
   const initExact = financeSlice.exactRate;
   const initLoanLength = financeSlice.length;
@@ -158,9 +160,7 @@ export function Loan({ className, ...props }: CardProps) {
           {cards.map((card, index) => (
             <React.Fragment key={index}>
               <CustomHoverCard {...card} />
-              {index < cards.length - 1 && (
-                <Separator orientation="vertical" />
-              )}
+              {index < cards.length - 1 && <Separator orientation="vertical" />}
             </React.Fragment>
           ))}
         </div>

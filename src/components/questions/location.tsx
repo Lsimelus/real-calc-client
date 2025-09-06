@@ -85,9 +85,7 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median unit rental in {location.city}:{" "}
-              <span className="font-bold">
-                {addcomma(location.medianRent)}
-              </span>
+              <span className="font-bold">{addcomma(location.medianRent)}</span>
             </Label>
           </div>
         )}

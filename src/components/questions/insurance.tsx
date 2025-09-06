@@ -18,8 +18,12 @@ import { estimatedHomeInsurance } from "@/utils/sliceUtil";
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Insurance({ className, ...props }: CardProps) {
-  const financeSlice = useSelector((state: any) => state.finance.financeDetails);
-  const insuranceSlice = useSelector((state: any) => state.insurance.insuranceDetails);
+  const financeSlice = useSelector(
+    (state: any) => state.finance.financeDetails,
+  );
+  const insuranceSlice = useSelector(
+    (state: any) => state.insurance.insuranceDetails,
+  );
   const exactAmount = insuranceSlice.exact;
 
   const [exact, setExact] = React.useState(exactAmount);

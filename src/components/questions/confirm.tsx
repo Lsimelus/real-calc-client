@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectCompleteness } from "@/lib/confirmSlice";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { homeInsurance, propertyTax } from "../../utils/sliceUtil";
 import { Label } from "../ui/label";
 import { addcomma, formatNumber } from "@/utils/utils";
@@ -19,11 +14,15 @@ export function Confirm({ className, ...props }: CardProps) {
   const location = useSelector((state: any) => state.location.locationDetails);
   const finance = useSelector((state: any) => state.finance.financeDetails);
   const tax = useSelector((state: any) => state.tax.taxDetails);
-  const insurance = useSelector((state: any) => state.insurance.insuranceDetails);
+  const insurance = useSelector(
+    (state: any) => state.insurance.insuranceDetails,
+  );
   const fees = useSelector((state: any) => state.fees.feesDetails);
   const dispatch = useDispatch();
 
-  const yearlyInsurance = addcomma(Number(homeInsurance(finance, insurance)[1]));
+  const yearlyInsurance = addcomma(
+    Number(homeInsurance(finance, insurance)[1]),
+  );
   const yearlyTax = addcomma(Number(propertyTax(finance, tax, location)[1]));
 
   return (

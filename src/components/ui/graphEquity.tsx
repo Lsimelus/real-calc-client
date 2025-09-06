@@ -108,8 +108,8 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {
             <div className="grid gap-2">
               <div className="flex items-center gap-2 leading-none text-muted-foreground">
                 During {turningDate}, you will have 20% equity in your home,
-                which means you will not have to make any additional payments. At
-                that point, you will be able to remove the Mortgage Insurance
+                which means you will not have to make any additional payments.
+                At that point, you will be able to remove the Mortgage Insurance
                 from your mortgage payment and it will decrease by{" "}
                 {addcomma(mortgageInsurance(finance))} per year.
               </div>

@@ -13,10 +13,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { selectExact } from "../../lib/taxSlice";
 import { Label } from "../ui/label";
-import {
-  estimatePropertyTax,
-  propertyTax,
-} from "@/utils/sliceUtil";
+import { estimatePropertyTax, propertyTax } from "@/utils/sliceUtil";
 
 type CardProps = React.ComponentProps<typeof Card>;
 

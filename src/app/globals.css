@@ -86,3 +86,11 @@
       @apply bg-background text-foreground;
     }
   }
+
+  @keyframes opacityPulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+.animate-opacity-pulse {
+  animation: opacityPulse 1s infinite;
+}

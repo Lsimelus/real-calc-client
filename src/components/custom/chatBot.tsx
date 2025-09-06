@@ -39,12 +39,12 @@ export function ChatBot() {
               msg.source === "user"
                 ? "ml-auto bg-blue-100 text-right"
                 : "bg-white"
-            }`}
+            } ${msg.temp === 10 ? "text-red-600" : ""}`}
           >
             {msg.message}
           </p>
         ))}
-        {loading && <Loader />}
+        {loading && <Loader className="animate-opacity-pulse"/>}
       </div>
       <Textarea
         placeholder="Type your message here."

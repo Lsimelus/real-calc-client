@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import {
-  calcDownDeposit,
+  calculateCashToClose,
   homeInsurance,
   mortgageInsurance,
   pmInsurance,
@@ -140,8 +140,8 @@ export const Summary: React.FC<SummaryProps> = ({
     updateInvoiceRow(5, value);
   }
 
-  function downDeposit() {
-    return calcDownDeposit(finance);
+  function cashToClose() {
+    return calculateCashToClose(finance);
   }
 
   React.useEffect(() => {
@@ -199,7 +199,7 @@ export const Summary: React.FC<SummaryProps> = ({
           <TableRow>
             <TableCell colSpan={3}>Down Payment + Closing Cost</TableCell>
             <TableCell className="text-right">
-              {addcomma(getSumOfRows() + downDeposit())}
+              {addcomma(cashToClose())}
             </TableCell>
           </TableRow>
         </TableFooter>

@@ -220,8 +220,8 @@ export const pmInsurance = (financeSlice: finance) => {
   return calculatePMI(loanAmount, pmiRate);
 };
 
-export const calcDownDeposit = (financeSlice: finance) => {
-  return calcLoanAmount(financeSlice) * DOWN_DEPOSIT_RATE;
+export const calculateCashToClose = (financeSlice: finance) => {
+  return (calcLoanAmount(financeSlice) * DOWN_DEPOSIT_RATE) + financeSlice.downPaymentAmount;
 };
 
 const calcLoanAmount = (financeSlice: finance) => {

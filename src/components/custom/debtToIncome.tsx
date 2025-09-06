@@ -2,7 +2,6 @@
 import React from "react";
 import { addcomma } from "../../utils/utils";
 
-
 import {
   Card,
   CardContent,
@@ -14,13 +13,12 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 
 interface DebtToIncomeProps {
-  mortgage: number
+  mortgage: number;
 }
 
 export const DebtToIncome: React.FC<DebtToIncomeProps> = ({
   mortgage,
 }: DebtToIncomeProps) => {
-
   const [debt, setDebt] = React.useState(0);
   const handleDebtChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
@@ -98,57 +96,52 @@ export const DebtToIncome: React.FC<DebtToIncomeProps> = ({
     );
   }
 
- 
-
   const idealMortgage = income * 0.28;
   const validIncome = mortgage <= Number(idealMortgage);
 
   return (
     <>
-        <Card>
-          <CardHeader>
-            <CardTitle>Debt to Income Ratio</CardTitle>
-          </CardHeader>
-          <CardContent className="grid  grid-cols-2 gap-4 m-2">
-            <div className="flex max-w-sm items-center gap-2">
-              <Label>
-                Total Monthly Debt: <span className="font-bold"></span>
-              </Label>
-              <Input
-                value={debt === 0 ? "" : debt}
-                onChange={handleDebtChange}
-              />
-            </div>
-            <div className="flex max-w-sm items-center gap-2">
-              <Label>Total Monethly Gross Income:</Label>
-              <Input
-                value={income === 0 ? "" : income}
-                onChange={handleIncomeChange}
-              />
-            </div>
+      <Card>
+        <CardHeader>
+          <CardTitle>Debt to Income Ratio</CardTitle>
+        </CardHeader>
+        <CardContent className="grid  grid-cols-2 gap-4 m-2">
+          <div className="flex max-w-sm items-center gap-2">
+            <Label>
+              Total Monthly Debt: <span className="font-bold"></span>
+            </Label>
+            <Input value={debt === 0 ? "" : debt} onChange={handleDebtChange} />
+          </div>
+          <div className="flex max-w-sm items-center gap-2">
+            <Label>Total Monethly Gross Income:</Label>
+            <Input
+              value={income === 0 ? "" : income}
+              onChange={handleIncomeChange}
+            />
+          </div>
 
-            {debt > 0 && income > 0 && (
-              <>
-                <div className="flex max-w-sm items-center gap-2">
-                  {getRatioLabel()}
-                </div>
-                <div className="flex max-w-sm items-center gap-2">
-                  <p>
-                    28% of your gross monthly income should go to housing
-                    expenses. Right now income suggests that you can afford a
-                    monthly payment of{" "}
-                    <span
-                      className={`font-bold ${validIncome ? "text-green-600" : "text-red-600"}`}
-                    >
-                      {addcomma(Number(idealMortgage))}
-                    </span>
-                    .
-                  </p>
-                </div>
-              </>
-            )}
-          </CardContent>
-        </Card>
-        </>
+          {debt > 0 && income > 0 && (
+            <>
+              <div className="flex max-w-sm items-center gap-2">
+                {getRatioLabel()}
+              </div>
+              <div className="flex max-w-sm items-center gap-2">
+                <p>
+                  28% of your gross monthly income should go to housing
+                  expenses. Right now income suggests that you can afford a
+                  monthly payment of{" "}
+                  <span
+                    className={`font-bold ${validIncome ? "text-green-600" : "text-red-600"}`}
+                  >
+                    {addcomma(Number(idealMortgage))}
+                  </span>
+                  .
+                </p>
+              </div>
+            </>
+          )}
+        </CardContent>
+      </Card>
+    </>
   );
 };

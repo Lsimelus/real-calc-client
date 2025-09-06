@@ -71,8 +71,6 @@ export const Summary: React.FC<SummaryProps> = ({
     }
   };
 
-
-
   const updateInvoiceRow = (index: number, value: number | any[]) => {
     setInvoices((prevInvoices) => {
       const newInvoices = [...prevInvoices];
@@ -193,9 +191,7 @@ export const Summary: React.FC<SummaryProps> = ({
         </TableFooter>
       </Table>
 
-      {questionCompleted && (
-        <DebtToIncome mortgage={getSumOfRows()}/>
-      )}
+      {questionCompleted && <DebtToIncome mortgage={getSumOfRows()} />}
     </div>
   );
 };

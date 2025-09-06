@@ -3,26 +3,17 @@ import * as React from "react";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
 import { SheetTitle } from "../ui/sheet";
-
-const messages = [
-  "asdasdsa-start",
-  "asdasdsa",
-  "asdreretrete ret ert ert ert er ter t ert reterterasdsa",
-  "asdasdsa",
-  "asdasdsa",
-  "asdasdsa",
-  "asdasdsa",
-  "nbghjkujhng",
-  "ghkjbhjj",
-];
+import { fetchAiResponse } from "@/api/fetchAiResponse";
+import { Loader } from "lucide-react";
 
 export function ChatBot() {
   type conversationSender = "user" | "bot"; // or your enum/type
 
   const [conversationMessages, setConversationMessages] = React.useState<
-    { message: string; source: conversationSender }[]
-  >([{ message: "Hello, how can I help you?", source: "bot" }]);
+    { message: string; source: conversationSender, success:boolean }[]
+  >([{ message: "Hello I am chat bot, how can I help you?", source: "bot", success: true }]);
   const [userInput, setUserInput] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
 
   const messagesEndRef = React.useRef<HTMLDivElement>(null);
   React.useEffect(() => {
@@ -53,25 +44,31 @@ export function ChatBot() {
             {msg.message}
           </p>
         ))}
+        {loading && <Loader />}
       </div>
       <Textarea
         placeholder="Type your message here."
         value={userInput}
         onChange={(e) => setUserInput(e.target.value)}
+        disabled={loading}
       />
       <Button
         className="mt-2"
-        onClick={() => {
+        disabled={loading}
+        onClick={async () => {
           const userMessage = document.querySelector("textarea")?.value;
           if (userMessage) {
             setConversationMessages((prev) => [
               ...prev,
-              { message: userMessage, source: "user" },
+              { message: userMessage, source: "user", success: true },
             ]);
+            setLoading(true);
+            console.log(await fetchAiResponse(userInput));
+            setLoading(false);
             setUserInput(""); // Clear the input field after sending
             setConversationMessages((prev) => [
               ...prev,
-              { message: "default response", source: "bot" },
+              { message: "default response", source: "bot", success: true },
             ]);
           }
         }}

@@ -22,7 +22,10 @@ export function Tax({ className, ...props }: CardProps) {
   const tax = useSelector((state: any) => state.tax.taxDetails);
   const location = useSelector((state: any) => state.location.locationDetails);
 
-  const estimatedTax = estimatePropertyTax(finance, location);
+    const estimatedTax = React.useMemo(
+  () => estimatePropertyTax(finance, location),
+  [finance, location]
+);
 
   const initExact = tax.exact;
   const [exact, setExact] = React.useState(initExact);

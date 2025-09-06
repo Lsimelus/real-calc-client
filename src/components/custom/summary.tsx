@@ -151,7 +151,7 @@ export const Summary: React.FC<SummaryProps> = ({
     row3();
     row4();
     row5();
-  }, [finance, insurance, tax, fees]);
+  }, [finance, insurance, tax, fees, location]);
 
   return (
     <div className="col-span-5 lg:col-span-2">

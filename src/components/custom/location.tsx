@@ -45,8 +45,7 @@ export function Location({ className, ...props }: CardProps) {
 
   
   React.useEffect(() => {
-    
-    if (location.medianValue !== 0 && finance.homePrice === 0) {
+    if (location.medianValue !== 0 && finance.homePrice === 0) { //Todo: This might happen all the time. TBD
       dispatch(selectPrice(location.medianValue));
     }
   }, [location.medianValue]);

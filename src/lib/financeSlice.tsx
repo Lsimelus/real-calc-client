@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loanTypes } from "../constants/types";
+import { loanTypes } from "../constants/misc";
 import { cardTypes } from "../components/custom/loan";
 
 export interface finance {
@@ -70,6 +70,8 @@ export const financeSlice = createSlice({
     },
 
     selectPrice: (state, action: PayloadAction<number>) => {
+      console.log("~~~~~~~~~~~~~~~~~~~~");
+      console.log(action.payload);
       state.financeDetails.homePrice = action.payload;
       state.financeDetails.priceComplete = action.payload > 0;
     },

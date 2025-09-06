@@ -14,7 +14,7 @@ import {
   PMI_RATE,
   DOWN_DEPOSIT_RATE,
 } from "@/constants/rates";
-import { loanTypes } from "@/constants/types";
+import { loanTypes } from "@/constants/misc";
 
 export const propertyTax = (
   financeSlice: finance,

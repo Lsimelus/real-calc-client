@@ -20,7 +20,7 @@ import {
   selectExactRate,
   selectLength,
 } from "../../lib/financeSlice";
-import { loanTypes } from "../../constants/types";
+import { loanTypes } from "../../constants/misc";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Slider } from "../ui/slider";

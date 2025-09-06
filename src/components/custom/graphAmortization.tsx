@@ -87,9 +87,12 @@ export const GraphAmortization: React.FC<GraphAmortizationProps> = ({
       <div className="flex w-full items-start gap-2 text-sm">
         <div className="grid gap-2">
           <p className="gap-2 leading-none text-muted-foreground">
-            The principal paid per month will be more than the interest paid until{" "}
-            <span className="font-bold text-black">{chartData.point}</span>. The only way to change this is be refinancing. Home improvements or extra payments will not make this happen sooner. Look at the Home Equity graph below to have a better understanding
-            of your loan.
+            The principal paid per month will be more than the interest paid
+            until{" "}
+            <span className="font-bold text-black">{chartData.point}</span>. The
+            only way to change this is be refinancing. Home improvements or
+            extra payments will not make this happen sooner. Look at the Home
+            Equity graph below to have a better understanding of your loan.
           </p>
         </div>
       </div>

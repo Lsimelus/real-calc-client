@@ -38,6 +38,8 @@ import {
 } from "@/components/ui/card";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
+import { initSummary } from "@/constants/misc";
+import { DebtToIncome } from "./debtToIncome";
 
 interface SummaryProps {
   questionCompleted: boolean;
@@ -56,44 +58,7 @@ export const Summary: React.FC<SummaryProps> = ({
   const fees = useSelector((state: any) => state.fees.feesDetails);
   const location = useSelector((state: any) => state.location.locationDetails);
 
-  const [invoices, setInvoices] = React.useState([
-    {
-      cost: "Principal & Interest",
-      monthly: "",
-      yearly: "",
-      desc: "The principal is the amount of money you borrowed to buy the home. The interest is the cost of borrowing that money.",
-    },
-    {
-      cost: "Property Taxes",
-      monthly: "",
-      yearly: "",
-      desc: "Property taxes are assessed by the local government and are based on the value of your home.",
-    },
-    {
-      cost: "Homeowners Insurance",
-      monthly: "",
-      yearly: "",
-      desc: "Homeowners insurance protects your home and belongings from damage or theft.",
-    },
-    {
-      cost: "Mortgage Insurance",
-      monthly: "",
-      yearly: "",
-      desc: "Mortgage insurance protects the lender if you stop making payments on your loan.",
-    },
-    {
-      cost: "Premium Mortgage Insurance",
-      monthly: "",
-      yearly: "",
-      desc: "Premium mortgage insurance is a type of mortgage insurance that is only required for certain loans.",
-    },
-    {
-      cost: "HOA Dues + fees",
-      monthly: "",
-      yearly: "",
-      desc: "HOA dues are fees that are paid to a homeowners association for the upkeep of common areas.",
-    },
-  ]);
+  const [invoices, setInvoices] = React.useState(initSummary);
 
   const [debt, setDebt] = React.useState(0);
   const handleDebtChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -141,7 +106,7 @@ export const Summary: React.FC<SummaryProps> = ({
   React.useEffect(() => {
     if (income > 0 && debt > 0) {
       var newRatio = (debt / income) * 100;
-      if (newRatio > 100) newRatio = 100; 
+      if (newRatio > 100) newRatio = 100;
       setRatio(newRatio);
       if (newRatio < 36) {
         setRatioLevel(1);
@@ -237,7 +202,7 @@ export const Summary: React.FC<SummaryProps> = ({
     row5();
   }, [finance, insurance, tax, fees, location]);
 
-  const idealMortgage = (income * 0.28);
+  const idealMortgage = income * 0.28;
   const validIncome = getSumOfRows() <= Number(idealMortgage);
 
   return (
@@ -296,44 +261,8 @@ export const Summary: React.FC<SummaryProps> = ({
       </Table>
 
       {questionCompleted && (
-
-
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Debt to Income Ratio</CardTitle>
-        </CardHeader>
-        <CardContent className="grid  grid-cols-2 gap-4 m-2">
-          <div className="flex max-w-sm items-center gap-2">
-            <Label>
-              Total Monthly Debt: <span className="font-bold"></span>
-            </Label>
-            <Input value={debt === 0 ? "" : debt} onChange={handleDebtChange} />
-          </div>
-          <div className="flex max-w-sm items-center gap-2">
-            <Label>Total Gross Income:</Label>
-            <Input
-              value={income === 0 ? "" : income}
-              onChange={handleIncomeChange}
-            />
-          </div>
-
-          {debt > 0 && income > 0 && (
-            <>
-              <div className="flex max-w-sm items-center gap-2">
-                {getRatioLabel()}
-              </div>
-              <div className="flex max-w-sm items-center gap-2">
-                <p>28% of your gross monthly income should go to housing expenses. Right now income suggests that you can afford a monthly payment of{" "}<span className={`font-bold ${validIncome ? "text-green-600" : "text-red-600"}`}>
-  {addcomma(Number(idealMortgage))}
-</span>.
-                </p>
-              </div>
-            </>
-          )}
-        </CardContent>
-      </Card>
-            )}
+        <DebtToIncome mortgage={getSumOfRows()}/>
+      )}
     </div>
   );
 };

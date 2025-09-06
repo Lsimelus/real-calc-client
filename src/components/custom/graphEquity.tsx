@@ -18,7 +18,7 @@ import {
 import { useSelector } from "react-redux";
 import React from "react";
 import { mortgageInsurance } from "@/utils/sliceUtil";
-import { loanTypes } from "@/constants/types";
+import { loanTypes } from "@/constants/misc";
 
 const chartConfig: ChartConfig = {
   balance: {
@@ -113,11 +113,17 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {
           <div className="flex w-full items-start gap-2 text-sm">
             <div className="grid gap-2">
               <p className="gap-2 leading-none text-muted-foreground">
-                During <span className="font-bold text-black">{turningDate}</span>, you will have <span className="font-bold text-black">20%</span> equity in your home,
-                which means you will not have to make any additional payments.
-                At that point, you will be able to remove the Mortgage Insurance
-                from your mortgage payment and it will decrease by{" "}
-                <span className="font-bold text-black">{addcomma(mortgageInsurance(finance))}</span> per year.
+                During{" "}
+                <span className="font-bold text-black">{turningDate}</span>, you
+                will have <span className="font-bold text-black">20%</span>{" "}
+                equity in your home, which means you will not have to make any
+                additional payments. At that point, you will be able to remove
+                the Mortgage Insurance from your mortgage payment and it will
+                decrease by{" "}
+                <span className="font-bold text-black">
+                  {addcomma(mortgageInsurance(finance))}
+                </span>{" "}
+                per year.
               </p>
             </div>
           </div>

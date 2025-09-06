@@ -5,10 +5,9 @@ import { Button } from "../ui/button";
 import { SheetTitle } from "../ui/sheet";
 import { fetchAiResponse } from "@/api/fetchAiResponse";
 import { Loader } from "lucide-react";
+import { conversationSender } from "@/constants/misc";
 
 export function ChatBot() {
-  type conversationSender = "user" | "bot"; // or your enum/type
-
   const [conversationMessages, setConversationMessages] = React.useState<
     { message: string; source: conversationSender, success:boolean }[]
   >([{ message: "Hello I am chat bot, how can I help you?", source: "bot", success: true }]);

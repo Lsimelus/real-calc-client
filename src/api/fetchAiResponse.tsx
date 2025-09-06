@@ -1,6 +1,10 @@
+import { conversationSender } from "@/constants/misc";
 import OpenAI from "openai";
 
-export async function fetchAiResponse(input: string) {
+
+export async function fetchAiResponse(
+  input: string
+): Promise<{ message: string; source: conversationSender; success: boolean }> {
   const client = new OpenAI({
     apiKey: process.env.PI_KEY,
     dangerouslyAllowBrowser: true,

@@ -13,9 +13,7 @@ import { states } from "../../constants/states";
 import { addcomma, cityOptionsList } from "../../utils/utils";
 import { Label } from "@/components/ui/label";
 import React from "react";
-import {
-  selectPrice
-} from "@/lib/financeSlice";
+import { selectPrice } from "@/lib/financeSlice";
 type CardProps = React.ComponentProps<typeof Card>;
 
 export function Location({ className, ...props }: CardProps) {
@@ -43,9 +41,9 @@ export function Location({ className, ...props }: CardProps) {
     setCurrentDate(`${futureDate.getMonth()}/${futureDate.getFullYear()}`);
   }, []);
 
-  
   React.useEffect(() => {
-    if (location.medianValue !== 0 && finance.homePrice === 0) { //Todo: This might happen all the time. TBD
+    if (location.medianValue !== 0 && finance.homePrice === 0) {
+      //Todo: This might happen all the time. TBD
       dispatch(selectPrice(location.medianValue));
     }
   }, [location.medianValue]);
@@ -87,7 +85,9 @@ export function Location({ className, ...props }: CardProps) {
           <div className="grid w-full max-w-sm items-center gap-1.5">
             <Label>
               Median property tax in {location.county}:{" "}
-              <span className="font-bold">{(location.medianTax*12).toFixed(2)}%</span>
+              <span className="font-bold">
+                {(location.medianTax * 12).toFixed(2)}%
+              </span>
             </Label>
           </div>
         )}

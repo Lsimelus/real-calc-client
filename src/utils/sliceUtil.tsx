@@ -221,7 +221,10 @@ export const pmInsurance = (financeSlice: finance) => {
 };
 
 export const calculateCashToClose = (financeSlice: finance) => {
-  return (calcLoanAmount(financeSlice) * DOWN_DEPOSIT_RATE) + financeSlice.downPaymentAmount;
+  return (
+    calcLoanAmount(financeSlice) * DOWN_DEPOSIT_RATE +
+    financeSlice.downPaymentAmount
+  );
 };
 
 const calcLoanAmount = (financeSlice: finance) => {

@@ -33,7 +33,7 @@ export function Price({ className, ...props }: CardProps) {
     (state: any) => state.finance.financeDetails.downPaymentPercent,
   );
 
-    React.useEffect(() => {
+  React.useEffect(() => {
     setPrice(initPrice);
   }, [initPrice]);
 
@@ -85,9 +85,6 @@ export function Price({ className, ...props }: CardProps) {
           <Input
             value={price === 0 ? "" : price}
             onChange={handleInputChange}
-            type="number"
-            min="0"
-            step="0.01"
           />
         </div>
 

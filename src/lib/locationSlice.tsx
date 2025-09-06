@@ -63,7 +63,8 @@ export const locationSlice = createSlice({
     builder.addCase(fetchCityInfo.fulfilled, (state, action) => {
       state.locationDetails.county = action.payload.county;
 
-      state.locationDetails.medianTax = parseFloat(action.payload.median_tax)/12;
+      state.locationDetails.medianTax =
+        parseFloat(action.payload.median_tax) / 12;
       state.locationDetails.medianValue = parseInt(action.payload.median_value);
       state.locationDetails.medianRent = parseInt(action.payload.median_rent);
       state.locationDetails.city = action.payload.city;

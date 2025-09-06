@@ -57,10 +57,16 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {
   }, [chartData.point]);
 
   return (
-    <Card className="col-span-3">
+    <Card className="col-span-5 lg:col-span-3">
       <CardHeader>
         <CardTitle>Home Equity Graph</CardTitle>
-        <CardDescription>A Home Equity Graph is a visual representation, often a line or bar chart, of a homeowner's home equity over time. It illustrates how home equity changes as a result of factors like principal mortgage payments. It does not include home value appreciation, extra principal payments, or property improvements.</CardDescription>
+        <CardDescription>
+          A Home Equity Graph is a visual representation, often a line or bar
+          chart, of a homeowner's home equity over time. It illustrates how home
+          equity changes as a result of factors like principal mortgage
+          payments. It does not include home value appreciation, extra principal
+          payments, or property improvements.
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -106,13 +112,13 @@ export const GraphEquity: React.FC<GraphEquityProps> = ({ chartData }) => {
         <CardFooter>
           <div className="flex w-full items-start gap-2 text-sm">
             <div className="grid gap-2">
-              <div className="flex items-center gap-2 leading-none text-muted-foreground">
-                During {turningDate}, you will have 20% equity in your home,
+              <p className="gap-2 leading-none text-muted-foreground">
+                During <span className="font-bold text-black">{turningDate}</span>, you will have <span className="font-bold text-black">20%</span> equity in your home,
                 which means you will not have to make any additional payments.
                 At that point, you will be able to remove the Mortgage Insurance
                 from your mortgage payment and it will decrease by{" "}
-                {addcomma(mortgageInsurance(finance))} per year.
-              </div>
+                <span className="font-bold text-black">{addcomma(mortgageInsurance(finance))}</span> per year.
+              </p>
             </div>
           </div>
         </CardFooter>

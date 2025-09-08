@@ -1,5 +1,5 @@
 import { conversationSender } from "@/constants/misc";
-import OpenAI from "openai";
+import { GoogleGenAI } from "@google/genai";
 
 
 export async function fetchAiResponse(
@@ -8,24 +8,24 @@ export async function fetchAiResponse(
 
   try {
 
-  
-  const client = new OpenAI({
-    apiKey: process.env.NEXT_PUBLIC_OPENAI_API_KEY,
-    dangerouslyAllowBrowser: true,
-  });
-  try {
-    const response = await client.responses.create({
-      model: "gpt-4o",
-      instructions: "You are a coding assistant that talks like a pirate",
-      input,
-    });
+    const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
+    const ai = new GoogleGenAI({ apiKey });
 
-    return { message: "The world will never know", source: "bot", success: true }
+  try {
+  const response = await ai.models.generateContent({
+    model: "gemini-2.5-flash",
+    contents: input,
+  });
+  console.log("AI response:", response.text);
+
+    return { message: response.text ?? "", source: "bot", success: true }
   } catch (error :any) {
+    console.log("AI1 error:", error);
       return { message: error.error.message, source: "bot", success: false }
   }
 
 } catch (error :any) {
+  console.log("AI2 error:", error);
   return { message: "Secrets failed to load", source: "bot", success: false }
 }
 

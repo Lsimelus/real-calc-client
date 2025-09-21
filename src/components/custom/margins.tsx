@@ -25,7 +25,7 @@ tech stack, future plans, and/or look at the code please visit this
 projects `;
 const GITHUB_PAGE_URL = "https://github.com/Lsimelus/real-calc-client";
 const GITHUB_PROFILE_URL = "https://github.com/Lsimelus";
-const PORTFOLIO_URL = "https://portfolio-orcin-theta-51.vercel.app/";
+const PORTFOLIO_URL = "https://www.lyndbergh.net/"; 
 const EMAIL = "Lsimelus@gmail.com";
 const LINKEDIN_URL = "https://www.linkedin.com/in/lyndbergh-simelus/";
 

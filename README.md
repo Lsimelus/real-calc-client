@@ -7,10 +7,17 @@ Live link: https://real-calc-client-blush.vercel.app
 ### Next steps
 
 1. Refactor small details. Function and variable names, remove unused imports, identify redundant functions, remove hard coded values and turn into constants
-3. Add Typescript testing sweet
-4. Add test for JS
+2. Modidy Redux for mass edits and population. Have preopopulation function
+3. Edit python to use FastAPI instead of flask
+4. PostgreSQL and SQLAlchemy or SQL Lite. For RFQ like functionality
 5. Make UI decorative and responsive
-6. Implement AI
+6. Add Typescript testing sweet
+7. Add test for JS
+8. Move City data to Fast API
+9. Complete docker
+10. Webhooks
+11. Log necessary info for AI
+12. Launch app!
 
 
 The [backend](https://github.com/Lsimelus/flask-backend) for this application is a python flask app that will eventually get updated

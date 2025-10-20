@@ -48,3 +48,7 @@ export function calculatePMI(
 
   return pmiCost;
 }
+
+export function calculateLoanAmount(price: number, downPaymentPercent: number) {
+  return price * (1 - downPaymentPercent / 100);
+}

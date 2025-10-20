@@ -30,9 +30,9 @@ import {
   propertyTax,
 } from "@/utils/sliceUtil";
 
-import { Label } from "../ui/label";
 import { initSummary } from "@/constants/misc";
 import { DebtToIncome } from "./debtToIncome";
+import { calculateLoanAmount } from "@/utils/math";
 
 interface SummaryProps {
   questionCompleted: boolean;
@@ -49,16 +49,17 @@ export const Summary: React.FC<SummaryProps> = ({
     (state: any) => state.insurance.insuranceDetails,
   );
 
-  // const toPrint = useSelector((state: any) => state);
-  // console.log("~~~~~~~~~~~~~~~~~~~~")
-  // console.log(toPrint)
-
   const fees = useSelector((state: any) => state.fees.feesDetails);
   const location = useSelector((state: any) => state.location.locationDetails);
 
   const [invoices, setInvoices] = React.useState(initSummary);
 
   const [debt, setDebt] = React.useState(0);
+  const loanAmount = calculateLoanAmount(
+    finance.homePrice,
+    finance.downPaymentPercent,
+  );
+
   const handleDebtChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     if (value.trim() === "") {
@@ -180,13 +181,15 @@ export const Summary: React.FC<SummaryProps> = ({
               {addcomma(getSumOfRows())}
             </TableCell>
           </TableRow>
-        </TableFooter>
-        <TableFooter>
           <TableRow>
             <TableCell colSpan={3}>Down Payment + Closing Cost</TableCell>
             <TableCell className="text-right">
               {addcomma(cashToClose())}
             </TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell colSpan={3}>Total Loan Amount</TableCell>
+            <TableCell className="text-right">{addcomma(loanAmount)}</TableCell>
           </TableRow>
         </TableFooter>
       </Table>

@@ -9,8 +9,14 @@ import { conversationSender } from "@/constants/misc";
 
 export function ChatBot() {
   const [conversationMessages, setConversationMessages] = React.useState<
-    { message: string; source: conversationSender, success:boolean }[]
-  >([{ message: "Hello I am chat bot, how can I help you?", source: "bot", success: true }]);
+    { message: string; source: conversationSender; success: boolean }[]
+  >([
+    {
+      message: "Hello I am chat bot, how can I help you?",
+      source: "bot",
+      success: true,
+    },
+  ]);
   const [userInput, setUserInput] = React.useState("");
   const [loading, setLoading] = React.useState(false);
 
@@ -37,13 +43,13 @@ export function ChatBot() {
             className={`w-3/5 block px-4 py-2 mb-2 rounded-2xl shadow-md  ${
               msg.source === "user"
                 ? "ml-auto bg-blue-100 text-right"
-                : "bg-white" 
+                : "bg-white"
             } ${msg.success === false ? "text-red-600" : ""}`}
           >
             {msg.message}
           </p>
         ))}
-        {loading && <Loader className="animate-opacity-pulse"/>}
+        {loading && <Loader className="animate-opacity-pulse" />}
       </div>
       <Textarea
         placeholder="Type your message here."
@@ -62,13 +68,10 @@ export function ChatBot() {
               { message: userMessage, source: "user", success: true },
             ]);
             setLoading(true);
-            const response = (await fetchAiResponse(userInput));
+            const response = await fetchAiResponse(userInput);
             setLoading(false);
             setUserInput(""); // Clear the input field after sending
-            setConversationMessages((prev) => [
-              ...prev,
-              response,
-            ]);
+            setConversationMessages((prev) => [...prev, response]);
           }
         }}
       >

@@ -5,7 +5,6 @@ export enum loanTypes {
   FHA = "fha",
 }
 
-
 export type conversationSender = "user" | "bot"; // or your enum/type
 
 export const initSummary = [
